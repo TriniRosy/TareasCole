@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lapbook: El Superzorro - Roald Dahl</title>
+    <style>
+        :root {
+            --bg: #f5e6d3;
+            --paper: #fdf5e6;
+            --brown: #6b3a2a;
+            --orange: #d4783b;
+            --gold: #c8943e;
+            --green: #5a7a4a;
+            --red: #b5432e;
+            --blue: #3a5a7a;
+            --dark: #2c1810;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.15);
+            --font-title: 'Georgia', 'Times New Roman', serif;
+            --font-body: 'Segoe UI', 'Tahoma', 'Geneva', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #d4b896 0%, #c4a47a 30%, #b8956a 60%, #d4b896 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: var(--font-body);
+            background-image:
+                radial-gradient(ellipse at 20% 20%, rgba(139, 90, 43, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 90, 43, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 90, 43, 0.08) 0%, transparent 70%);
+        }
+
+        /* ─── MESA / SUPERFICIE DE FONDO ─── */
+        .table-surface {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(0, 0, 0, 0.03) 3px,
+                    rgba(0, 0, 0, 0.03) 4px),
+                radial-gradient(ellipse at center, rgba(0, 0, 0, 0.05) 0%, transparent 70%);
+        }
+
+        /* ─── CONTENEDOR PRINCIPAL DEL LAPBOOK ─── */
+        .lapbook-wrapper {
+            position: relative;
+            z-index: 1;
+            perspective: 1500px;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .lapbook {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        /* ─── CARPETA CENTRAL (BASE) ─── */
+        .folder-base {
+            background: linear-gradient(180deg, #e8d5b8 0%, #dcc8a0 40%, #c9b28a 100%);
+            border-radius: 18px 18px 12px 12px;
+            box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            width: 100%;
+            max-width: 700px;
+            min-height: 500px;
+            position: relative;
+            border: 3px solid #8b6914;
+            overflow: visible;
+            transition: all 0.3s ease;
+        }
+        .folder-base::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 2px dashed rgba(139, 105, 20, 0.3);
+            border-radius: 10px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Solapa izquierda */
+        .flap {
+            position: absolute;
+            top: 0;
+            width: 48%;
+            height: 100%;
+            background: linear-gradient(180deg, #ecdcc5 0%, #ddcaa5 100%);
+            border: 3px solid #8b6914;
+            z-index: 5;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .flap-left {
+            left: 0;
+            transform-origin: left center;
+            border-radius: 16px 4px 4px 16px;
+            border-right: 2px solid #a07828;
+        }
+        .flap-right {
+            right: 0;
+            transform-origin: right center;
+            border-radius: 4px 16px 16px 4px;
+            border-left: 2px solid #a07828;
+        }
+        .flap:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+            z-index: 10;
+        }
+        .flap-left.open {
+            transform: rotateY(-140deg);
+            box-shadow: -8px 4px 20px rgba(0, 0, 0, 0.4);
+            z-index: 3;
+        }
+        .flap-right.open {
+            transform: rotateY(140deg);
+            box-shadow: 8px 4px 20px rgba(0, 0, 0, 0.4);
+            z-index: 3;
+        }
+        .flap-content {
+            text-align: center;
+            padding: 15px;
+            pointer-events: none;
+            user-select: none;
+        }
+        .flap-emoji {
+            font-size: 3.5rem;
+            display: block;
+            animation: bounce-gentle 2s ease-in-out infinite;
+        }
+        .flap-label {
+            font-family: var(--font-title);
+            font-weight: bold;
+            color: var(--brown);
+            font-size: 1rem;
+            margin-top: 6px;
+            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.5);
+            padding: 4px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        @keyframes bounce-gentle {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* ─── CONTENIDO INTERIOR DE LA CARPETA ─── */
+        .inner-content {
+            padding: 30px 20px 20px;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-height: 500px;
+        }
+        .lapbook-title-area {
+            text-align: center;
+            background: linear-gradient(180deg, #fffdf5 0%, #fdf3e0 100%);
+            border-radius: 12px;
+            padding: 18px 20px;
+            box-shadow: var(--shadow-sm);
+            border: 2px solid #b8945a;
+            position: relative;
+        }
+        .lapbook-title-area h1 {
+            font-family: var(--font-title);
+            font-size: 1.8rem;
+            color: #5c2d0e;
+            letter-spacing: 1px;
+            margin: 0;
+            text-shadow: 1px 1px 0 rgba(255, 200, 100, 0.5);
+        }
+        .lapbook-title-area .subtitle {
+            font-style: italic;
+            color: #8b5a2b;
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+        .lapbook-title-area .author {
+            font-size: 0.8rem;
+            color: #a07040;
+        }
+        .fox-icon-big {
+            font-size: 3rem;
+            display: block;
+            animation: fox-peek 3s ease-in-out infinite;
+        }
+        @keyframes fox-peek {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-5px) rotate(-3deg);
+            }
+            75% {
+                transform: translateY(-5px) rotate(3deg);
+            }
+        }
+
+        /* ─── SECCIÓN DE GRANJEROS (3 columnas) ─── */
+        .farmers-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .farmer-card {
+            flex: 1;
+            min-width: 120px;
+            max-width: 180px;
+            background: var(--paper);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid #c9a86c;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .farmer-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+            border-color: #8b5a2b;
+        }
+        .farmer-card .farmer-emoji {
+            font-size: 2.8rem;
+            display: block;
+            transition: transform 0.3s;
+        }
+        .farmer-card:hover .farmer-emoji {
+            transform: scale(1.2) rotate(-5deg);
+        }
+        .farmer-card h4 {
+            font-family: var(--font-title);
+            color: #4a1a0a;
+            font-size: 0.95rem;
+            margin: 4px 0;
+        }
+        .farmer-card .farm-produce {
+            font-size: 0.7rem;
+            color: #6b4226;
+            background: #fef3e0;
+            padding: 3px 8px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .farmer-detail {
+            display: none;
+            font-size: 0.7rem;
+            color: #5a3a1a;
+            margin-top: 6px;
+            line-height: 1.3;
+            background: #fffdf5;
+            padding: 6px;
+            border-radius: 6px;
+            border: 1px dashed #c9a86c;
+        }
+        .farmer-card.expanded .farmer-detail {
+            display: block;
+            animation: fadeInDown 0.4s ease;
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── ACORDEÓN DE TÚNELES ─── */
+        .accordion-section {
+            background: #fef9f0;
+            border-radius: 12px;
+            border: 2px solid #b8945a;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .accordion-header {
+            background: linear-gradient(180deg, #f0dbb8 0%, #e4c894 100%);
+            padding: 12px 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-title);
+            font-weight: bold;
+            color: #4a2a0a;
+            font-size: 1rem;
+            user-select: none;
+            border-bottom: 1px solid #c9a86c;
+            transition: background 0.3s;
+        }
+        .accordion-header:hover {
+            background: linear-gradient(180deg, #f5e3c4 0%, #ecd4a0 100%);
+        }
+        .accordion-header .arrow {
+            transition: transform 0.4s ease;
+            font-size: 1.3rem;
+        }
+        .accordion-header.active .arrow {
+            transform: rotate(180deg);
+        }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #fffdf5;
+        }
+        .accordion-body.open {
+            max-height: 350px;
+        }
+        .tunnel-path {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+        .tunnel-stop {
+            background: #fdf5e6;
+            border: 2px solid #8b5a2b;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        .tunnel-stop:hover {
+            transform: scale(1.2);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            background: #fff8e7;
+        }
+        .tunnel-stop .tooltip {
+            position: absolute;
+            bottom: 110%;
+            background: #2c1810;
+            color: #fdf5e6;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: bold;
+        }
+        .tunnel-stop:hover .tooltip {
+            opacity: 1;
+        }
+        .tunnel-arrow-connector {
+            font-size: 1.5rem;
+            color: #8b5a2b;
+            animation: pulse-arrow 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse-arrow {
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: translateX(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(4px);
+            }
+        }
+
+        /* ─── BOLSILLO CON TARJETAS ─── */
+        .pocket-section {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: stretch;
+        }
+        .pocket {
+            flex: 1;
+            min-width: 140px;
+            background: #f0e0c8;
+            border-radius: 0 0 12px 12px;
+            border: 2px solid #a07828;
+            border-top: 4px solid #8b6914;
+            padding: 8px;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all 0.3s;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .pocket-label {
+            font-family: var(--font-title);
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: #4a2a0a;
+            background: #fffdf5;
+            padding: 3px 10px;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            border: 1px solid #c9a86c;
+        }
+        .pocket-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+        }
+        .mini-card {
+            background: #fffef9;
+            border: 1px solid #c9a86c;
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 0.7rem;
+            cursor: grab;
+            transition: all 0.3s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            user-select: none;
+            position: relative;
+            z-index: 1;
+        }
+        .mini-card:hover {
+            transform: translateY(-3px) rotate(-2deg);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 5;
+            background: #fffff0;
+            border-color: #8b5a2b;
+        }
+        .mini-card.dragging {
+            opacity: 0.6;
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+            cursor: grabbing;
+        }
+        .mini-card .card-emoji {
+            font-size: 1.5rem;
+            display: block;
+        }
+
+        /* ─── RUEDA GIRATORIA ─── */
+        .wheel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            perspective: 800px;
+        }
+        .wheel-stand {
+            text-align: center;
+        }
+        .wheel-label {
+            font-family: var(--font-title);
+            font-weight: bold;
+            color: #4a2a0a;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+        }
+        .wheel {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(#e8c878 0deg 60deg,
+                    #d4a84b 60deg 120deg,
+                    #e8c878 120deg 180deg,
+                    #d4a84b 180deg 240deg,
+                    #e8c878 240deg 300deg,
+                    #d4a84b 300deg 360deg);
+            border: 5px solid #6b3a2a;
+            box-shadow: var(--shadow-sm), inset 0 0 20px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            user-select: none;
+        }
+        .wheel:hover {
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3);
+        }
+        .wheel-center {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #fffdf5;
+            border: 3px solid #6b3a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 2;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        .wheel-spoke {
+            position: absolute;
+            width: 3px;
+            height: 50%;
+            background: #6b3a2a;
+            top: 0;
+            left: 50%;
+            transform-origin: bottom center;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            pointer-events: none;
+        }
+        .wheel-spoke:nth-child(2) {
+            transform: translateX(-50%) rotate(60deg);
+        }
+        .wheel-spoke:nth-child(3) {
+            transform: translateX(-50%) rotate(120deg);
+        }
+        .wheel-spoke:nth-child(4) {
+            transform: translateX(-50%) rotate(180deg);
+        }
+        .wheel-spoke:nth-child(5) {
+            transform: translateX(-50%) rotate(240deg);
+        }
+        .wheel-spoke:nth-child(6) {
+            transform: translateX(-50%) rotate(300deg);
+        }
+        .wheel-segment-label {
+            position: absolute;
+            font-size: 0.55rem;
+            font-weight: bold;
+            color: #2c1810;
+            pointer-events: none;
+            text-align: center;
+            width: 35px;
+            transform-origin: center center;
+        }
+
+        /* ─── PESTAÑAS LATERALES ─── */
+        .side-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 200px;
+        }
+        .side-tab {
+            background: linear-gradient(180deg, #fdf5e6 0%, #f0e0c8 100%);
+            border: 2px solid #8b6914;
+            border-radius: 0 14px 14px 0;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-family: var(--font-title);
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: #4a2a0a;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+            text-align: center;
+            writing-mode: horizontal-tb;
+            min-width: 90px;
+        }
+        .side-tab:hover {
+            background: #fffdf5;
+            transform: translateX(4px);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+            border-color: #5c3a10;
+        }
+        .side-tab .tab-emoji {
+            font-size: 1.5rem;
+            display: block;
+        }
+
+        /* ─── MODAL POPUP ─── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal-box {
+            background: #fdf5e6;
+            border-radius: 16px;
+            padding: 25px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            border: 4px solid #8b6914;
+            position: relative;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        .modal-close {
+            position: absolute;
+            top: 8px;
+            right: 14px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #6b3a2a;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .modal-close:hover {
+            transform: scale(1.3);
+            color: #b5432e;
+        }
+        .modal-box h3 {
+            font-family: var(--font-title);
+            color: #4a1a0a;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .modal-box p {
+            font-size: 0.9rem;
+            color: #5a3a1a;
+            line-height: 1.5;
+        }
+        .modal-box .modal-emoji {
+            font-size: 4rem;
+            display: block;
+            margin: 0 auto 8px;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            .lapbook {
+                flex-direction: column;
+                align-items: center;
+            }
+            .folder-base {
+                max-width: 100%;
+                min-height: 400px;
+            }
+            .flap {
+                width: 45%;
+            }
+            .side-tabs {
+                flex-direction: row;
+                flex-wrap: wrap;
+                max-width: 100%;
+                justify-content: center;
+            }
+            .side-tab {
+                border-radius: 14px;
+                flex: 1;
+                min-width: 70px;
+                font-size: 0.7rem;
+            }
+            .farmers-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .farmer-card {
+                max-width: 100%;
+                width: 100%;
+            }
+            .pocket-section {
+                flex-direction: column;
+            }
+            .tunnel-stop {
+                width: 40px;
+                height: 40px;
+                font-size: 1.3rem;
+            }
+            .lapbook-title-area h1 {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* ─── DETALLES DECORATIVOS ─── */
+        .leaf-decor {
+            position: absolute;
+            pointer-events: none;
+            font-size: 1.2rem;
+            opacity: 0.5;
+            animation: float-leaf 6s ease-in-out infinite;
+        }
+        @keyframes float-leaf {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            30% {
+                transform: translateY(-15px) rotate(10deg);
+            }
+            60% {
+                transform: translateY(-5px) rotate(-8deg);
+            }
+        }
+        .sparkle {
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+            0%,
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.3);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="table-surface"></div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-box" id="modalBox">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <span class="modal-emoji" id="modalEmoji">🦊</span>
+            <h3 id="modalTitle">Título</h3>
+            <p id="modalText">Contenido aquí...</p>
+        </div>
+    </div>
+
+    <div class="lapbook-wrapper">
+        <div class="lapbook">
+
+            <!-- CARPETA CENTRAL -->
+            <div class="folder-base" id="folderBase">
+                <!-- Solapa izquierda -->
+                <div class="flap flap-left" id="flapLeft" title="Ábreme">
+                    <div class="flap-content">
+                        <span class="flap-emoji">🌳</span>
+                        <span class="flap-label">El Bosque</span>
+                    </div>
+                </div>
+                <!-- Solapa derecha -->
+                <div class="flap flap-right" id="flapRight" title="Ábreme">
+                    <div class="flap-content">
+                        <span class="flap-emoji">⛰️</span>
+                        <span class="flap-label">La Colina</span>
+                    </div>
+                </div>
+
+                <!-- CONTENIDO INTERIOR -->
+                <div class="inner-content">
+                    <!-- Título -->
+                    <div class="lapbook-title-area">
+                        <span class="fox-icon-big">🦊</span>
+                        <h1>El Superzorro</h1>
+                        <div class="subtitle">Fantastic Mr. Fox</div>
+                        <div class="author">Roald Dahl</div>
+                    </div>
+
+                    <!-- Los 3 granjeros -->
+                    <div class="farmers-row">
+                        <div class="farmer-card" data-farmer="benito" id="cardBenito">
+                            <span class="farmer-emoji">🐔</span>
+                            <h4>Benito</h4>
+                            <span class="farm-produce">Granja de pollos</span>
+                            <div class="farmer-detail">Gordo, glotón. Come 3 pollos al día. Su granja tiene miles de pollos gordos.</div>
+                        </div>
+                        <div class="farmer-card" data-farmer="bunuelo" id="cardBunuelo">
+                            <span class="farmer-emoji">🦆</span>
+                            <h4>Buñuelo</h4>
+                            <span class="farm-produce">Patos y gansos</span>
+                            <div class="farmer-detail">Bajito, barrigón. Cría patos y gansos. Adora el hígado de ganso.</div>
+                        </div>
+                        <div class="farmer-card" data-farmer="canon" id="cardCanon">
+                            <span class="farmer-emoji">🦃</span>
+                            <h4>Cañón</h4>
+                            <span class="farm-produce">Pavos y manzanas</span>
+                            <div class="farmer-detail">Flaco, huesudo. Tiene pavos y un huerto de manzanas. Bebe sidra.</div>
+                        </div>
+                    </div>
+
+                    <!-- Acordeón de túneles -->
+                    <div class="accordion-section">
+                        <div class="accordion-header" id="accordionHeader">
+                            🕳️ El Plan del Superzorro: Los Túneles Secretos
+                            <span class="arrow">▼</span>
+                        </div>
+                        <div class="accordion-body" id="accordionBody">
+                            <div class="tunnel-path">
+                                <div class="tunnel-stop" data-info="hogar">
+                                    🏠<span class="tooltip">Madriguera</span>
+                                </div>
+                                <span class="tunnel-arrow-connector">→</span>
+                                <div class="tunnel-stop" data-info="benito">
+                                    🐔<span class="tooltip">Granja Benito</span>
+                                </div>
+                                <span class="tunnel-arrow-connector">→</span>
+                                <div class="tunnel-stop" data-info="bunuelo">
+                                    🦆<span class="tooltip">Granja Buñuelo</span>
+                                </div>
+                                <span class="tunnel-arrow-connector">→</span>
+                                <div class="tunnel-stop" data-info="canon">
+                                    🦃<span class="tooltip">Granja Cañón</span>
+                                </div>
+                                <span class="tunnel-arrow-connector">→</span>
+                                <div class="tunnel-stop" data-info="banquete">
+                                    🎉<span class="tooltip">¡El Banquete!</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESTAÑAS LATERALES -->
+            <div class="side-tabs">
+                <!-- Bolsillo personajes -->
+                <div class="pocket" id="pocketCharacters">
+                    <span class="pocket-label">👥 Personajes</span>
+                    <div class="pocket-cards">
+                        <div class="mini-card" draggable="true" data-character="superzorro">
+                            <span class="card-emoji">🦊</span> Don Zorro
+                        </div>
+                        <div class="mini-card" draggable="true" data-character="dona">
+                            <span class="card-emoji">🦊‍❤️</span> Doña Zorra
+                        </div>
+                        <div class="mini-card" draggable="true" data-character="zorritos">
+                            <span class="card-emoji">🦊🐾</span> Zorritos
+                        </div>
+                        <div class="mini-card" draggable="true" data-character="tejon">
+                            <span class="card-emoji">🦡</span> Tejón
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bolsillo valores -->
+                <div class="pocket" id="pocketValues">
+                    <span class="pocket-label">💡 Valores</span>
+                    <div class="pocket-cards">
+                        <div class="mini-card" draggable="true" data-value="astucia">
+                            <span class="card-emoji">🧠</span> Astucia
+                        </div>
+                        <div class="mini-card" draggable="true" data-value="familia">
+                            <span class="card-emoji">👨‍👩‍👧‍👦</span> Familia
+                        </div>
+                        <div class="mini-card" draggable="true" data-value="trabajo">
+                            <span class="card-emoji">🤝</span> Trabajo en equipo
+                        </div>
+                        <div class="mini-card" draggable="true" data-value="codicia">
+                            <span class="card-emoji">⚠️</span> Anti-codicia
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rueda giratoria -->
+                <div class="wheel-stand">
+                    <div class="wheel-label">🎡 Gira la rueda</div>
+                    <div class="wheel" id="spinningWheel">
+                        <div class="wheel-spoke"></div>
+                        <div class="wheel-spoke"></div>
+                        <div class="wheel-spoke"></div>
+                        <div class="wheel-spoke"></div>
+                        <div class="wheel-spoke"></div>
+                        <div class="wheel-spoke"></div>
+                        <div class="wheel-center">🦊</div>
+                    </div>
+                    <div style="font-size:0.7rem;margin-top:4px;color:#4a2a0a;" id="wheelResult">¡Gírame!</div>
+                </div>
+
+                <!-- Pestaña moraleja -->
+                <div class="side-tab" id="tabMoraleja">
+                    <span class="tab-emoji">📖</span> Moraleja
+                </div>
+                <!-- Pestaña curiosidades -->
+                <div class="side-tab" id="tabCuriosidades">
+                    <span class="tab-emoji">⭐</span> Curiosidades
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ─── ELEMENTOS DEL DOM ───
+            const flapLeft = document.getElementById('flapLeft');
+            const flapRight = document.getElementById('flapRight');
+            const accordionHeader = document.getElementById('accordionHeader');
+            const accordionBody = document.getElementById('accordionBody');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalEmoji = document.getElementById('modalEmoji');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalText = document.getElementById('modalText');
+            const modalClose = document.getElementById('modalClose');
+            const spinningWheel = document.getElementById('spinningWheel');
+            const wheelResult = document.getElementById('wheelResult');
+            const folderBase = document.getElementById('folderBase');
+
+            // ─── DATOS DEL MODAL ───
+            const modalData = {
+                benito: { emoji: '🐔', title: 'Granjero Benito',
+                    text: 'Benito es el granjero gordo. Cría miles de pollos en su enorme granja. Es glotón y come tres pollos al día. Odia al Superzorro porque le roba sus mejores aves.' },
+                bunuelo: { emoji: '🦆', title: 'Granjero Buñuelo',
+                    text: 'Buñuelo es bajito y barrigón. Se especializa en patos y gansos. Su debilidad es el hígado de ganso. Junto con Benito y Cañón, planea atrapar al zorro.' },
+                canon: { emoji: '🦃', title: 'Granjero Cañón',
+                    text: 'Cañón es flaco como un palo. Cría pavos y cultiva manzanas para hacer sidra. Es el más delgado pero igual de malhumorado que sus dos compinches.' },
+                hogar: { emoji: '🏠', title: 'La Madriguera',
+                    text: 'Aquí vive Don Zorro con Doña Zorra y sus cuatro zorritos. Es una madriguera acogedora bajo un gran árbol, al inicio de la colina.' },
+                banquete: { emoji: '🎉', title: '¡El Gran Banquete!',
+                    text: 'Gracias a los túneles secretos, Don Zorro organiza un enorme banquete subterráneo al que invita a todos los animales: tejones, topos, conejos y comadrejas. ¡Nadie pasa hambre!' },
+                superzorro: { emoji: '🦊', title: 'Don Zorro (El Superzorro)',
+                    text: 'Es el protagonista: astuto, valiente y muy inteligente. Siempre encuentra una solución. Su cola fue disparada por los granjeros pero eso no lo detuvo.' },
+                dona: { emoji: '🦊❤️', title: 'Doña Zorra',
+                    text: 'La esposa de Don Zorro. Lo apoya incondicionalmente y cuida de los zorritos. Le preocupa cuando su esposo sale a buscar comida, pero confía en su astucia.' },
+                zorritos: { emoji: '🦊🐾', title: 'Los Zorritos',
+                    text: 'Son cuatro pequeños zorros, hijos de Don Zorro y Doña Zorra. Al principio pasan hambre durante el asedio, pero luego ayudan a cavar los túneles.' },
+                tejon: { emoji: '🦡', title: 'El Tejón',
+                    text: 'Amigo de Don Zorro. Al principio duda sobre si está bien robar, pero Don Zorro le explica que es por supervivencia. Participa en el banquete final.' },
+                astucia: { emoji: '🧠', title: 'Astucia sobre fuerza',
+                    text: 'Don Zorro demuestra que la inteligencia y la astucia pueden más que la fuerza bruta de los tres granjeros con sus tractores y palas.' },
+                familia: { emoji: '👨‍👩‍👧‍👦', title: 'La importancia de la familia',
+                    text: 'Don Zorro arriesga todo para alimentar a su familia. La familia es el motor que lo impulsa a idear el plan de los túneles.' },
+                trabajo: { emoji: '🤝', title: 'Trabajo en equipo',
+                    text: 'Los animales del bosque se unen para cavar los túneles y comparten el botín. Juntos logran lo que individualmente sería imposible.' },
+                codicia: { emoji: '⚠️', title: 'Anti-codicia',
+                    text: 'Los granjeros representan la codicia: no les importa destruir el bosque con tal de atrapar a un solo zorro. Su obsesión los lleva al fracaso.' },
+                moraleja: { emoji: '📖', title: 'Moraleja de la historia',
+                    text: 'La inteligencia vence a la fuerza. El trabajo en equipo y la solidaridad permiten superar las adversidades. La familia es lo más importante. Y la codicia solo trae infelicidad.' },
+                curiosidades: { emoji: '⭐', title: 'Curiosidades',
+                    text: '¿Sabías que Roald Dahl se inspiró en un zorro real que veía desde su jardín? El libro fue publicado en 1970. Existe una película de Wes Anderson (2009) con la voz de George Clooney como Don Zorro. ¡La película usa stop-motion!' }
+            };
+
+            // ─── ABRIR MODAL ───
+            function openModal(key) {
+                const data = modalData[key];
+                if (!data) return;
+                modalEmoji.textContent = data.emoji;
+                modalTitle.textContent = data.title;
+                modalText.textContent = data.text;
+                modalOverlay.classList.add('active');
+            }
+
+            function closeModal() {
+                modalOverlay.classList.remove('active');
+            }
+            modalClose.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', function(e) {
+                if (e.target === modalOverlay) closeModal();
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // ─── SOLAPAS ───
+            flapLeft.addEventListener('click', function() {
+                flapLeft.classList.toggle('open');
+                if (flapLeft.classList.contains('open')) {
+                    openModal('hogar');
+                }
+            });
+            flapRight.addEventListener('click', function() {
+                flapRight.classList.toggle('open');
+                if (flapRight.classList.contains('open')) {
+                    openModal('banquete');
+                }
+            });
+
+            // ─── ACORDEÓN ───
+            accordionHeader.addEventListener('click', function() {
+                accordionHeader.classList.toggle('active');
+                accordionBody.classList.toggle('open');
+            });
+            // Iniciar abierto para mostrar los túneles
+            accordionHeader.classList.add('active');
+            accordionBody.classList.add('open');
+
+            // ─── TARJETAS DE GRANJEROS ───
+            const farmerCards = document.querySelectorAll('.farmer-card');
+            farmerCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Si ya está expandida, abrir modal
+                    if (this.classList.contains('expanded')) {
+                        const farmer = this.getAttribute('data-farmer');
+                        openModal(farmer);
+                    } else {
+                        // Cerrar otras
+                        farmerCards.forEach(c => c.classList.remove('expanded'));
+                        this.classList.add('expanded');
+                    }
+                });
+            });
+
+            // ─── PARADAS DE TÚNEL ───
+            const tunnelStops = document.querySelectorAll('.tunnel-stop');
+            tunnelStops.forEach(stop => {
+                stop.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const info = this.getAttribute('data-info');
+                    openModal(info);
+                });
+            });
+
+            // ─── BOLSILLOS Y MINI TARJETAS ───
+            const miniCards = document.querySelectorAll('.mini-card');
+            miniCards.forEach(card => {
+                // Click para abrir modal
+                card.addEventListener('click', function(e) {
+                    const character = this.getAttribute('data-character');
+                    const value = this.getAttribute('data-value');
+                    if (character) openModal(character);
+                    if (value) openModal(value);
+                });
+
+                // Drag and drop
+                card.addEventListener('dragstart', function(e) {
+                    this.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', this.getAttribute('data-character') ||
+                        this.getAttribute('data-value') || '');
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+                card.addEventListener('dragend', function(e) {
+                    this.classList.remove('dragging');
+                });
+                card.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                });
+                card.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    const draggedCard = document.querySelector('.mini-card.dragging');
+                    if (draggedCard && draggedCard !== this) {
+                        // Intercambiar posiciones
+                        const parent1 = draggedCard.parentNode;
+                        const parent2 = this.parentNode;
+                        const temp = document.createElement('span');
+                        this.parentNode.insertBefore(temp, this);
+                        parent1.insertBefore(this, draggedCard);
+                        parent2.insertBefore(draggedCard, temp);
+                        parent2.removeChild(temp);
+                        // Animación breve
+                        draggedCard.style.transition = 'all 0.3s ease';
+                        this.style.transition = 'all 0.3s ease';
+                        setTimeout(() => {
+                            draggedCard.style.transition = '';
+                            this.style.transition = '';
+                        }, 300);
+                    }
+                });
+            });
+
+            // ─── RUEDA GIRATORIA ───
+            const wheelSegments = [
+                { label: 'Don Zorro', emoji: '🦊', key: 'superzorro' },
+                { label: 'Granjeros', emoji: '😡', key: 'benito' },
+                { label: 'Banquete', emoji: '🎉', key: 'banquete' },
+                { label: 'Túneles', emoji: '🕳️', key: 'hogar' },
+                { label: 'Astucia', emoji: '🧠', key: 'astucia' },
+                { label: 'Familia', emoji: '❤️', key: 'familia' },
+            ];
+            let currentSegment = 0;
+            let isSpinning = false;
+
+            spinningWheel.addEventListener('click', function() {
+                if (isSpinning) return;
+                isSpinning = true;
+                const spins = 2 + Math.floor(Math.random() * 3); // 2-4 vueltas completas
+                const extraDeg = Math.floor(Math.random() * 6) * 60; // Segmento aleatorio
+                const totalRotation = spins * 360 + extraDeg;
+                const currentRotation = parseFloat(spinningWheel.getAttribute('data-rotation') ||
+                    '0');
+                const newRotation = currentRotation + totalRotation;
+                spinningWheel.style.transform = `rotate(${newRotation}deg)`;
+                spinningWheel.setAttribute('data-rotation', newRotation);
+
+                // Determinar segmento resultante
+                const normalizedDeg = ((newRotation % 360) + 360) % 360;
+                const segmentIndex = Math.floor(normalizedDeg / 60) % 6;
+                const segment = wheelSegments[segmentIndex];
+
+                setTimeout(() => {
+                    wheelResult.textContent = `${segment.emoji} ${segment.label}`;
+                    isSpinning = false;
+                    // Abrir modal después de un momentito
+                    setTimeout(() => openModal(segment.key), 400);
+                }, 900);
+            });
+
+            // ─── PESTAÑAS LATERALES ───
+            document.getElementById('tabMoraleja').addEventListener('click', function() {
+                openModal('moraleja');
+            });
+            document.getElementById('tabCuriosidades').addEventListener('click', function() {
+                openModal('curiosidades');
+            });
+
+            // ─── HOJAS DECORATIVAS FLOTANTES ───
+            const leaves = ['🍂', '🍁', '🌿', '🍃', '🪶'];
+            for (let i = 0; i < 8; i++) {
+                const leaf = document.createElement('span');
+                leaf.classList.add('leaf-decor');
+                leaf.textContent = leaves[Math.floor(Math.random() * leaves.length)];
+                leaf.style.left = Math.random() * 85 + '%';
+                leaf.style.top = Math.random() * 90 + '%';
+                leaf.style.animationDelay = Math.random() * 6 + 's';
+                leaf.style.animationDuration = (4 + Math.random() * 8) + 's';
+                leaf.style.fontSize = (0.9 + Math.random() * 1.8) + 'rem';
+                folderBase.appendChild(leaf);
+            }
+
+            // ─── SPARKLE EN TÍTULO ───
+            const sparkleEl = document.createElement('span');
+            sparkleEl.classList.add('sparkle');
+            sparkleEl.textContent = ' ✨';
+            sparkleEl.style.display = 'inline-block';
+            const titleH1 = document.querySelector('.lapbook-title-area h1');
+            if (titleH1) titleH1.appendChild(sparkleEl);
+
+            console.log('🦊 Lapbook de "El Superzorro" listo. ¡Explora las solapas, bolsillos, túneles y la rueda!');
+            console.log('💡 Consejo: Haz clic en las solapas laterales de la carpeta, en los granjeros, en las paradas de los túneles, y arrastra las mini-tarjetas entre bolsillos.');
+        })();
+    </script>
+</body>
+</html>
