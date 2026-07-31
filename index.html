@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Cuando Llegues</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #1a0b2e, #3b154d);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .instruccion {
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 1.2rem;
+            pointer-events: none;
+            text-align: center;
+            animation: latido 2s infinite alternative;
+        }
+        .corazon {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 20px;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            animation: flotar Y_TIMEms linear forwards;
+            opacity: 0.9;
+        }
+        @keyframes latido {
+            to { opacity: 0.3; transform: scale(0.95); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="instruccion">Toca cualquier parte de la pantalla...</div>
+
+    <script>
+        document.addEventListener('click', (e) => {
+            crearCorazon(e.clientX, e.clientY);
+        });
+
+        document.addEventListener('touchstart', (e) => {
+            crearCorazon(e.touches[0].clientX, e.touches[0].clientY);
+        });
+
+        function crearCorazon(x, y) {
+            const corazon = document.createElement('div');
+            corazon.innerHTML = '❤️';
+            corazon.classList.add('corazon');
+            
+            // Valores aleatorios para que cada toque sea único
+            const tamaño = Math.random() * 30 + 15; // Entre 15px y 45px
+            const duracion = Math.random() * 2000 + 1500; // Entre 1.5s y 3.5s
+            const movimientoX = (Math.random() - 0.5) * 200; // Desplazamiento lateral
+            
+            corazon.style.left = `${x}px`;
+            corazon.style.top = `${y}px`;
+            corazon.style.fontSize = `${tamaño}px`;
+            
+            // Crear una animación única sobre la marcha
+            const nombreAnimacion = `flotar_${Math.random().toString(36).substr(2, 9)}`;
+            const estiloAnimacion = document.createElement('style');
+            estiloAnimacion.innerHTML = `
+                @keyframes ${nombreAnimacion} {
+                    0% {
+                        transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translate(calc(-50% + ${movimientoX}px), calc(-50% - 300px)) scale(1.2) rotate(${movimientoX}deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(estiloAnimacion);
+            corazon.style.animation = `${nombreAnimacion} ${duracion}ms cubic-bezier(0.1, 0.8, 0.3, 1) forwards`;
+
+            document.body.appendChild(corazon);
+
+            // Limpiar el DOM
+            setTimeout(() => {
+                corazon.remove();
+                estiloAnimacion.remove();
+            }, duracion);
+        }
+    </script>
+</body>
+</html>
