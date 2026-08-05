@@ -1,24 +1,21 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lapbook: El Superzorro - Roald Dahl</title>
+    <title>🐾 Huellas de Animales - Plantilla SVG</title>
     <style>
         :root {
-            --bg: #f5e6d3;
-            --paper: #fdf5e6;
-            --brown: #6b3a2a;
-            --orange: #d4783b;
-            --gold: #c8943e;
-            --green: #5a7a4a;
-            --red: #b5432e;
-            --blue: #3a5a7a;
-            --dark: #2c1810;
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-            --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.15);
-            --font-title: 'Georgia', 'Times New Roman', serif;
-            --font-body: 'Segoe UI', 'Tahoma', 'Geneva', sans-serif;
+            --bg: #fdf6f0;
+            --paw-color1: #8B7355;
+            --paw-color2: #A0897C;
+            --paw-color3: #C4A882;
+            --paw-color4: #6B5B4F;
+            --paw-color5: #B8956A;
+            --accent: #e8d5c4;
+            --card-bg: #fffaf7;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            --text: #5c4a3a;
         }
 
         * {
@@ -28,1149 +25,665 @@
         }
 
         body {
-            background: linear-gradient(145deg, #d4b896 0%, #c4a47a 30%, #b8956a 60%, #d4b896 100%);
-            background-attachment: fixed;
+            background-color: var(--bg);
+            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            font-family: var(--font-body);
             background-image:
-                radial-gradient(ellipse at 20% 20%, rgba(139, 90, 43, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(139, 90, 43, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(139, 90, 43, 0.08) 0%, transparent 70%);
+                radial-gradient(circle at 8% 10%, rgba(184, 149, 106, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 20%, rgba(139, 115, 85, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 15% 80%, rgba(196, 168, 130, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 90% 75%, rgba(160, 137, 124, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(184, 149, 106, 0.04) 0%, transparent 60%);
+            background-attachment: fixed;
         }
 
-        /* ─── MESA / SUPERFICIE DE FONDO ─── */
-        .table-surface {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            background:
-                repeating-linear-gradient(0deg,
-                    transparent,
-                    transparent 3px,
-                    rgba(0, 0, 0, 0.03) 3px,
-                    rgba(0, 0, 0, 0.03) 4px),
-                radial-gradient(ellipse at center, rgba(0, 0, 0, 0.05) 0%, transparent 70%);
-        }
-
-        /* ─── CONTENEDOR PRINCIPAL DEL LAPBOOK ─── */
-        .lapbook-wrapper {
+        /* ── Encabezado ───────────────────── */
+        .header {
+            text-align: center;
+            padding: 3rem 1.5rem 1.5rem;
             position: relative;
-            z-index: 1;
-            perspective: 1500px;
-            width: 100%;
-            max-width: 1100px;
         }
-
-        .lapbook {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            align-items: flex-start;
-        }
-
-        /* ─── CARPETA CENTRAL (BASE) ─── */
-        .folder-base {
-            background: linear-gradient(180deg, #e8d5b8 0%, #dcc8a0 40%, #c9b28a 100%);
-            border-radius: 18px 18px 12px 12px;
-            box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            width: 100%;
-            max-width: 700px;
-            min-height: 500px;
-            position: relative;
-            border: 3px solid #8b6914;
-            overflow: visible;
-            transition: all 0.3s ease;
-        }
-        .folder-base::before {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            right: 8px;
-            bottom: 8px;
-            border: 2px dashed rgba(139, 105, 20, 0.3);
-            border-radius: 10px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Solapa izquierda */
-        .flap {
-            position: absolute;
-            top: 0;
-            width: 48%;
-            height: 100%;
-            background: linear-gradient(180deg, #ecdcc5 0%, #ddcaa5 100%);
-            border: 3px solid #8b6914;
-            z-index: 5;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            box-shadow: var(--shadow-sm);
-            display: flex;
+        .header h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #5c4a3a;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border-radius: 8px;
+            gap: 0.5rem;
         }
-        .flap-left {
-            left: 0;
-            transform-origin: left center;
-            border-radius: 16px 4px 4px 16px;
-            border-right: 2px solid #a07828;
-        }
-        .flap-right {
-            right: 0;
-            transform-origin: right center;
-            border-radius: 4px 16px 16px 4px;
-            border-left: 2px solid #a07828;
-        }
-        .flap:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-            z-index: 10;
-        }
-        .flap-left.open {
-            transform: rotateY(-140deg);
-            box-shadow: -8px 4px 20px rgba(0, 0, 0, 0.4);
-            z-index: 3;
-        }
-        .flap-right.open {
-            transform: rotateY(140deg);
-            box-shadow: 8px 4px 20px rgba(0, 0, 0, 0.4);
-            z-index: 3;
-        }
-        .flap-content {
-            text-align: center;
-            padding: 15px;
-            pointer-events: none;
-            user-select: none;
-        }
-        .flap-emoji {
-            font-size: 3.5rem;
-            display: block;
-            animation: bounce-gentle 2s ease-in-out infinite;
-        }
-        .flap-label {
-            font-family: var(--font-title);
-            font-weight: bold;
-            color: var(--brown);
-            font-size: 1rem;
-            margin-top: 6px;
-            text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.5);
-            padding: 4px 10px;
-            border-radius: 20px;
+        .header h1 .paw-icon {
             display: inline-block;
+            animation: pawBounce 1.6s ease-in-out infinite;
         }
-        @keyframes bounce-gentle {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-8px);
-            }
+        .header h1 .paw-icon:nth-child(1) {
+            animation-delay: 0s;
         }
-
-        /* ─── CONTENIDO INTERIOR DE LA CARPETA ─── */
-        .inner-content {
-            padding: 30px 20px 20px;
-            position: relative;
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            min-height: 500px;
+        .header h1 .paw-icon:nth-child(3) {
+            animation-delay: 0.8s;
         }
-        .lapbook-title-area {
-            text-align: center;
-            background: linear-gradient(180deg, #fffdf5 0%, #fdf3e0 100%);
-            border-radius: 12px;
-            padding: 18px 20px;
-            box-shadow: var(--shadow-sm);
-            border: 2px solid #b8945a;
-            position: relative;
-        }
-        .lapbook-title-area h1 {
-            font-family: var(--font-title);
-            font-size: 1.8rem;
-            color: #5c2d0e;
-            letter-spacing: 1px;
-            margin: 0;
-            text-shadow: 1px 1px 0 rgba(255, 200, 100, 0.5);
-        }
-        .lapbook-title-area .subtitle {
-            font-style: italic;
-            color: #8b5a2b;
-            font-size: 0.9rem;
-            margin-top: 2px;
-        }
-        .lapbook-title-area .author {
-            font-size: 0.8rem;
-            color: #a07040;
-        }
-        .fox-icon-big {
-            font-size: 3rem;
-            display: block;
-            animation: fox-peek 3s ease-in-out infinite;
-        }
-        @keyframes fox-peek {
+        @keyframes pawBounce {
             0%,
             100% {
                 transform: translateY(0) rotate(0deg);
             }
             25% {
-                transform: translateY(-5px) rotate(-3deg);
-            }
-            75% {
-                transform: translateY(-5px) rotate(3deg);
-            }
-        }
-
-        /* ─── SECCIÓN DE GRANJEROS (3 columnas) ─── */
-        .farmers-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .farmer-card {
-            flex: 1;
-            min-width: 120px;
-            max-width: 180px;
-            background: var(--paper);
-            border-radius: 12px;
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            border: 2px solid #c9a86c;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .farmer-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
-            border-color: #8b5a2b;
-        }
-        .farmer-card .farmer-emoji {
-            font-size: 2.8rem;
-            display: block;
-            transition: transform 0.3s;
-        }
-        .farmer-card:hover .farmer-emoji {
-            transform: scale(1.2) rotate(-5deg);
-        }
-        .farmer-card h4 {
-            font-family: var(--font-title);
-            color: #4a1a0a;
-            font-size: 0.95rem;
-            margin: 4px 0;
-        }
-        .farmer-card .farm-produce {
-            font-size: 0.7rem;
-            color: #6b4226;
-            background: #fef3e0;
-            padding: 3px 8px;
-            border-radius: 10px;
-            display: inline-block;
-            margin-top: 4px;
-        }
-        .farmer-detail {
-            display: none;
-            font-size: 0.7rem;
-            color: #5a3a1a;
-            margin-top: 6px;
-            line-height: 1.3;
-            background: #fffdf5;
-            padding: 6px;
-            border-radius: 6px;
-            border: 1px dashed #c9a86c;
-        }
-        .farmer-card.expanded .farmer-detail {
-            display: block;
-            animation: fadeInDown 0.4s ease;
-        }
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ─── ACORDEÓN DE TÚNELES ─── */
-        .accordion-section {
-            background: #fef9f0;
-            border-radius: 12px;
-            border: 2px solid #b8945a;
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-        }
-        .accordion-header {
-            background: linear-gradient(180deg, #f0dbb8 0%, #e4c894 100%);
-            padding: 12px 18px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-family: var(--font-title);
-            font-weight: bold;
-            color: #4a2a0a;
-            font-size: 1rem;
-            user-select: none;
-            border-bottom: 1px solid #c9a86c;
-            transition: background 0.3s;
-        }
-        .accordion-header:hover {
-            background: linear-gradient(180deg, #f5e3c4 0%, #ecd4a0 100%);
-        }
-        .accordion-header .arrow {
-            transition: transform 0.4s ease;
-            font-size: 1.3rem;
-        }
-        .accordion-header.active .arrow {
-            transform: rotate(180deg);
-        }
-        .accordion-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            background: #fffdf5;
-        }
-        .accordion-body.open {
-            max-height: 350px;
-        }
-        .tunnel-path {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 15px;
-            align-items: center;
-            justify-content: center;
-        }
-        .tunnel-stop {
-            background: #fdf5e6;
-            border: 2px solid #8b5a2b;
-            border-radius: 50%;
-            width: 55px;
-            height: 55px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s;
-            cursor: pointer;
-            position: relative;
-        }
-        .tunnel-stop:hover {
-            transform: scale(1.2);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            z-index: 2;
-            background: #fff8e7;
-        }
-        .tunnel-stop .tooltip {
-            position: absolute;
-            bottom: 110%;
-            background: #2c1810;
-            color: #fdf5e6;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.65rem;
-            white-space: nowrap;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-weight: bold;
-        }
-        .tunnel-stop:hover .tooltip {
-            opacity: 1;
-        }
-        .tunnel-arrow-connector {
-            font-size: 1.5rem;
-            color: #8b5a2b;
-            animation: pulse-arrow 1.5s ease-in-out infinite;
-        }
-        @keyframes pulse-arrow {
-            0%,
-            100% {
-                opacity: 0.5;
-                transform: translateX(0);
+                transform: translateY(-10px) rotate(-5deg);
             }
             50% {
-                opacity: 1;
-                transform: translateX(4px);
+                transform: translateY(0) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-6px) rotate(5deg);
             }
         }
+        .header .subtitle {
+            color: #8b7355;
+            font-size: 1.1rem;
+            margin-top: 0.4rem;
+            letter-spacing: 0.04em;
+            opacity: 0.8;
+        }
 
-        /* ─── BOLSILLO CON TARJETAS ─── */
-        .pocket-section {
+        /* ── Separador de huellas ────────── */
+        .paw-divider {
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: stretch;
-        }
-        .pocket {
-            flex: 1;
-            min-width: 140px;
-            background: #f0e0c8;
-            border-radius: 0 0 12px 12px;
-            border: 2px solid #a07828;
-            border-top: 4px solid #8b6914;
-            padding: 8px;
-            position: relative;
-            box-shadow: var(--shadow-sm);
-            cursor: pointer;
-            transition: all 0.3s;
-            min-height: 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .pocket-label {
-            font-family: var(--font-title);
-            font-weight: bold;
-            font-size: 0.8rem;
-            color: #4a2a0a;
-            background: #fffdf5;
-            padding: 3px 10px;
-            border-radius: 10px;
-            margin-bottom: 6px;
-            border: 1px solid #c9a86c;
-        }
-        .pocket-cards {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
             justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 1rem;
+            flex-wrap: wrap;
+            opacity: 0.5;
         }
-        .mini-card {
-            background: #fffef9;
-            border: 1px solid #c9a86c;
-            border-radius: 6px;
-            padding: 6px 8px;
-            font-size: 0.7rem;
-            cursor: grab;
-            transition: all 0.3s;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        .paw-divider svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        /* ── Cuadrícula principal ────────── */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem 3rem;
+        }
+
+        /* ── Tarjeta de cada huella ──────── */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 1.8rem 1.2rem 1.4rem;
             text-align: center;
-            user-select: none;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(184, 149, 106, 0.15);
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            border-color: rgba(184, 149, 106, 0.35);
+        }
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(184, 149, 106, 0.04);
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+        .card:hover::after {
+            width: 120px;
+            height: 120px;
+            top: -50px;
+            right: -50px;
+            background: rgba(184, 149, 106, 0.08);
+        }
+        .card .paw-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        .card:hover .paw-wrapper {
+            transform: scale(1.08);
+        }
+        .card .paw-wrapper svg {
+            width: 80px;
+            height: 80px;
+            transition: filter 0.3s ease;
+        }
+        .card:hover .paw-wrapper svg {
+            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.2));
+        }
+        .card .label {
+            margin-top: 0.8rem;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
             position: relative;
             z-index: 1;
         }
-        .mini-card:hover {
-            transform: translateY(-3px) rotate(-2deg);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 5;
-            background: #fffff0;
-            border-color: #8b5a2b;
-        }
-        .mini-card.dragging {
-            opacity: 0.6;
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            z-index: 20;
-            cursor: grabbing;
-        }
-        .mini-card .card-emoji {
-            font-size: 1.5rem;
-            display: block;
-        }
-
-        /* ─── RUEDA GIRATORIA ─── */
-        .wheel-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            perspective: 800px;
-        }
-        .wheel-stand {
-            text-align: center;
-        }
-        .wheel-label {
-            font-family: var(--font-title);
-            font-weight: bold;
-            color: #4a2a0a;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
-        }
-        .wheel {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            background: conic-gradient(#e8c878 0deg 60deg,
-                    #d4a84b 60deg 120deg,
-                    #e8c878 120deg 180deg,
-                    #d4a84b 180deg 240deg,
-                    #e8c878 240deg 300deg,
-                    #d4a84b 300deg 360deg);
-            border: 5px solid #6b3a2a;
-            box-shadow: var(--shadow-sm), inset 0 0 20px rgba(0, 0, 0, 0.15);
-            cursor: pointer;
-            transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .card .label-small {
+            font-size: 0.75rem;
+            color: #a0897c;
+            font-weight: 400;
+            margin-top: 0.15rem;
             position: relative;
-            user-select: none;
-        }
-        .wheel:hover {
-            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.3);
-        }
-        .wheel-center {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: #fffdf5;
-            border: 3px solid #6b3a2a;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            z-index: 2;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        }
-        .wheel-spoke {
-            position: absolute;
-            width: 3px;
-            height: 50%;
-            background: #6b3a2a;
-            top: 0;
-            left: 50%;
-            transform-origin: bottom center;
-            transform: translateX(-50%);
-            border-radius: 2px;
-            pointer-events: none;
-        }
-        .wheel-spoke:nth-child(2) {
-            transform: translateX(-50%) rotate(60deg);
-        }
-        .wheel-spoke:nth-child(3) {
-            transform: translateX(-50%) rotate(120deg);
-        }
-        .wheel-spoke:nth-child(4) {
-            transform: translateX(-50%) rotate(180deg);
-        }
-        .wheel-spoke:nth-child(5) {
-            transform: translateX(-50%) rotate(240deg);
-        }
-        .wheel-spoke:nth-child(6) {
-            transform: translateX(-50%) rotate(300deg);
-        }
-        .wheel-segment-label {
-            position: absolute;
-            font-size: 0.55rem;
-            font-weight: bold;
-            color: #2c1810;
-            pointer-events: none;
-            text-align: center;
-            width: 35px;
-            transform-origin: center center;
+            z-index: 1;
         }
 
-        /* ─── PESTAÑAS LATERALES ─── */
-        .side-tabs {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            max-width: 200px;
+        /* ── Variantes de color por tarjeta ── */
+        .card:nth-child(5n+1) .paw-wrapper svg {
+            --local-color: #8B7355;
         }
-        .side-tab {
-            background: linear-gradient(180deg, #fdf5e6 0%, #f0e0c8 100%);
-            border: 2px solid #8b6914;
-            border-radius: 0 14px 14px 0;
-            padding: 10px 14px;
-            cursor: pointer;
-            font-family: var(--font-title);
-            font-weight: bold;
-            font-size: 0.8rem;
-            color: #4a2a0a;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.3s;
-            text-align: center;
-            writing-mode: horizontal-tb;
-            min-width: 90px;
+        .card:nth-child(5n+2) .paw-wrapper svg {
+            --local-color: #A0897C;
         }
-        .side-tab:hover {
-            background: #fffdf5;
-            transform: translateX(4px);
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-            border-color: #5c3a10;
+        .card:nth-child(5n+3) .paw-wrapper svg {
+            --local-color: #C4A882;
         }
-        .side-tab .tab-emoji {
-            font-size: 1.5rem;
-            display: block;
+        .card:nth-child(5n+4) .paw-wrapper svg {
+            --local-color: #6B5B4F;
+        }
+        .card:nth-child(5n+5) .paw-wrapper svg {
+            --local-color: #B8956A;
         }
 
-        /* ─── MODAL POPUP ─── */
-        .modal-overlay {
+        /* ── Sección de fondo decorativo ──── */
+        .background-paws {
             position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s ease;
+            z-index: -1;
+            opacity: 0.025;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        .modal-box {
-            background: #fdf5e6;
-            border-radius: 16px;
-            padding: 25px;
-            max-width: 450px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-            border: 4px solid #8b6914;
-            position: relative;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        @keyframes popIn {
-            from {
-                transform: scale(0.7);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        .modal-close {
+        .bg-paw {
             position: absolute;
-            top: 8px;
-            right: 14px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            color: #6b3a2a;
-            font-weight: bold;
-            transition: transform 0.2s;
+            animation: floatPaw 20s linear infinite;
         }
-        .modal-close:hover {
-            transform: scale(1.3);
-            color: #b5432e;
+        .bg-paw:nth-child(1) {
+            top: 5%;
+            left: 3%;
+            animation-delay: 0s;
+            animation-duration: 22s;
         }
-        .modal-box h3 {
-            font-family: var(--font-title);
-            color: #4a1a0a;
-            font-size: 1.3rem;
-            margin-bottom: 8px;
+        .bg-paw:nth-child(2) {
+            top: 15%;
+            right: 5%;
+            animation-delay: -5s;
+            animation-duration: 19s;
         }
-        .modal-box p {
-            font-size: 0.9rem;
-            color: #5a3a1a;
-            line-height: 1.5;
+        .bg-paw:nth-child(3) {
+            bottom: 10%;
+            left: 8%;
+            animation-delay: -10s;
+            animation-duration: 24s;
         }
-        .modal-box .modal-emoji {
-            font-size: 4rem;
-            display: block;
-            margin: 0 auto 8px;
+        .bg-paw:nth-child(4) {
+            bottom: 25%;
+            right: 10%;
+            animation-delay: -15s;
+            animation-duration: 21s;
         }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 768px) {
-            .lapbook {
-                flex-direction: column;
-                align-items: center;
-            }
-            .folder-base {
-                max-width: 100%;
-                min-height: 400px;
-            }
-            .flap {
-                width: 45%;
-            }
-            .side-tabs {
-                flex-direction: row;
-                flex-wrap: wrap;
-                max-width: 100%;
-                justify-content: center;
-            }
-            .side-tab {
-                border-radius: 14px;
-                flex: 1;
-                min-width: 70px;
-                font-size: 0.7rem;
-            }
-            .farmers-row {
-                flex-direction: column;
-                align-items: center;
-            }
-            .farmer-card {
-                max-width: 100%;
-                width: 100%;
-            }
-            .pocket-section {
-                flex-direction: column;
-            }
-            .tunnel-stop {
-                width: 40px;
-                height: 40px;
-                font-size: 1.3rem;
-            }
-            .lapbook-title-area h1 {
-                font-size: 1.3rem;
-            }
+        .bg-paw:nth-child(5) {
+            top: 45%;
+            left: 2%;
+            animation-delay: -7s;
+            animation-duration: 26s;
         }
-
-        /* ─── DETALLES DECORATIVOS ─── */
-        .leaf-decor {
-            position: absolute;
-            pointer-events: none;
-            font-size: 1.2rem;
-            opacity: 0.5;
-            animation: float-leaf 6s ease-in-out infinite;
+        .bg-paw:nth-child(6) {
+            top: 60%;
+            right: 3%;
+            animation-delay: -12s;
+            animation-duration: 23s;
         }
-        @keyframes float-leaf {
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            30% {
-                transform: translateY(-15px) rotate(10deg);
-            }
-            60% {
-                transform: translateY(-5px) rotate(-8deg);
-            }
+        .bg-paw:nth-child(7) {
+            top: 30%;
+            left: 50%;
+            animation-delay: -18s;
+            animation-duration: 20s;
         }
-        .sparkle {
-            animation: sparkle 2s ease-in-out infinite;
-        }
-        @keyframes sparkle {
-            0%,
-            100% {
-                opacity: 0.4;
-                transform: scale(1);
+        @keyframes floatPaw {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translateY(-30px) rotate(8deg) scale(1.1);
             }
             50% {
-                opacity: 1;
-                transform: scale(1.3);
+                transform: translateY(-10px) rotate(-3deg) scale(0.95);
+            }
+            75% {
+                transform: translateY(-40px) rotate(5deg) scale(1.05);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+        }
+
+        /* ── Pie de página ───────────────── */
+        .footer {
+            text-align: center;
+            padding: 1.5rem 1rem 3rem;
+            color: #a0897c;
+            font-size: 0.85rem;
+            letter-spacing: 0.03em;
+        }
+        .footer span {
+            display: inline-block;
+            animation: pawBounce 2s ease-in-out infinite;
+        }
+
+        /* ── Responsive ──────────────────── */
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+                padding: 0.8rem;
+            }
+            .card {
+                padding: 1.2rem 0.6rem 1rem;
+                border-radius: 16px;
+            }
+            .card .paw-wrapper {
+                height: 70px;
+            }
+            .card .paw-wrapper svg {
+                width: 55px;
+                height: 55px;
+            }
+            .card .label {
+                font-size: 0.8rem;
+            }
+            .header h1 {
+                font-size: 1.6rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="table-surface"></div>
-
-    <!-- MODAL -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box" id="modalBox">
-            <button class="modal-close" id="modalClose">&times;</button>
-            <span class="modal-emoji" id="modalEmoji">🦊</span>
-            <h3 id="modalTitle">Título</h3>
-            <p id="modalText">Contenido aquí...</p>
+    <!-- ═══════════════════════════════════════ -->
+    <!-- FONDO DECORATIVO DE HUELLAS FLOTANTES -->
+    <!-- ═══════════════════════════════════════ -->
+    <div class="background-paws" aria-hidden="true">
+        <div class="bg-paw">
+            <svg viewBox="0 0 100 100" width="200" height="200"><circle cx="50" cy="50" r="30" fill="#8B7355"/><circle cx="28" cy="24" r="12" fill="#8B7355"/><circle cx="72" cy="24" r="12" fill="#8B7355"/><circle cx="22" cy="54" r="10" fill="#8B7355"/><circle cx="78" cy="54" r="10" fill="#8B7355"/></svg>
+        </div>
+        <div class="bg-paw">
+            <svg viewBox="0 0 100 100" width="180" height="180"><ellipse cx="50" cy="58" rx="26" ry="22" fill="#A0897C"/><ellipse cx="30" cy="28" rx="10" ry="13" fill="#A0897C"/><ellipse cx="50" cy="20" rx="10" ry="14" fill="#A0897C"/><ellipse cx="70" cy="28" rx="10" ry="13" fill="#A0897C"/></svg>
+        </div>
+        <div class="bg-paw">
+            <svg viewBox="0 0 100 100" width="220" height="220"><circle cx="50" cy="48" r="32" fill="#6B5B4F"/><circle cx="22" cy="18" r="13" fill="#6B5B4F"/><circle cx="50" cy="14" r="13" fill="#6B5B4F"/><circle cx="78" cy="18" r="13" fill="#6B5B4F"/></svg>
+        </div>
+        <div class="bg-paw">
+            <svg viewBox="0 0 100 100" width="170" height="170"><circle cx="50" cy="50" r="28" fill="#C4A882"/><circle cx="26" cy="22" r="11" fill="#C4A882"/><circle cx="50" cy="18" r="11" fill="#C4A882"/><circle cx="74" cy="22" r="11" fill="#C4A882"/><circle cx="18" cy="52" r="9" fill="#C4A882"/><circle cx="82" cy="52" r="9" fill="#C4A882"/></svg>
+        </div>
+        <div class="bg-paw">
+            <svg viewBox="0 0 100 100" width="190" height="190"><ellipse cx="50" cy="55" rx="28" ry="24" fill="#B8956A"/><ellipse cx="28" cy="22" rx="11" ry="15" fill="#B8956A"/><ellipse cx="50" cy="16" rx="11" ry="16" fill="#B8956A"/><ellipse cx="72" cy="22" rx="11" ry="15" fill="#B8956A"/></svg>
+        </div>
+        <div class="bg-paw">
+            <svg viewBox="0 0 100 100" width="200" height="200"><circle cx="50" cy="50" r="30" fill="#8B7355"/><circle cx="24" cy="18" r="14" fill="#8B7355"/><circle cx="50" cy="14" r="14" fill="#8B7355"/><circle cx="76" cy="18" r="14" fill="#8B7355"/></svg>
+        </div>
+        <div class="bg-paw">
+            <svg viewBox="0 0 100 100" width="160" height="160"><ellipse cx="50" cy="56" rx="24" ry="20" fill="#A0897C"/><ellipse cx="30" cy="26" rx="9" ry="12" fill="#A0897C"/><ellipse cx="50" cy="20" rx="9" ry="13" fill="#A0897C"/><ellipse cx="70" cy="26" rx="9" ry="12" fill="#A0897C"/></svg>
         </div>
     </div>
 
-    <div class="lapbook-wrapper">
-        <div class="lapbook">
+    <!-- ═══════════════════════════════════════ -->
+    <!-- ENCABEZADO                              -->
+    <!-- ═══════════════════════════════════════ -->
+    <header class="header">
+        <h1>
+            <span class="paw-icon">🐾</span>
+            Huellas del Reino Animal
+            <span class="paw-icon">🐾</span>
+        </h1>
+        <p class="subtitle">Colección de patitas en SVG · 20 diseños únicos</p>
+    </header>
 
-            <!-- CARPETA CENTRAL -->
-            <div class="folder-base" id="folderBase">
-                <!-- Solapa izquierda -->
-                <div class="flap flap-left" id="flapLeft" title="Ábreme">
-                    <div class="flap-content">
-                        <span class="flap-emoji">🌳</span>
-                        <span class="flap-label">El Bosque</span>
-                    </div>
-                </div>
-                <!-- Solapa derecha -->
-                <div class="flap flap-right" id="flapRight" title="Ábreme">
-                    <div class="flap-content">
-                        <span class="flap-emoji">⛰️</span>
-                        <span class="flap-label">La Colina</span>
-                    </div>
-                </div>
+    <!-- ═══════════════════════════════════════ -->
+    <!-- CUADRÍCULA DE HUELLAS                  -->
+    <!-- ═══════════════════════════════════════ -->
+    <main class="grid">
 
-                <!-- CONTENIDO INTERIOR -->
-                <div class="inner-content">
-                    <!-- Título -->
-                    <div class="lapbook-title-area">
-                        <span class="fox-icon-big">🦊</span>
-                        <h1>El Superzorro</h1>
-                        <div class="subtitle">Fantastic Mr. Fox</div>
-                        <div class="author">Roald Dahl</div>
-                    </div>
-
-                    <!-- Los 3 granjeros -->
-                    <div class="farmers-row">
-                        <div class="farmer-card" data-farmer="benito" id="cardBenito">
-                            <span class="farmer-emoji">🐔</span>
-                            <h4>Benito</h4>
-                            <span class="farm-produce">Granja de pollos</span>
-                            <div class="farmer-detail">Gordo, glotón. Come 3 pollos al día. Su granja tiene miles de pollos gordos.</div>
-                        </div>
-                        <div class="farmer-card" data-farmer="bunuelo" id="cardBunuelo">
-                            <span class="farmer-emoji">🦆</span>
-                            <h4>Buñuelo</h4>
-                            <span class="farm-produce">Patos y gansos</span>
-                            <div class="farmer-detail">Bajito, barrigón. Cría patos y gansos. Adora el hígado de ganso.</div>
-                        </div>
-                        <div class="farmer-card" data-farmer="canon" id="cardCanon">
-                            <span class="farmer-emoji">🦃</span>
-                            <h4>Cañón</h4>
-                            <span class="farm-produce">Pavos y manzanas</span>
-                            <div class="farmer-detail">Flaco, huesudo. Tiene pavos y un huerto de manzanas. Bebe sidra.</div>
-                        </div>
-                    </div>
-
-                    <!-- Acordeón de túneles -->
-                    <div class="accordion-section">
-                        <div class="accordion-header" id="accordionHeader">
-                            🕳️ El Plan del Superzorro: Los Túneles Secretos
-                            <span class="arrow">▼</span>
-                        </div>
-                        <div class="accordion-body" id="accordionBody">
-                            <div class="tunnel-path">
-                                <div class="tunnel-stop" data-info="hogar">
-                                    🏠<span class="tooltip">Madriguera</span>
-                                </div>
-                                <span class="tunnel-arrow-connector">→</span>
-                                <div class="tunnel-stop" data-info="benito">
-                                    🐔<span class="tooltip">Granja Benito</span>
-                                </div>
-                                <span class="tunnel-arrow-connector">→</span>
-                                <div class="tunnel-stop" data-info="bunuelo">
-                                    🦆<span class="tooltip">Granja Buñuelo</span>
-                                </div>
-                                <span class="tunnel-arrow-connector">→</span>
-                                <div class="tunnel-stop" data-info="canon">
-                                    🦃<span class="tooltip">Granja Cañón</span>
-                                </div>
-                                <span class="tunnel-arrow-connector">→</span>
-                                <div class="tunnel-stop" data-info="banquete">
-                                    🎉<span class="tooltip">¡El Banquete!</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- 1. PERRO 🐶 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="60" rx="30" ry="24" fill="var(--local-color, #8B7355)"/>
+                    <ellipse cx="28" cy="28" rx="13" ry="17" fill="var(--local-color, #8B7355)" transform="rotate(-8,28,28)"/>
+                    <ellipse cx="50" cy="22" rx="13" ry="18" fill="var(--local-color, #8B7355)"/>
+                    <ellipse cx="72" cy="28" rx="13" ry="17" fill="var(--local-color, #8B7355)" transform="rotate(8,72,28)"/>
+                    <ellipse cx="18" cy="52" rx="10" ry="13" fill="var(--local-color, #8B7355)" transform="rotate(-15,18,52)"/>
+                    <ellipse cx="82" cy="52" rx="10" ry="13" fill="var(--local-color, #8B7355)" transform="rotate(15,82,52)"/>
+                </svg>
             </div>
-
-            <!-- PESTAÑAS LATERALES -->
-            <div class="side-tabs">
-                <!-- Bolsillo personajes -->
-                <div class="pocket" id="pocketCharacters">
-                    <span class="pocket-label">👥 Personajes</span>
-                    <div class="pocket-cards">
-                        <div class="mini-card" draggable="true" data-character="superzorro">
-                            <span class="card-emoji">🦊</span> Don Zorro
-                        </div>
-                        <div class="mini-card" draggable="true" data-character="dona">
-                            <span class="card-emoji">🦊‍❤️</span> Doña Zorra
-                        </div>
-                        <div class="mini-card" draggable="true" data-character="zorritos">
-                            <span class="card-emoji">🦊🐾</span> Zorritos
-                        </div>
-                        <div class="mini-card" draggable="true" data-character="tejon">
-                            <span class="card-emoji">🦡</span> Tejón
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Bolsillo valores -->
-                <div class="pocket" id="pocketValues">
-                    <span class="pocket-label">💡 Valores</span>
-                    <div class="pocket-cards">
-                        <div class="mini-card" draggable="true" data-value="astucia">
-                            <span class="card-emoji">🧠</span> Astucia
-                        </div>
-                        <div class="mini-card" draggable="true" data-value="familia">
-                            <span class="card-emoji">👨‍👩‍👧‍👦</span> Familia
-                        </div>
-                        <div class="mini-card" draggable="true" data-value="trabajo">
-                            <span class="card-emoji">🤝</span> Trabajo en equipo
-                        </div>
-                        <div class="mini-card" draggable="true" data-value="codicia">
-                            <span class="card-emoji">⚠️</span> Anti-codicia
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Rueda giratoria -->
-                <div class="wheel-stand">
-                    <div class="wheel-label">🎡 Gira la rueda</div>
-                    <div class="wheel" id="spinningWheel">
-                        <div class="wheel-spoke"></div>
-                        <div class="wheel-spoke"></div>
-                        <div class="wheel-spoke"></div>
-                        <div class="wheel-spoke"></div>
-                        <div class="wheel-spoke"></div>
-                        <div class="wheel-spoke"></div>
-                        <div class="wheel-center">🦊</div>
-                    </div>
-                    <div style="font-size:0.7rem;margin-top:4px;color:#4a2a0a;" id="wheelResult">¡Gírame!</div>
-                </div>
-
-                <!-- Pestaña moraleja -->
-                <div class="side-tab" id="tabMoraleja">
-                    <span class="tab-emoji">📖</span> Moraleja
-                </div>
-                <!-- Pestaña curiosidades -->
-                <div class="side-tab" id="tabCuriosidades">
-                    <span class="tab-emoji">⭐</span> Curiosidades
-                </div>
-            </div>
+            <div class="label">Perro</div>
+            <div class="label-small">Canis familiaris</div>
         </div>
-    </div>
 
-    <script>
-        (function() {
-            // ─── ELEMENTOS DEL DOM ───
-            const flapLeft = document.getElementById('flapLeft');
-            const flapRight = document.getElementById('flapRight');
-            const accordionHeader = document.getElementById('accordionHeader');
-            const accordionBody = document.getElementById('accordionBody');
-            const modalOverlay = document.getElementById('modalOverlay');
-            const modalEmoji = document.getElementById('modalEmoji');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalText = document.getElementById('modalText');
-            const modalClose = document.getElementById('modalClose');
-            const spinningWheel = document.getElementById('spinningWheel');
-            const wheelResult = document.getElementById('wheelResult');
-            const folderBase = document.getElementById('folderBase');
+        <!-- 2. GATO 🐱 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="58" r="27" fill="var(--local-color, #A0897C)"/>
+                    <circle cx="26" cy="26" r="12" fill="var(--local-color, #A0897C)"/>
+                    <circle cx="50" cy="20" r="12" fill="var(--local-color, #A0897C)"/>
+                    <circle cx="74" cy="26" r="12" fill="var(--local-color, #A0897C)"/>
+                    <circle cx="20" cy="52" r="9" fill="var(--local-color, #A0897C)"/>
+                    <circle cx="80" cy="52" r="9" fill="var(--local-color, #A0897C)"/>
+                </svg>
+            </div>
+            <div class="label">Gato</div>
+            <div class="label-small">Felis catus</div>
+        </div>
 
-            // ─── DATOS DEL MODAL ───
-            const modalData = {
-                benito: { emoji: '🐔', title: 'Granjero Benito',
-                    text: 'Benito es el granjero gordo. Cría miles de pollos en su enorme granja. Es glotón y come tres pollos al día. Odia al Superzorro porque le roba sus mejores aves.' },
-                bunuelo: { emoji: '🦆', title: 'Granjero Buñuelo',
-                    text: 'Buñuelo es bajito y barrigón. Se especializa en patos y gansos. Su debilidad es el hígado de ganso. Junto con Benito y Cañón, planea atrapar al zorro.' },
-                canon: { emoji: '🦃', title: 'Granjero Cañón',
-                    text: 'Cañón es flaco como un palo. Cría pavos y cultiva manzanas para hacer sidra. Es el más delgado pero igual de malhumorado que sus dos compinches.' },
-                hogar: { emoji: '🏠', title: 'La Madriguera',
-                    text: 'Aquí vive Don Zorro con Doña Zorra y sus cuatro zorritos. Es una madriguera acogedora bajo un gran árbol, al inicio de la colina.' },
-                banquete: { emoji: '🎉', title: '¡El Gran Banquete!',
-                    text: 'Gracias a los túneles secretos, Don Zorro organiza un enorme banquete subterráneo al que invita a todos los animales: tejones, topos, conejos y comadrejas. ¡Nadie pasa hambre!' },
-                superzorro: { emoji: '🦊', title: 'Don Zorro (El Superzorro)',
-                    text: 'Es el protagonista: astuto, valiente y muy inteligente. Siempre encuentra una solución. Su cola fue disparada por los granjeros pero eso no lo detuvo.' },
-                dona: { emoji: '🦊❤️', title: 'Doña Zorra',
-                    text: 'La esposa de Don Zorro. Lo apoya incondicionalmente y cuida de los zorritos. Le preocupa cuando su esposo sale a buscar comida, pero confía en su astucia.' },
-                zorritos: { emoji: '🦊🐾', title: 'Los Zorritos',
-                    text: 'Son cuatro pequeños zorros, hijos de Don Zorro y Doña Zorra. Al principio pasan hambre durante el asedio, pero luego ayudan a cavar los túneles.' },
-                tejon: { emoji: '🦡', title: 'El Tejón',
-                    text: 'Amigo de Don Zorro. Al principio duda sobre si está bien robar, pero Don Zorro le explica que es por supervivencia. Participa en el banquete final.' },
-                astucia: { emoji: '🧠', title: 'Astucia sobre fuerza',
-                    text: 'Don Zorro demuestra que la inteligencia y la astucia pueden más que la fuerza bruta de los tres granjeros con sus tractores y palas.' },
-                familia: { emoji: '👨‍👩‍👧‍👦', title: 'La importancia de la familia',
-                    text: 'Don Zorro arriesga todo para alimentar a su familia. La familia es el motor que lo impulsa a idear el plan de los túneles.' },
-                trabajo: { emoji: '🤝', title: 'Trabajo en equipo',
-                    text: 'Los animales del bosque se unen para cavar los túneles y comparten el botín. Juntos logran lo que individualmente sería imposible.' },
-                codicia: { emoji: '⚠️', title: 'Anti-codicia',
-                    text: 'Los granjeros representan la codicia: no les importa destruir el bosque con tal de atrapar a un solo zorro. Su obsesión los lleva al fracaso.' },
-                moraleja: { emoji: '📖', title: 'Moraleja de la historia',
-                    text: 'La inteligencia vence a la fuerza. El trabajo en equipo y la solidaridad permiten superar las adversidades. La familia es lo más importante. Y la codicia solo trae infelicidad.' },
-                curiosidades: { emoji: '⭐', title: 'Curiosidades',
-                    text: '¿Sabías que Roald Dahl se inspiró en un zorro real que veía desde su jardín? El libro fue publicado en 1970. Existe una película de Wes Anderson (2009) con la voz de George Clooney como Don Zorro. ¡La película usa stop-motion!' }
-            };
+        <!-- 3. OSO 🐻 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="55" rx="34" ry="28" fill="var(--local-color, #6B5B4F)"/>
+                    <ellipse cx="22" cy="22" rx="14" ry="16" fill="var(--local-color, #6B5B4F)"/>
+                    <ellipse cx="50" cy="16" rx="14" ry="17" fill="var(--local-color, #6B5B4F)"/>
+                    <ellipse cx="78" cy="22" rx="14" ry="16" fill="var(--local-color, #6B5B4F)"/>
+                    <ellipse cx="12" cy="48" rx="11" ry="12" fill="var(--local-color, #6B5B4F)"/>
+                    <ellipse cx="88" cy="48" rx="11" ry="12" fill="var(--local-color, #6B5B4F)"/>
+                </svg>
+            </div>
+            <div class="label">Oso pardo</div>
+            <div class="label-small">Ursus arctos</div>
+        </div>
 
-            // ─── ABRIR MODAL ───
-            function openModal(key) {
-                const data = modalData[key];
-                if (!data) return;
-                modalEmoji.textContent = data.emoji;
-                modalTitle.textContent = data.title;
-                modalText.textContent = data.text;
-                modalOverlay.classList.add('active');
-            }
+        <!-- 4. CONEJO 🐰 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="62" rx="22" ry="28" fill="var(--local-color, #C4A882)"/>
+                    <ellipse cx="34" cy="28" rx="10" ry="20" fill="var(--local-color, #C4A882)" transform="rotate(-10,34,28)"/>
+                    <ellipse cx="66" cy="28" rx="10" ry="20" fill="var(--local-color, #C4A882)" transform="rotate(10,66,28)"/>
+                    <ellipse cx="22" cy="50" rx="7" ry="12" fill="var(--local-color, #C4A882)" transform="rotate(-20,22,50)"/>
+                    <ellipse cx="78" cy="50" rx="7" ry="12" fill="var(--local-color, #C4A882)" transform="rotate(20,78,50)"/>
+                </svg>
+            </div>
+            <div class="label">Conejo</div>
+            <div class="label-small">Oryctolagus cuniculus</div>
+        </div>
 
-            function closeModal() {
-                modalOverlay.classList.remove('active');
-            }
-            modalClose.addEventListener('click', closeModal);
-            modalOverlay.addEventListener('click', function(e) {
-                if (e.target === modalOverlay) closeModal();
-            });
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') closeModal();
-            });
+        <!-- 5. LOBO 🐺 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="58" rx="32" ry="25" fill="var(--local-color, #B8956A)"/>
+                    <ellipse cx="26" cy="26" rx="14" ry="18" fill="var(--local-color, #B8956A)" transform="rotate(-6,26,26)"/>
+                    <ellipse cx="50" cy="20" rx="14" ry="19" fill="var(--local-color, #B8956A)"/>
+                    <ellipse cx="74" cy="26" rx="14" ry="18" fill="var(--local-color, #B8956A)" transform="rotate(6,74,26)"/>
+                    <ellipse cx="16" cy="50" rx="11" ry="14" fill="var(--local-color, #B8956A)" transform="rotate(-12,16,50)"/>
+                    <ellipse cx="84" cy="50" rx="11" ry="14" fill="var(--local-color, #B8956A)" transform="rotate(12,84,50)"/>
+                </svg>
+            </div>
+            <div class="label">Lobo</div>
+            <div class="label-small">Canis lupus</div>
+        </div>
 
-            // ─── SOLAPAS ───
-            flapLeft.addEventListener('click', function() {
-                flapLeft.classList.toggle('open');
-                if (flapLeft.classList.contains('open')) {
-                    openModal('hogar');
-                }
-            });
-            flapRight.addEventListener('click', function() {
-                flapRight.classList.toggle('open');
-                if (flapRight.classList.contains('open')) {
-                    openModal('banquete');
-                }
-            });
+        <!-- 6. TIGRE 🐯 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="56" r="30" fill="var(--local-color, #C49060)"/>
+                    <circle cx="24" cy="24" r="13" fill="var(--local-color, #C49060)"/>
+                    <circle cx="50" cy="18" r="13" fill="var(--local-color, #C49060)"/>
+                    <circle cx="76" cy="24" r="13" fill="var(--local-color, #C49060)"/>
+                    <circle cx="18" cy="50" r="10" fill="var(--local-color, #C49060)"/>
+                    <circle cx="82" cy="50" r="10" fill="var(--local-color, #C49060)"/>
+                </svg>
+            </div>
+            <div class="label">Tigre</div>
+            <div class="label-small">Panthera tigris</div>
+        </div>
 
-            // ─── ACORDEÓN ───
-            accordionHeader.addEventListener('click', function() {
-                accordionHeader.classList.toggle('active');
-                accordionBody.classList.toggle('open');
-            });
-            // Iniciar abierto para mostrar los túneles
-            accordionHeader.classList.add('active');
-            accordionBody.classList.add('open');
+        <!-- 7. ZORRO 🦊 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="60" rx="26" ry="22" fill="var(--local-color, #D4956B)"/>
+                    <ellipse cx="28" cy="30" rx="11" ry="15" fill="var(--local-color, #D4956B)" transform="rotate(-5,28,30)"/>
+                    <ellipse cx="50" cy="24" rx="11" ry="16" fill="var(--local-color, #D4956B)"/>
+                    <ellipse cx="72" cy="30" rx="11" ry="15" fill="var(--local-color, #D4956B)" transform="rotate(5,72,30)"/>
+                    <ellipse cx="20" cy="52" rx="8" ry="11" fill="var(--local-color, #D4956B)" transform="rotate(-10,20,52)"/>
+                    <ellipse cx="80" cy="52" rx="8" ry="11" fill="var(--local-color, #D4956B)" transform="rotate(10,80,52)"/>
+                </svg>
+            </div>
+            <div class="label">Zorro</div>
+            <div class="label-small">Vulpes vulpes</div>
+        </div>
 
-            // ─── TARJETAS DE GRANJEROS ───
-            const farmerCards = document.querySelectorAll('.farmer-card');
-            farmerCards.forEach(card => {
-                card.addEventListener('click', function(e) {
-                    // Si ya está expandida, abrir modal
-                    if (this.classList.contains('expanded')) {
-                        const farmer = this.getAttribute('data-farmer');
-                        openModal(farmer);
-                    } else {
-                        // Cerrar otras
-                        farmerCards.forEach(c => c.classList.remove('expanded'));
-                        this.classList.add('expanded');
-                    }
-                });
-            });
+        <!-- 8. MAPACHE 🦝 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="58" rx="28" ry="24" fill="var(--local-color, #7A6B5C)"/>
+                    <ellipse cx="26" cy="28" rx="10" ry="16" fill="var(--local-color, #7A6B5C)" transform="rotate(-5,26,28)"/>
+                    <ellipse cx="50" cy="22" rx="10" ry="17" fill="var(--local-color, #7A6B5C)"/>
+                    <ellipse cx="74" cy="28" rx="10" ry="16" fill="var(--local-color, #7A6B5C)" transform="rotate(5,74,28)"/>
+                    <ellipse cx="18" cy="50" rx="8" ry="12" fill="var(--local-color, #7A6B5C)" transform="rotate(-12,18,50)"/>
+                    <ellipse cx="82" cy="50" rx="8" ry="12" fill="var(--local-color, #7A6B5C)" transform="rotate(12,82,50)"/>
+                </svg>
+            </div>
+            <div class="label">Mapache</div>
+            <div class="label-small">Procyon lotor</div>
+        </div>
 
-            // ─── PARADAS DE TÚNEL ───
-            const tunnelStops = document.querySelectorAll('.tunnel-stop');
-            tunnelStops.forEach(stop => {
-                stop.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const info = this.getAttribute('data-info');
-                    openModal(info);
-                });
-            });
+        <!-- 9. CIERVO 🦌 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="52" cy="66" rx="18" ry="26" fill="var(--local-color, #A08060)"/>
+                    <ellipse cx="35" cy="32" rx="9" ry="18" fill="var(--local-color, #A08060)" transform="rotate(-8,35,32)"/>
+                    <ellipse cx="68" cy="32" rx="9" ry="18" fill="var(--local-color, #A08060)" transform="rotate(8,68,32)"/>
+                </svg>
+            </div>
+            <div class="label">Ciervo</div>
+            <div class="label-small">Cervus elaphus</div>
+        </div>
 
-            // ─── BOLSILLOS Y MINI TARJETAS ───
-            const miniCards = document.querySelectorAll('.mini-card');
-            miniCards.forEach(card => {
-                // Click para abrir modal
-                card.addEventListener('click', function(e) {
-                    const character = this.getAttribute('data-character');
-                    const value = this.getAttribute('data-value');
-                    if (character) openModal(character);
-                    if (value) openModal(value);
-                });
+        <!-- 10. ELEFANTE 🐘 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="54" r="34" fill="var(--local-color, #9B8B7A)"/>
+                    <circle cx="22" cy="22" r="16" fill="var(--local-color, #9B8B7A)"/>
+                    <circle cx="50" cy="16" r="16" fill="var(--local-color, #9B8B7A)"/>
+                    <circle cx="78" cy="22" r="16" fill="var(--local-color, #9B8B7A)"/>
+                    <circle cx="12" cy="50" r="12" fill="var(--local-color, #9B8B7A)"/>
+                    <circle cx="88" cy="50" r="12" fill="var(--local-color, #9B8B7A)"/>
+                </svg>
+            </div>
+            <div class="label">Elefante</div>
+            <div class="label-small">Loxodonta africana</div>
+        </div>
 
-                // Drag and drop
-                card.addEventListener('dragstart', function(e) {
-                    this.classList.add('dragging');
-                    e.dataTransfer.setData('text/plain', this.getAttribute('data-character') ||
-                        this.getAttribute('data-value') || '');
-                    e.dataTransfer.effectAllowed = 'move';
-                });
-                card.addEventListener('dragend', function(e) {
-                    this.classList.remove('dragging');
-                });
-                card.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    e.dataTransfer.dropEffect = 'move';
-                });
-                card.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    const draggedCard = document.querySelector('.mini-card.dragging');
-                    if (draggedCard && draggedCard !== this) {
-                        // Intercambiar posiciones
-                        const parent1 = draggedCard.parentNode;
-                        const parent2 = this.parentNode;
-                        const temp = document.createElement('span');
-                        this.parentNode.insertBefore(temp, this);
-                        parent1.insertBefore(this, draggedCard);
-                        parent2.insertBefore(draggedCard, temp);
-                        parent2.removeChild(temp);
-                        // Animación breve
-                        draggedCard.style.transition = 'all 0.3s ease';
-                        this.style.transition = 'all 0.3s ease';
-                        setTimeout(() => {
-                            draggedCard.style.transition = '';
-                            this.style.transition = '';
-                        }, 300);
-                    }
-                });
-            });
+        <!-- 11. LEÓN 🦁 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="54" r="31" fill="var(--local-color, #C49A6C)"/>
+                    <circle cx="23" cy="22" r="14" fill="var(--local-color, #C49A6C)"/>
+                    <circle cx="50" cy="16" r="14" fill="var(--local-color, #C49A6C)"/>
+                    <circle cx="77" cy="22" r="14" fill="var(--local-color, #C49A6C)"/>
+                    <circle cx="17" cy="50" r="11" fill="var(--local-color, #C49A6C)"/>
+                    <circle cx="83" cy="50" r="11" fill="var(--local-color, #C49A6C)"/>
+                </svg>
+            </div>
+            <div class="label">León</div>
+            <div class="label-small">Panthera leo</div>
+        </div>
 
-            // ─── RUEDA GIRATORIA ───
-            const wheelSegments = [
-                { label: 'Don Zorro', emoji: '🦊', key: 'superzorro' },
-                { label: 'Granjeros', emoji: '😡', key: 'benito' },
-                { label: 'Banquete', emoji: '🎉', key: 'banquete' },
-                { label: 'Túneles', emoji: '🕳️', key: 'hogar' },
-                { label: 'Astucia', emoji: '🧠', key: 'astucia' },
-                { label: 'Familia', emoji: '❤️', key: 'familia' },
-            ];
-            let currentSegment = 0;
-            let isSpinning = false;
+        <!-- 12. ARDILLA 🐿️ -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="62" rx="20" ry="26" fill="var(--local-color, #B88050)"/>
+                    <ellipse cx="34" cy="28" rx="9" ry="18" fill="var(--local-color, #B88050)" transform="rotate(-12,34,28)"/>
+                    <ellipse cx="66" cy="28" rx="9" ry="18" fill="var(--local-color, #B88050)" transform="rotate(12,66,28)"/>
+                    <ellipse cx="22" cy="50" rx="6" ry="11" fill="var(--local-color, #B88050)" transform="rotate(-18,22,50)"/>
+                    <ellipse cx="78" cy="50" rx="6" ry="11" fill="var(--local-color, #B88050)" transform="rotate(18,78,50)"/>
+                </svg>
+            </div>
+            <div class="label">Ardilla</div>
+            <div class="label-small">Sciurus vulgaris</div>
+        </div>
 
-            spinningWheel.addEventListener('click', function() {
-                if (isSpinning) return;
-                isSpinning = true;
-                const spins = 2 + Math.floor(Math.random() * 3); // 2-4 vueltas completas
-                const extraDeg = Math.floor(Math.random() * 6) * 60; // Segmento aleatorio
-                const totalRotation = spins * 360 + extraDeg;
-                const currentRotation = parseFloat(spinningWheel.getAttribute('data-rotation') ||
-                    '0');
-                const newRotation = currentRotation + totalRotation;
-                spinningWheel.style.transform = `rotate(${newRotation}deg)`;
-                spinningWheel.setAttribute('data-rotation', newRotation);
+        <!-- 13. JAGUAR 🐆 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="56" r="29" fill="var(--local-color, #D4A050)"/>
+                    <circle cx="25" cy="25" r="12" fill="var(--local-color, #D4A050)"/>
+                    <circle cx="50" cy="19" r="12" fill="var(--local-color, #D4A050)"/>
+                    <circle cx="75" cy="25" r="12" fill="var(--local-color, #D4A050)"/>
+                    <circle cx="19" cy="50" r="9" fill="var(--local-color, #D4A050)"/>
+                    <circle cx="81" cy="50" r="9" fill="var(--local-color, #D4A050)"/>
+                </svg>
+            </div>
+            <div class="label">Jaguar</div>
+            <div class="label-small">Panthera onca</div>
+        </div>
 
-                // Determinar segmento resultante
-                const normalizedDeg = ((newRotation % 360) + 360) % 360;
-                const segmentIndex = Math.floor(normalizedDeg / 60) % 6;
-                const segment = wheelSegments[segmentIndex];
+        <!-- 14. CABALLO 🐴 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="64" rx="24" ry="28" fill="var(--local-color, #7A6450)"/>
+                    <ellipse cx="35" cy="30" rx="12" ry="20" fill="var(--local-color, #7A6450)" transform="rotate(-5,35,30)"/>
+                    <ellipse cx="65" cy="30" rx="12" ry="20" fill="var(--local-color, #7A6450)" transform="rotate(5,65,30)"/>
+                </svg>
+            </div>
+            <div class="label">Caballo</div>
+            <div class="label-small">Equus ferus caballus</div>
+        </div>
 
-                setTimeout(() => {
-                    wheelResult.textContent = `${segment.emoji} ${segment.label}`;
-                    isSpinning = false;
-                    // Abrir modal después de un momentito
-                    setTimeout(() => openModal(segment.key), 400);
-                }, 900);
-            });
+        <!-- 15. NUTRIA 🦦 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="58" rx="26" ry="22" fill="var(--local-color, #8B7060)"/>
+                    <ellipse cx="27" cy="28" rx="10" ry="14" fill="var(--local-color, #8B7060)" transform="rotate(-7,27,28)"/>
+                    <ellipse cx="50" cy="22" rx="10" ry="15" fill="var(--local-color, #8B7060)"/>
+                    <ellipse cx="73" cy="28" rx="10" ry="14" fill="var(--local-color, #8B7060)" transform="rotate(7,73,28)"/>
+                    <ellipse cx="18" cy="50" rx="8" ry="11" fill="var(--local-color, #8B7060)" transform="rotate(-14,18,50)"/>
+                    <ellipse cx="82" cy="50" rx="8" ry="11" fill="var(--local-color, #8B7060)" transform="rotate(14,82,50)"/>
+                </svg>
+            </div>
+            <div class="label">Nutria</div>
+            <div class="label-small">Lutra lutra</div>
+        </div>
 
-            // ─── PESTAÑAS LATERALES ───
-            document.getElementById('tabMoraleja').addEventListener('click', function() {
-                openModal('moraleja');
-            });
-            document.getElementById('tabCuriosidades').addEventListener('click', function() {
-                openModal('curiosidades');
-            });
+        <!-- 16. PANDA 🐼 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="55" rx="33" ry="27" fill="var(--local-color, #3D3D3D)"/>
+                    <ellipse cx="22" cy="23" rx="14" ry="16" fill="var(--local-color, #3D3D3D)"/>
+                    <ellipse cx="50" cy="17" rx="14" ry="17" fill="var(--local-color, #3D3D3D)"/>
+                    <ellipse cx="78" cy="23" rx="14" ry="16" fill="var(--local-color, #3D3D3D)"/>
+                    <ellipse cx="13" cy="48" rx="11" ry="12" fill="var(--local-color, #3D3D3D)"/>
+                    <ellipse cx="87" cy="48" rx="11" ry="12" fill="var(--local-color, #3D3D3D)"/>
+                </svg>
+            </div>
+            <div class="label">Panda</div>
+            <div class="label-small">Ailuropoda melanoleuca</div>
+        </div>
 
-            // ─── HOJAS DECORATIVAS FLOTANTES ───
-            const leaves = ['🍂', '🍁', '🌿', '🍃', '🪶'];
-            for (let i = 0; i < 8; i++) {
-                const leaf = document.createElement('span');
-                leaf.classList.add('leaf-decor');
-                leaf.textContent = leaves[Math.floor(Math.random() * leaves.length)];
-                leaf.style.left = Math.random() * 85 + '%';
-                leaf.style.top = Math.random() * 90 + '%';
-                leaf.style.animationDelay = Math.random() * 6 + 's';
-                leaf.style.animationDuration = (4 + Math.random() * 8) + 's';
-                leaf.style.fontSize = (0.9 + Math.random() * 1.8) + 'rem';
-                folderBase.appendChild(leaf);
-            }
+        <!-- 17. AVE / GALLINA 🐔 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="50" y1="20" x2="35" y2="75" stroke="var(--local-color, #D4956B)" stroke-width="6" stroke-linecap="round"/>
+                    <line x1="50" y1="20" x2="65" y2="75" stroke="var(--local-color, #D4956B)" stroke-width="6" stroke-linecap="round"/>
+                    <line x1="50" y1="20" x2="50" y2="80" stroke="var(--local-color, #D4956B)" stroke-width="6" stroke-linecap="round"/>
+                    <line x1="35" y1="75" x2="28" y2="90" stroke="var(--local-color, #D4956B)" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="50" y1="80" x2="50" y2="92" stroke="var(--local-color, #D4956B)" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="65" y1="75" x2="72" y2="90" stroke="var(--local-color, #D4956B)" stroke-width="5" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="label">Ave</div>
+            <div class="label-small">Gallus gallus</div>
+        </div>
 
-            // ─── SPARKLE EN TÍTULO ───
-            const sparkleEl = document.createElement('span');
-            sparkleEl.classList.add('sparkle');
-            sparkleEl.textContent = ' ✨';
-            sparkleEl.style.display = 'inline-block';
-            const titleH1 = document.querySelector('.lapbook-title-area h1');
-            if (titleH1) titleH1.appendChild(sparkleEl);
+        <!-- 18. PATO 🦆 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="55" rx="18" ry="22" fill="var(--local-color, #E8A850)"/>
+                    <line x1="50" y1="33" x2="22" y2="80" stroke="var(--local-color, #E8A850)" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="50" y1="33" x2="50" y2="82" stroke="var(--local-color, #E8A850)" stroke-width="5" stroke-linecap="round"/>
+                    <line x1="50" y1="33" x2="78" y2="80" stroke="var(--local-color, #E8A850)" stroke-width="5" stroke-linecap="round"/>
+                    <ellipse cx="22" cy="83" rx="6" ry="4" fill="var(--local-color, #E8A850)"/>
+                    <ellipse cx="50" cy="85" rx="6" ry="4" fill="var(--local-color, #E8A850)"/>
+                    <ellipse cx="78" cy="83" rx="6" ry="4" fill="var(--local-color, #E8A850)"/>
+                </svg>
+            </div>
+            <div class="label">Pato</div>
+            <div class="label-small">Anas platyrhynchos</div>
+        </div>
 
-            console.log('🦊 Lapbook de "El Superzorro" listo. ¡Explora las solapas, bolsillos, túneles y la rueda!');
-            console.log('💡 Consejo: Haz clic en las solapas laterales de la carpeta, en los granjeros, en las paradas de los túneles, y arrastra las mini-tarjetas entre bolsillos.');
-        })();
-    </script>
+        <!-- 19. RANA 🐸 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="58" rx="22" ry="20" fill="var(--local-color, #6B8C42)"/>
+                    <ellipse cx="22" cy="28" rx="9" ry="18" fill="var(--local-color, #6B8C42)" transform="rotate(-20,22,28)"/>
+                    <ellipse cx="42" cy="22" rx="9" ry="19" fill="var(--local-color, #6B8C42)" transform="rotate(-8,42,22)"/>
+                    <ellipse cx="58" cy="22" rx="9" ry="19" fill="var(--local-color, #6B8C42)" transform="rotate(8,58,22)"/>
+                    <ellipse cx="78" cy="28" rx="9" ry="18" fill="var(--local-color, #6B8C42)" transform="rotate(20,78,28)"/>
+                </svg>
+            </div>
+            <div class="label">Rana</div>
+            <div class="label-small">Lithobates catesbeianus</div>
+        </div>
+
+        <!-- 20. HÁMSTER 🐹 -->
+        <div class="card">
+            <div class="paw-wrapper">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse cx="50" cy="62" rx="19" ry="24" fill="var(--local-color, #D4A878)"/>
+                    <ellipse cx="34" cy="30" rx="8" ry="16" fill="var(--local-color, #D4A878)" transform="rotate(-10,34,30)"/>
+                    <ellipse cx="66" cy="30" rx="8" ry="16" fill="var(--local-color, #D4A878)" transform="rotate(10,66,30)"/>
+                    <ellipse cx="24" cy="50" rx="6" ry="10" fill="var(--local-color, #D4A878)" transform="rotate(-16,24,50)"/>
+                    <ellipse cx="76" cy="50" rx="6" ry="10" fill="var(--local-color, #D4A878)" transform="rotate(16,76,50)"/>
+                </svg>
+            </div>
+            <div class="label">Hámster</div>
+            <div class="label-small">Mesocricetus auratus</div>
+        </div>
+
+    </main>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- PIE DE PÁGINA                          -->
+    <!-- ═══════════════════════════════════════ -->
+    <footer class="footer">
+        <p>Hecho con <span>🐾</span> amor por los animales · Plantilla SVG de huellas</p>
+        <p style="font-size:0.7rem;opacity:0.6;">Perro · Gato · Oso · Conejo · Lobo · Tigre · Zorro · Mapache · Ciervo · Elefante · León · Ardilla · Jaguar · Caballo · Nutria · Panda · Ave · Pato · Rana · Hámster</p>
+    </footer>
+
 </body>
 </html>
