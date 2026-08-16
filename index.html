@@ -3,19 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐾 Huellas de Animales - Plantilla SVG</title>
+    <title>🌸 Organizador Kawaii de Trinidad 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ========== VARIABLES Y RESET ========== */
         :root {
-            --bg: #fdf6f0;
-            --paw-color1: #8B7355;
-            --paw-color2: #A0897C;
-            --paw-color3: #C4A882;
-            --paw-color4: #6B5B4F;
-            --paw-color5: #B8956A;
-            --accent: #e8d5c4;
-            --card-bg: #fffaf7;
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
-            --text: #5c4a3a;
+            --rosa: #ffb6c1;
+            --rosa-claro: #ffe4e9;
+            --rosa-medio: #ffc0cb;
+            --rosa-fuerte: #ff69b4;
+            --lila: #e6d0f0;
+            --lila-claro: #f3e8fa;
+            --blanco: #ffffff;
+            --texto: #5a4a5a;
+            --texto-suave: #8a7a8a;
+            --sombra: 0 8px 25px rgba(255, 105, 180, 0.25);
+            --sombra-hover: 0 12px 35px rgba(255, 105, 180, 0.4);
+            --borde-rosa: 3px solid #ffb6c1;
+            --radio: 24px;
+            --radio-peq: 16px;
+            --transicion: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            --fuente-titulos: 'Baloo 2', cursive;
+            --fuente-cuerpo: 'Quicksand', sans-serif;
         }
 
         * {
@@ -25,665 +34,1343 @@
         }
 
         body {
-            background-color: var(--bg);
-            font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
-            min-height: 100vh;
-            background-image:
-                radial-gradient(circle at 8% 10%, rgba(184, 149, 106, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 85% 20%, rgba(139, 115, 85, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 15% 80%, rgba(196, 168, 130, 0.07) 0%, transparent 50%),
-                radial-gradient(circle at 90% 75%, rgba(160, 137, 124, 0.06) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(184, 149, 106, 0.04) 0%, transparent 60%);
+            font-family: var(--fuente-cuerpo);
+            background: linear-gradient(135deg, #ffe4e9 0%, #f8d5e8 25%, #e8d5f5 60%, #d5e8f5 100%);
             background-attachment: fixed;
-        }
-
-        /* ── Encabezado ───────────────────── */
-        .header {
-            text-align: center;
-            padding: 3rem 1.5rem 1.5rem;
+            min-height: 100vh;
+            color: var(--texto);
+            line-height: 1.6;
+            overflow-x: hidden;
             position: relative;
         }
-        .header h1 {
-            font-size: clamp(2rem, 4vw, 3rem);
-            color: #5c4a3a;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .header h1 .paw-icon {
-            display: inline-block;
-            animation: pawBounce 1.6s ease-in-out infinite;
-        }
-        .header h1 .paw-icon:nth-child(1) {
-            animation-delay: 0s;
-        }
-        .header h1 .paw-icon:nth-child(3) {
-            animation-delay: 0.8s;
-        }
-        @keyframes pawBounce {
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-            25% {
-                transform: translateY(-10px) rotate(-5deg);
-            }
-            50% {
-                transform: translateY(0) rotate(0deg);
-            }
-            75% {
-                transform: translateY(-6px) rotate(5deg);
-            }
-        }
-        .header .subtitle {
-            color: #8b7355;
-            font-size: 1.1rem;
-            margin-top: 0.4rem;
-            letter-spacing: 0.04em;
-            opacity: 0.8;
-        }
 
-        /* ── Separador de huellas ────────── */
-        .paw-divider {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.5rem 1rem;
-            flex-wrap: wrap;
-            opacity: 0.5;
-        }
-        .paw-divider svg {
-            width: 28px;
-            height: 28px;
-        }
-
-        /* ── Cuadrícula principal ────────── */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem 2rem 3rem;
-        }
-
-        /* ── Tarjeta de cada huella ──────── */
-        .card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 1.8rem 1.2rem 1.4rem;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: default;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(184, 149, 106, 0.15);
-        }
-        .card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-            border-color: rgba(184, 149, 106, 0.35);
-        }
-        .card::after {
+        /* Patrón de estrellas sutiles */
+        body::before {
             content: '';
-            position: absolute;
-            top: -30px;
-            right: -30px;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: rgba(184, 149, 106, 0.04);
-            pointer-events: none;
-            transition: all 0.4s ease;
-        }
-        .card:hover::after {
-            width: 120px;
-            height: 120px;
-            top: -50px;
-            right: -50px;
-            background: rgba(184, 149, 106, 0.08);
-        }
-        .card .paw-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100px;
-            position: relative;
-            z-index: 1;
-            transition: transform 0.3s ease;
-        }
-        .card:hover .paw-wrapper {
-            transform: scale(1.08);
-        }
-        .card .paw-wrapper svg {
-            width: 80px;
-            height: 80px;
-            transition: filter 0.3s ease;
-        }
-        .card:hover .paw-wrapper svg {
-            filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.2));
-        }
-        .card .label {
-            margin-top: 0.8rem;
-            font-weight: 600;
-            color: var(--text);
-            font-size: 0.95rem;
-            letter-spacing: 0.02em;
-            position: relative;
-            z-index: 1;
-        }
-        .card .label-small {
-            font-size: 0.75rem;
-            color: #a0897c;
-            font-weight: 400;
-            margin-top: 0.15rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ── Variantes de color por tarjeta ── */
-        .card:nth-child(5n+1) .paw-wrapper svg {
-            --local-color: #8B7355;
-        }
-        .card:nth-child(5n+2) .paw-wrapper svg {
-            --local-color: #A0897C;
-        }
-        .card:nth-child(5n+3) .paw-wrapper svg {
-            --local-color: #C4A882;
-        }
-        .card:nth-child(5n+4) .paw-wrapper svg {
-            --local-color: #6B5B4F;
-        }
-        .card:nth-child(5n+5) .paw-wrapper svg {
-            --local-color: #B8956A;
-        }
-
-        /* ── Sección de fondo decorativo ──── */
-        .background-paws {
             position: fixed;
-            pointer-events: none;
-            z-index: -1;
-            opacity: 0.025;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 24 24' fill='%23ffffff' fill-opacity='0.2'%3E%3Cpath d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Elementos flotantes decorativos */
+        .flotante {
+            position: fixed;
+            z-index: 0;
+            pointer-events: none;
+            animation: flotar 6s ease-in-out infinite;
+            opacity: 0.6;
+            font-size: 2rem;
+            user-select: none;
+        }
+        .flotante:nth-child(1) { top: 8%; left: 3%; animation-delay: 0s; }
+        .flotante:nth-child(2) { top: 15%; right: 5%; animation-delay: 1.5s; font-size: 1.8rem; }
+        .flotante:nth-child(3) { bottom: 20%; left: 5%; animation-delay: 3s; font-size: 2.2rem; }
+        .flotante:nth-child(4) { bottom: 12%; right: 8%; animation-delay: 4.5s; font-size: 1.6rem; }
+        .flotante:nth-child(5) { top: 45%; left: 50%; animation-delay: 2s; font-size: 1.4rem; opacity: 0.4; }
+        .flotante:nth-child(6) { top: 65%; right: 3%; animation-delay: 5s; font-size: 2rem; }
+        .flotante:nth-child(7) { bottom: 35%; left: 2%; animation-delay: 3.8s; font-size: 1.5rem; }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(5deg); }
+            50% { transform: translateY(-8px) rotate(-3deg); }
+            75% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        /* ========== CONTENEDOR PRINCIPAL ========== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 25px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========== ENCABEZADO ========== */
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+            padding: 30px 25px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border-radius: var(--radio);
+            box-shadow: var(--sombra);
+            border: 3px dashed var(--rosa-medio);
+            position: relative;
             overflow: hidden;
         }
-        .bg-paw {
+
+        header::after {
+            content: '✨';
             position: absolute;
-            animation: floatPaw 20s linear infinite;
+            top: 10px;
+            right: 25px;
+            font-size: 2.5rem;
+            animation: flotar 3s ease-in-out infinite;
         }
-        .bg-paw:nth-child(1) {
-            top: 5%;
-            left: 3%;
-            animation-delay: 0s;
-            animation-duration: 22s;
-        }
-        .bg-paw:nth-child(2) {
-            top: 15%;
-            right: 5%;
-            animation-delay: -5s;
-            animation-duration: 19s;
-        }
-        .bg-paw:nth-child(3) {
-            bottom: 10%;
-            left: 8%;
-            animation-delay: -10s;
-            animation-duration: 24s;
-        }
-        .bg-paw:nth-child(4) {
-            bottom: 25%;
-            right: 10%;
-            animation-delay: -15s;
-            animation-duration: 21s;
-        }
-        .bg-paw:nth-child(5) {
-            top: 45%;
-            left: 2%;
-            animation-delay: -7s;
-            animation-duration: 26s;
-        }
-        .bg-paw:nth-child(6) {
-            top: 60%;
-            right: 3%;
-            animation-delay: -12s;
-            animation-duration: 23s;
-        }
-        .bg-paw:nth-child(7) {
-            top: 30%;
-            left: 50%;
-            animation-delay: -18s;
-            animation-duration: 20s;
-        }
-        @keyframes floatPaw {
-            0% {
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
-            25% {
-                transform: translateY(-30px) rotate(8deg) scale(1.1);
-            }
-            50% {
-                transform: translateY(-10px) rotate(-3deg) scale(0.95);
-            }
-            75% {
-                transform: translateY(-40px) rotate(5deg) scale(1.05);
-            }
-            100% {
-                transform: translateY(0) rotate(0deg) scale(1);
-            }
+        header::before {
+            content: '🌸';
+            position: absolute;
+            bottom: 10px;
+            left: 25px;
+            font-size: 2.5rem;
+            animation: flotar 3s ease-in-out infinite 1.5s;
         }
 
-        /* ── Pie de página ───────────────── */
-        .footer {
-            text-align: center;
-            padding: 1.5rem 1rem 3rem;
-            color: #a0897c;
-            font-size: 0.85rem;
-            letter-spacing: 0.03em;
+        header h1 {
+            font-family: var(--fuente-titulos);
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--rosa-fuerte);
+            text-shadow: 2px 2px 0px var(--rosa-claro);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            line-height: 1.2;
         }
-        .footer span {
+
+        header .nombre {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--texto);
+            background: var(--rosa-claro);
             display: inline-block;
-            animation: pawBounce 2s ease-in-out infinite;
+            padding: 6px 24px;
+            border-radius: 50px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.2);
         }
 
-        /* ── Responsive ──────────────────── */
-        @media (max-width: 600px) {
-            .grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.8rem;
-                padding: 0.8rem;
+        header .fecha {
+            font-size: 1.1rem;
+            color: var(--texto-suave);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        header .saludo {
+            font-size: 1.1rem;
+            color: var(--rosa-fuerte);
+            font-weight: 600;
+            margin-top: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 4px 16px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        /* ========== SECCIONES ========== */
+        section {
+            margin-bottom: 40px;
+        }
+
+        section > h2 {
+            font-family: var(--fuente-titulos);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--texto);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 0.5px;
+            flex-wrap: wrap;
+        }
+
+        section > h2 .icono-titulo {
+            font-size: 2.2rem;
+            filter: drop-shadow(0 2px 4px rgba(255, 105, 180, 0.3));
+        }
+
+        /* ========== HORARIO ========== */
+        .horario-wrapper {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radio);
+            padding: 25px;
+            box-shadow: var(--sombra);
+            border: 2px solid var(--rosa-claro);
+            overflow-x: auto;
+        }
+
+        .horario-wrapper table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 4px;
+            min-width: 700px;
+        }
+
+        .horario-wrapper th,
+        .horario-wrapper td {
+            padding: 12px 10px;
+            text-align: center;
+            border-radius: var(--radio-peq);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transicion);
+        }
+
+        .horario-wrapper th {
+            background: var(--rosa-medio);
+            color: var(--blanco);
+            font-family: var(--fuente-titulos);
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .horario-wrapper td {
+            background: var(--blanco);
+            color: var(--texto);
+            border: 2px solid var(--rosa-claro);
+            cursor: default;
+            box-shadow: 0 2px 6px rgba(255, 105, 180, 0.1);
+        }
+
+        .horario-wrapper td:hover {
+            transform: scale(1.04);
+            box-shadow: 0 6px 16px rgba(255, 105, 180, 0.3);
+            border-color: var(--rosa-fuerte);
+            z-index: 2;
+            position: relative;
+        }
+
+        .horario-wrapper td.recreo {
+            background: var(--lila-claro);
+            color: var(--texto-suave);
+            font-style: italic;
+            font-size: 0.8rem;
+            border-color: var(--lila);
+            letter-spacing: 0.5px;
+        }
+
+        .horario-wrapper td.recreo:hover {
+            transform: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Colores por materia en el horario */
+        .mat-lenguaje { background: #ffe0ec !important; border-color: #ffb6c1 !important; }
+        .mat-matematica { background: #d6ecff !important; border-color: #a2d5f2 !important; }
+        .mat-ciencias { background: #dff5d8 !important; border-color: #b5e7a0 !important; }
+        .mat-historia { background: #fff3d6 !important; border-color: #ffd59e !important; }
+        .mat-ingles { background: #f0e0ff !important; border-color: #d5b3e5 !important; }
+        .mat-artes { background: #ffe4f0 !important; border-color: #f7c6d9 !important; }
+        .mat-musica { background: #d8f0e8 !important; border-color: #c9e4de !important; }
+        .mat-edfisica { background: #fff8e0 !important; border-color: #f9e0b0 !important; }
+        .mat-tecnologia { background: #e0eefc !important; border-color: #b0d4f1 !important; }
+        .mat-orientacion { background: #f5e8fa !important; border-color: #e8d0f0 !important; }
+
+        /* ========== TAREAS ========== */
+        .tareas-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .progreso-global {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 15px 20px;
+            border-radius: 50px;
+            box-shadow: var(--sombra);
+            border: 2px solid var(--rosa-claro);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .progreso-global .barra {
+            flex: 1;
+            height: 14px;
+            background: var(--rosa-claro);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progreso-global .barra .relleno {
+            height: 100%;
+            background: linear-gradient(90deg, var(--rosa), var(--rosa-fuerte));
+            border-radius: 20px;
+            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 0%;
+        }
+
+        .progreso-global .porcentaje {
+            font-weight: 700;
+            color: var(--rosa-fuerte);
+            font-size: 1.1rem;
+            min-width: 48px;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-family: var(--fuente-cuerpo);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transicion);
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+            letter-spacing: 0.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.45);
+        }
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+        }
+
+        .btn-primario {
+            background: linear-gradient(135deg, var(--rosa), var(--rosa-fuerte));
+            color: white;
+            font-size: 1.05rem;
+            padding: 14px 28px;
+        }
+
+        .btn-primario:hover {
+            background: linear-gradient(135deg, var(--rosa-fuerte), #ff4d9e);
+        }
+
+        .btn-secundario {
+            background: var(--blanco);
+            color: var(--rosa-fuerte);
+            border: 2px solid var(--rosa-medio);
+        }
+
+        .btn-secundario:hover {
+            background: var(--rosa-claro);
+            border-color: var(--rosa-fuerte);
+        }
+
+        .btn-peligro {
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-peligro:hover {
+            background: #ff5252;
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.5);
+        }
+
+        /* Grid de materias */
+        .grid-materias {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        /* Tarjeta de materia */
+        .tarjeta-materia {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radio);
+            padding: 22px;
+            box-shadow: var(--sombra);
+            border: 3px solid var(--rosa-claro);
+            transition: var(--transicion);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tarjeta-materia::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 90px;
+            height: 90px;
+            background: var(--color-materia, var(--rosa));
+            opacity: 0.15;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .tarjeta-materia:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--sombra-hover);
+            border-color: var(--color-materia, var(--rosa-medio));
+        }
+
+        .tarjeta-materia .cabecera {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .tarjeta-materia .icono-materia {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--color-materia, var(--rosa));
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
+            font-size: 1.6rem;
+        }
+
+        .tarjeta-materia .icono-materia svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .tarjeta-materia .nombre-materia {
+            font-family: var(--fuente-titulos);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--texto);
+            flex: 1;
+        }
+
+        .tarjeta-materia .contador {
+            background: var(--color-materia, var(--rosa));
+            color: white;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Lista de tareas */
+        .lista-tareas {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .lista-tareas li {
+            background: var(--blanco);
+            border-radius: var(--radio-peq);
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 3px 8px rgba(255, 105, 180, 0.12);
+            border: 2px solid var(--rosa-claro);
+            transition: var(--transicion);
+            animation: aparecer 0.3s ease-out;
+        }
+
+        .lista-tareas li:hover {
+            border-color: var(--color-materia, var(--rosa-medio));
+            box-shadow: 0 6px 14px rgba(255, 105, 180, 0.2);
+            transform: translateX(4px);
+        }
+
+        .lista-tareas li.completada {
+            opacity: 0.6;
+            background: var(--lila-claro);
+            border-color: var(--lila);
+        }
+
+        .lista-tareas li.completada .texto-tarea {
+            text-decoration: line-through;
+            color: var(--texto-suave);
+        }
+
+        .lista-tareas .checkbox {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 3px solid var(--color-materia, var(--rosa));
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transicion);
+            background: white;
+        }
+
+        .lista-tareas .checkbox:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
+        }
+
+        .lista-tareas .checkbox.checked {
+            background: var(--color-materia, var(--rosa));
+            border-color: var(--color-materia, var(--rosa));
+        }
+
+        .lista-tareas .checkbox.checked::after {
+            content: '✓';
+            color: white;
+            font-weight: 800;
+            font-size: 0.9rem;
+            line-height: 1;
+        }
+
+        .lista-tareas .contenido-tarea {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .lista-tareas .texto-tarea {
+            font-weight: 600;
+            color: var(--texto);
+            font-size: 0.95rem;
+            word-break: break-word;
+        }
+
+        .lista-tareas .meta-tarea {
+            display: flex;
+            gap: 10px;
+            font-size: 0.75rem;
+            color: var(--texto-suave);
+            flex-wrap: wrap;
+        }
+
+        .lista-tareas .prioridad {
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+        }
+        .prioridad-alta { background: #ffe0e0; color: #e53935; }
+        .prioridad-media { background: #fff8e1; color: #f9a825; }
+        .prioridad-baja { background: #e0f5e0; color: #2e7d32; }
+
+        .lista-tareas .fecha-tarea {
+            background: var(--rosa-claro);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .lista-tareas .btn-eliminar {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: #ff6b6b;
+            transition: var(--transicion);
+            padding: 4px 6px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        .lista-tareas .btn-eliminar:hover {
+            background: #ffe0e0;
+            transform: scale(1.2);
+            color: #e53935;
+        }
+
+        .sin-tareas {
+            text-align: center;
+            color: var(--texto-suave);
+            font-style: italic;
+            padding: 15px;
+            font-size: 0.9rem;
+        }
+
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(10px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* ========== MODAL ========== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fundido 0.3s ease-out;
+        }
+
+        .modal-overlay.activo {
+            display: flex;
+        }
+
+        @keyframes fundido {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal {
+            background: var(--blanco);
+            border-radius: var(--radio);
+            padding: 30px 28px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
+            border: 4px solid var(--rosa-medio);
+            position: relative;
+            animation: salto 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes salto {
+            from { opacity: 0; transform: translateY(30px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal h3 {
+            font-family: var(--fuente-titulos);
+            font-size: 1.7rem;
+            color: var(--rosa-fuerte);
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .modal .cerrar-modal {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--rosa-fuerte);
+            transition: var(--transicion);
+            line-height: 1;
+            padding: 4px 8px;
+            border-radius: 10px;
+        }
+        .modal .cerrar-modal:hover {
+            background: var(--rosa-claro);
+            transform: rotate(90deg);
+        }
+
+        .form-grupo {
+            margin-bottom: 16px;
+        }
+
+        .form-grupo label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--texto);
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+
+        .form-grupo input,
+        .form-grupo select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 3px solid var(--rosa-claro);
+            border-radius: var(--radio-peq);
+            font-family: var(--fuente-cuerpo);
+            font-size: 1rem;
+            color: var(--texto);
+            background: var(--blanco);
+            transition: var(--transicion);
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+        }
+
+        .form-grupo input:focus,
+        .form-grupo select:focus {
+            border-color: var(--rosa-fuerte);
+            box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15);
+            background: #fffafc;
+        }
+
+        .form-grupo select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='%23ff69b4'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
+        }
+
+        .form-botones {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--texto-suave);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            font-size: 0.95rem;
+        }
+
+        footer .corazon {
+            color: var(--rosa-fuerte);
+            animation: latido 1.5s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes latido {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); }
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px 15px 40px;
             }
-            .card {
-                padding: 1.2rem 0.6rem 1rem;
-                border-radius: 16px;
+            header h1 {
+                font-size: 2rem;
             }
-            .card .paw-wrapper {
-                height: 70px;
+            header .nombre {
+                font-size: 1.1rem;
             }
-            .card .paw-wrapper svg {
-                width: 55px;
-                height: 55px;
+            section > h2 {
+                font-size: 1.5rem;
             }
-            .card .label {
-                font-size: 0.8rem;
+            .grid-materias {
+                grid-template-columns: 1fr;
             }
-            .header h1 {
+            .tareas-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .progreso-global {
+                width: 100%;
+            }
+            .modal {
+                padding: 22px 18px;
+            }
+            .horario-wrapper {
+                padding: 15px;
+            }
+            .horario-wrapper table {
+                font-size: 0.75rem;
+                min-width: 550px;
+            }
+            .horario-wrapper th,
+            .horario-wrapper td {
+                padding: 8px 6px;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            header h1 {
                 font-size: 1.6rem;
+            }
+            .btn {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+            .tarjeta-materia {
+                padding: 16px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ═══════════════════════════════════════ -->
-    <!-- FONDO DECORATIVO DE HUELLAS FLOTANTES -->
-    <!-- ═══════════════════════════════════════ -->
-    <div class="background-paws" aria-hidden="true">
-        <div class="bg-paw">
-            <svg viewBox="0 0 100 100" width="200" height="200"><circle cx="50" cy="50" r="30" fill="#8B7355"/><circle cx="28" cy="24" r="12" fill="#8B7355"/><circle cx="72" cy="24" r="12" fill="#8B7355"/><circle cx="22" cy="54" r="10" fill="#8B7355"/><circle cx="78" cy="54" r="10" fill="#8B7355"/></svg>
-        </div>
-        <div class="bg-paw">
-            <svg viewBox="0 0 100 100" width="180" height="180"><ellipse cx="50" cy="58" rx="26" ry="22" fill="#A0897C"/><ellipse cx="30" cy="28" rx="10" ry="13" fill="#A0897C"/><ellipse cx="50" cy="20" rx="10" ry="14" fill="#A0897C"/><ellipse cx="70" cy="28" rx="10" ry="13" fill="#A0897C"/></svg>
-        </div>
-        <div class="bg-paw">
-            <svg viewBox="0 0 100 100" width="220" height="220"><circle cx="50" cy="48" r="32" fill="#6B5B4F"/><circle cx="22" cy="18" r="13" fill="#6B5B4F"/><circle cx="50" cy="14" r="13" fill="#6B5B4F"/><circle cx="78" cy="18" r="13" fill="#6B5B4F"/></svg>
-        </div>
-        <div class="bg-paw">
-            <svg viewBox="0 0 100 100" width="170" height="170"><circle cx="50" cy="50" r="28" fill="#C4A882"/><circle cx="26" cy="22" r="11" fill="#C4A882"/><circle cx="50" cy="18" r="11" fill="#C4A882"/><circle cx="74" cy="22" r="11" fill="#C4A882"/><circle cx="18" cy="52" r="9" fill="#C4A882"/><circle cx="82" cy="52" r="9" fill="#C4A882"/></svg>
-        </div>
-        <div class="bg-paw">
-            <svg viewBox="0 0 100 100" width="190" height="190"><ellipse cx="50" cy="55" rx="28" ry="24" fill="#B8956A"/><ellipse cx="28" cy="22" rx="11" ry="15" fill="#B8956A"/><ellipse cx="50" cy="16" rx="11" ry="16" fill="#B8956A"/><ellipse cx="72" cy="22" rx="11" ry="15" fill="#B8956A"/></svg>
-        </div>
-        <div class="bg-paw">
-            <svg viewBox="0 0 100 100" width="200" height="200"><circle cx="50" cy="50" r="30" fill="#8B7355"/><circle cx="24" cy="18" r="14" fill="#8B7355"/><circle cx="50" cy="14" r="14" fill="#8B7355"/><circle cx="76" cy="18" r="14" fill="#8B7355"/></svg>
-        </div>
-        <div class="bg-paw">
-            <svg viewBox="0 0 100 100" width="160" height="160"><ellipse cx="50" cy="56" rx="24" ry="20" fill="#A0897C"/><ellipse cx="30" cy="26" rx="9" ry="12" fill="#A0897C"/><ellipse cx="50" cy="20" rx="9" ry="13" fill="#A0897C"/><ellipse cx="70" cy="26" rx="9" ry="12" fill="#A0897C"/></svg>
+    <!-- Elementos flotantes decorativos -->
+    <div class="flotante">🌸</div>
+    <div class="flotante">⭐</div>
+    <div class="flotante">💖</div>
+    <div class="flotante">✨</div>
+    <div class="flotante">🌷</div>
+    <div class="flotante">🎀</div>
+    <div class="flotante">💕</div>
+
+    <div class="container">
+        <!-- ========== ENCABEZADO ========== -->
+        <header>
+            <h1>🌸 Mi Organizador Kawaii 🌸</h1>
+            <p class="nombre">✨ Trinidad Quilodrán ✨</p>
+            <p class="fecha" id="fecha-actual"></p>
+            <p class="saludo" id="saludo"></p>
+        </header>
+
+        <!-- ========== HORARIO ========== -->
+        <section class="horario">
+            <h2>
+                <span class="icono-titulo">📅</span> Mi Horario Escolar
+                <span style="font-size:0.8rem; color:var(--texto-suave);">(5° Básico)</span>
+            </h2>
+            <div class="horario-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hora</th>
+                            <th>Lunes</th>
+                            <th>Martes</th>
+                            <th>Miércoles</th>
+                            <th>Jueves</th>
+                            <th>Viernes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>8:00 - 8:45</strong></td>
+                            <td class="mat-lenguaje">📖 Lenguaje</td>
+                            <td class="mat-matematica">📐 Matemática</td>
+                            <td class="mat-lenguaje">📖 Lenguaje</td>
+                            <td class="mat-matematica">📐 Matemática</td>
+                            <td class="mat-ingles">🇬🇧 Inglés</td>
+                        </tr>
+                        <tr>
+                            <td><strong>8:45 - 9:30</strong></td>
+                            <td class="mat-matematica">📐 Matemática</td>
+                            <td class="mat-lenguaje">📖 Lenguaje</td>
+                            <td class="mat-ingles">🇬🇧 Inglés</td>
+                            <td class="mat-ciencias">🔬 Ciencias</td>
+                            <td class="mat-lenguaje">📖 Lenguaje</td>
+                        </tr>
+                        <tr>
+                            <td class="recreo" colspan="6">☕ Recreo (9:30 - 9:45)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>9:45 - 10:30</strong></td>
+                            <td class="mat-ciencias">🔬 Ciencias</td>
+                            <td class="mat-edfisica">⚽ Ed. Física</td>
+                            <td class="mat-matematica">📐 Matemática</td>
+                            <td class="mat-lenguaje">📖 Lenguaje</td>
+                            <td class="mat-matematica">📐 Matemática</td>
+                        </tr>
+                        <tr>
+                            <td><strong>10:30 - 11:15</strong></td>
+                            <td class="mat-historia">🌍 Historia</td>
+                            <td class="mat-musica">🎵 Música</td>
+                            <td class="mat-historia">🌍 Historia</td>
+                            <td class="mat-edfisica">⚽ Ed. Física</td>
+                            <td class="mat-ciencias">🔬 Ciencias</td>
+                        </tr>
+                        <tr>
+                            <td class="recreo" colspan="6">☕ Recreo (11:15 - 11:30)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>11:30 - 12:15</strong></td>
+                            <td class="mat-ingles">🇬🇧 Inglés</td>
+                            <td class="mat-ciencias">🔬 Ciencias</td>
+                            <td class="mat-artes">🎨 Artes</td>
+                            <td class="mat-historia">🌍 Historia</td>
+                            <td class="mat-tecnologia">💻 Tecnología</td>
+                        </tr>
+                        <tr>
+                            <td><strong>12:15 - 13:00</strong></td>
+                            <td class="mat-artes">🎨 Artes</td>
+                            <td class="mat-tecnologia">💻 Tecnología</td>
+                            <td class="mat-orientacion">💬 Orientación</td>
+                            <td class="mat-musica">🎵 Música</td>
+                            <td class="mat-artes">🎨 Artes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ========== TAREAS ========== -->
+        <section class="tareas">
+            <h2>
+                <span class="icono-titulo">📚</span> Mis Tareas
+            </h2>
+
+            <div class="tareas-header">
+                <div class="progreso-global">
+                    <span style="font-size:1.6rem;">🌸</span>
+                    <div class="barra">
+                        <div class="relleno" id="barra-progreso"></div>
+                    </div>
+                    <span class="porcentaje" id="porcentaje">0%</span>
+                </div>
+                <button class="btn btn-primario" id="btnAgregar">➕ Agregar Tarea</button>
+                <button class="btn btn-secundario" id="btnLimpiar">🧹 Limpiar Completadas</button>
+            </div>
+
+            <div class="grid-materias" id="gridMaterias">
+                <!-- Se llenará dinámicamente con JS -->
+            </div>
+        </section>
+
+        <!-- ========== FOOTER ========== -->
+        <footer>
+            Hecho con <span class="corazon">💖</span> para Trinidad Quilodrán · 5° Básico · Chile 🇨🇱
+        </footer>
+    </div>
+
+    <!-- ========== MODAL PARA AGREGAR TAREA ========== -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="cerrar-modal" id="btnCerrarModal">&times;</button>
+            <h3>🌸 Nueva Tarea 🌸</h3>
+            <form id="formTarea">
+                <div class="form-grupo">
+                    <label for="inputMateria">📚 Materia</label>
+                    <select id="inputMateria" required>
+                        <option value="">-- Elige una materia --</option>
+                        <option value="Lenguaje">📖 Lenguaje</option>
+                        <option value="Matemática">📐 Matemática</option>
+                        <option value="Ciencias Naturales">🔬 Ciencias Naturales</option>
+                        <option value="Historia y Geografía">🌍 Historia y Geografía</option>
+                        <option value="Inglés">🇬🇧 Inglés</option>
+                        <option value="Artes Visuales">🎨 Artes Visuales</option>
+                        <option value="Música">🎵 Música</option>
+                        <option value="Ed. Física">⚽ Ed. Física</option>
+                        <option value="Tecnología">💻 Tecnología</option>
+                        <option value="Orientación">💬 Orientación</option>
+                    </select>
+                </div>
+                <div class="form-grupo">
+                    <label for="inputTarea">✏️ Descripción de la tarea</label>
+                    <input type="text" id="inputTarea" placeholder="Ej: Hacer guía de fracciones" required>
+                </div>
+                <div class="form-grupo">
+                    <label for="inputFecha">📅 Fecha de entrega</label>
+                    <input type="date" id="inputFecha" required>
+                </div>
+                <div class="form-grupo">
+                    <label for="inputPrioridad">⚡ Prioridad</label>
+                    <select id="inputPrioridad">
+                        <option value="alta">🔴 Alta - ¡Urgente!</option>
+                        <option value="media" selected>🟡 Media - Normal</option>
+                        <option value="baja">🟢 Baja - Tranquila</option>
+                    </select>
+                </div>
+                <div class="form-botones">
+                    <button type="button" class="btn btn-secundario" id="btnCancelar">Cancelar</button>
+                    <button type="submit" class="btn btn-primario">💾 Guardar Tarea</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════ -->
-    <!-- ENCABEZADO                              -->
-    <!-- ═══════════════════════════════════════ -->
-    <header class="header">
-        <h1>
-            <span class="paw-icon">🐾</span>
-            Huellas del Reino Animal
-            <span class="paw-icon">🐾</span>
-        </h1>
-        <p class="subtitle">Colección de patitas en SVG · 20 diseños únicos</p>
-    </header>
+    <script>
+        // ============================================================
+        //  CONFIGURACIÓN DE MATERIAS
+        // ============================================================
+        const MATERIAS = [
+            { nombre: 'Lenguaje', emoji: '📖', color: '#ffb6c1', icono: 'libro' },
+            { nombre: 'Matemática', emoji: '📐', color: '#a2d5f2', icono: 'regla' },
+            { nombre: 'Ciencias Naturales', emoji: '🔬', color: '#b5e7a0', icono: 'ciencia' },
+            { nombre: 'Historia y Geografía', emoji: '🌍', color: '#ffd59e', icono: 'mundo' },
+            { nombre: 'Inglés', emoji: '🇬🇧', color: '#d5b3e5', icono: 'ingles' },
+            { nombre: 'Artes Visuales', emoji: '🎨', color: '#f7c6d9', icono: 'arte' },
+            { nombre: 'Música', emoji: '🎵', color: '#c9e4de', icono: 'musica' },
+            { nombre: 'Ed. Física', emoji: '⚽', color: '#f9e0b0', icono: 'deporte' },
+            { nombre: 'Tecnología', emoji: '💻', color: '#b0d4f1', icono: 'tech' },
+            { nombre: 'Orientación', emoji: '💬', color: '#e8d0f0', icono: 'orientacion' },
+        ];
 
-    <!-- ═══════════════════════════════════════ -->
-    <!-- CUADRÍCULA DE HUELLAS                  -->
-    <!-- ═══════════════════════════════════════ -->
-    <main class="grid">
+        // ============================================================
+        //  ICONOS SVG (funciones que devuelven strings SVG)
+        // ============================================================
+        function svgLibro() {
+            return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>`;
+        }
 
-        <!-- 1. PERRO 🐶 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="60" rx="30" ry="24" fill="var(--local-color, #8B7355)"/>
-                    <ellipse cx="28" cy="28" rx="13" ry="17" fill="var(--local-color, #8B7355)" transform="rotate(-8,28,28)"/>
-                    <ellipse cx="50" cy="22" rx="13" ry="18" fill="var(--local-color, #8B7355)"/>
-                    <ellipse cx="72" cy="28" rx="13" ry="17" fill="var(--local-color, #8B7355)" transform="rotate(8,72,28)"/>
-                    <ellipse cx="18" cy="52" rx="10" ry="13" fill="var(--local-color, #8B7355)" transform="rotate(-15,18,52)"/>
-                    <ellipse cx="82" cy="52" rx="10" ry="13" fill="var(--local-color, #8B7355)" transform="rotate(15,82,52)"/>
-                </svg>
-            </div>
-            <div class="label">Perro</div>
-            <div class="label-small">Canis familiaris</div>
-        </div>
+        function svgRegla() {
+            return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>`;
+        }
 
-        <!-- 2. GATO 🐱 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="58" r="27" fill="var(--local-color, #A0897C)"/>
-                    <circle cx="26" cy="26" r="12" fill="var(--local-color, #A0897C)"/>
-                    <circle cx="50" cy="20" r="12" fill="var(--local-color, #A0897C)"/>
-                    <circle cx="74" cy="26" r="12" fill="var(--local-color, #A0897C)"/>
-                    <circle cx="20" cy="52" r="9" fill="var(--local-color, #A0897C)"/>
-                    <circle cx="80" cy="52" r="9" fill="var(--local-color, #A0897C)"/>
-                </svg>
-            </div>
-            <div class="label">Gato</div>
-            <div class="label-small">Felis catus</div>
-        </div>
+        function svgCiencia() {
+            return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 3v2H7v2h10V5h-2V3H9zm-2 6h10v2h-2v2h-2v-2h-2v2H9v-2H7V9zm-4 8c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v1c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-1zm2-4h14c1.1 0 2 .9 2 2v-1c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v1c0-1.1.9-2 2-2z"/></svg>`;
+        }
 
-        <!-- 3. OSO 🐻 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="55" rx="34" ry="28" fill="var(--local-color, #6B5B4F)"/>
-                    <ellipse cx="22" cy="22" rx="14" ry="16" fill="var(--local-color, #6B5B4F)"/>
-                    <ellipse cx="50" cy="16" rx="14" ry="17" fill="var(--local-color, #6B5B4F)"/>
-                    <ellipse cx="78" cy="22" rx="14" ry="16" fill="var(--local-color, #6B5B4F)"/>
-                    <ellipse cx="12" cy="48" rx="11" ry="12" fill="var(--local-color, #6B5B4F)"/>
-                    <ellipse cx="88" cy="48" rx="11" ry="12" fill="var(--local-color, #6B5B4F)"/>
-                </svg>
-            </div>
-            <div class="label">Oso pardo</div>
-            <div class="label-small">Ursus arctos</div>
-        </div>
+        function svgMundo() {
+            return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`;
+        }
 
-        <!-- 4. CONEJO 🐰 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="62" rx="22" ry="28" fill="var(--local-color, #C4A882)"/>
-                    <ellipse cx="34" cy="28" rx="10" ry="20" fill="var(--local-color, #C4A882)" transform="rotate(-10,34,28)"/>
-                    <ellipse cx="66" cy="28" rx="10" ry="20" fill="var(--local-color, #C4A882)" transform="rotate(10,66,28)"/>
-                    <ellipse cx="22" cy="50" rx="7" ry="12" fill="var(--local-color, #C4A882)" transform="rotate(-20,22,50)"/>
-                    <ellipse cx="78" cy="50" rx="7" ry="12" fill="var(--local-color, #C4A882)" transform="rotate(20,78,50)"/>
-                </svg>
-            </div>
-            <div class="label">Conejo</div>
-            <div class="label-small">Oryctolagus cuniculus</div>
-        </div>
+        function svgIngles() {
+            return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>`;
+        }
 
-        <!-- 5. LOBO 🐺 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="58" rx="32" ry="25" fill="var(--local-color, #B8956A)"/>
-                    <ellipse cx="26" cy="26" rx="14" ry="18" fill="var(--local-color, #B8956A)" transform="rotate(-6,26,26)"/>
-                    <ellipse cx="50" cy="20" rx="14" ry="19" fill="var(--local-color, #B8956A)"/>
-                    <ellipse cx="74" cy="26" rx="14" ry="18" fill="var(--local-color, #B8956A)" transform="rotate(6,74,26)"/>
-                    <ellipse cx="16" cy="50" rx="11" ry="14" fill="var(--local-color, #B8956A)" transform="rotate(-12,16,50)"/>
-                    <ellipse cx="84" cy="50" rx="11" ry="14" fill="var(--local-color, #B8956A)" transform="rotate(12,84,50)"/>
-                </svg>
-            </div>
-            <div class="label">Lobo</div>
-            <div class="label-small">Canis lupus</div>
-        </div>
+        function svgArte() {
+            return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.41 0 8 3.59 8 8 0 1.85-.63 3.55-1.69 4.9z"/></svg>`;
+        }
 
-        <!-- 6. TIGRE 🐯 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="56" r="30" fill="var(--local-color, #C49060)"/>
-                    <circle cx="24" cy="24" r="13" fill="var(--local-color, #C49060)"/>
-                    <circle cx="50" cy="18" r="13" fill="var(--local-color, #C49060)"/>
-                    <circle cx="76" cy="24" r="13" fill="var(--local-color, #C49060)"/>
-                    <circle cx="18" cy="50" r="10" fill="var(--local-color, #C49060)"/>
-                    <circle cx="82" cy="50" r="10" fill="var(--local-color, #C49060)"/>
-                </svg>
-            </div>
-            <div class="label">Tigre</div>
-            <div class="label-small">Panthera tigris</div>
-        </div>
+        function svgMusica() {
+            return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>`;
+        }
 
-        <!-- 7. ZORRO 🦊 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="60" rx="26" ry="22" fill="var(--local-color, #D4956B)"/>
-                    <ellipse cx="28" cy="30" rx="11" ry="15" fill="var(--local-color, #D4956B)" transform="rotate(-5,28,30)"/>
-                    <ellipse cx="50" cy="24" rx="11" ry="16" fill="var(--local-color, #D4956B)"/>
-                    <ellipse cx="72" cy="30" rx="11" ry="15" fill="var(--local-color, #D4956B)" transform="rotate(5,72,30)"/>
-                    <ellipse cx="20" cy="52" rx="8" ry="11" fill="var(--local-color, #D4956B)" transform="rotate(-10,20,52)"/>
-                    <ellipse cx="80" cy="52" rx="8" ry="11" fill="var(--local-color, #D4956B)" transform="rotate(10,80,52)"/>
-                </svg>
-            </div>
-            <div class="label">Zorro</div>
-            <div class="label-small">Vulpes vulpes</div>
-        </div>
+        function svgDeporte() {
+            return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5.5 8.5l-1.5 1.5-2-2 1.5-1.5 2 2zm-7.5 7.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>`;
+        }
 
-        <!-- 8. MAPACHE 🦝 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="58" rx="28" ry="24" fill="var(--local-color, #7A6B5C)"/>
-                    <ellipse cx="26" cy="28" rx="10" ry="16" fill="var(--local-color, #7A6B5C)" transform="rotate(-5,26,28)"/>
-                    <ellipse cx="50" cy="22" rx="10" ry="17" fill="var(--local-color, #7A6B5C)"/>
-                    <ellipse cx="74" cy="28" rx="10" ry="16" fill="var(--local-color, #7A6B5C)" transform="rotate(5,74,28)"/>
-                    <ellipse cx="18" cy="50" rx="8" ry="12" fill="var(--local-color, #7A6B5C)" transform="rotate(-12,18,50)"/>
-                    <ellipse cx="82" cy="50" rx="8" ry="12" fill="var(--local-color, #7A6B5C)" transform="rotate(12,82,50)"/>
-                </svg>
-            </div>
-            <div class="label">Mapache</div>
-            <div class="label-small">Procyon lotor</div>
-        </div>
+        function svgTech() {
+            return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>`;
+        }
 
-        <!-- 9. CIERVO 🦌 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="52" cy="66" rx="18" ry="26" fill="var(--local-color, #A08060)"/>
-                    <ellipse cx="35" cy="32" rx="9" ry="18" fill="var(--local-color, #A08060)" transform="rotate(-8,35,32)"/>
-                    <ellipse cx="68" cy="32" rx="9" ry="18" fill="var(--local-color, #A08060)" transform="rotate(8,68,32)"/>
-                </svg>
-            </div>
-            <div class="label">Ciervo</div>
-            <div class="label-small">Cervus elaphus</div>
-        </div>
+        function svgOrientacion() {
+            return `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>`;
+        }
 
-        <!-- 10. ELEFANTE 🐘 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="54" r="34" fill="var(--local-color, #9B8B7A)"/>
-                    <circle cx="22" cy="22" r="16" fill="var(--local-color, #9B8B7A)"/>
-                    <circle cx="50" cy="16" r="16" fill="var(--local-color, #9B8B7A)"/>
-                    <circle cx="78" cy="22" r="16" fill="var(--local-color, #9B8B7A)"/>
-                    <circle cx="12" cy="50" r="12" fill="var(--local-color, #9B8B7A)"/>
-                    <circle cx="88" cy="50" r="12" fill="var(--local-color, #9B8B7A)"/>
-                </svg>
-            </div>
-            <div class="label">Elefante</div>
-            <div class="label-small">Loxodonta africana</div>
-        </div>
+        function obtenerIconoSVG(nombreIcono) {
+            const iconos = {
+                'libro': svgLibro,
+                'regla': svgRegla,
+                'ciencia': svgCiencia,
+                'mundo': svgMundo,
+                'ingles': svgIngles,
+                'arte': svgArte,
+                'musica': svgMusica,
+                'deporte': svgDeporte,
+                'tech': svgTech,
+                'orientacion': svgOrientacion,
+            };
+            return (iconos[nombreIcono] || svgLibro)();
+        }
 
-        <!-- 11. LEÓN 🦁 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="54" r="31" fill="var(--local-color, #C49A6C)"/>
-                    <circle cx="23" cy="22" r="14" fill="var(--local-color, #C49A6C)"/>
-                    <circle cx="50" cy="16" r="14" fill="var(--local-color, #C49A6C)"/>
-                    <circle cx="77" cy="22" r="14" fill="var(--local-color, #C49A6C)"/>
-                    <circle cx="17" cy="50" r="11" fill="var(--local-color, #C49A6C)"/>
-                    <circle cx="83" cy="50" r="11" fill="var(--local-color, #C49A6C)"/>
-                </svg>
-            </div>
-            <div class="label">León</div>
-            <div class="label-small">Panthera leo</div>
-        </div>
+        // ============================================================
+        //  GESTIÓN DE TAREAS (localStorage)
+        // ============================================================
+        const CLAVE_STORAGE = 'tareas_trinidad_kawaii';
 
-        <!-- 12. ARDILLA 🐿️ -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="62" rx="20" ry="26" fill="var(--local-color, #B88050)"/>
-                    <ellipse cx="34" cy="28" rx="9" ry="18" fill="var(--local-color, #B88050)" transform="rotate(-12,34,28)"/>
-                    <ellipse cx="66" cy="28" rx="9" ry="18" fill="var(--local-color, #B88050)" transform="rotate(12,66,28)"/>
-                    <ellipse cx="22" cy="50" rx="6" ry="11" fill="var(--local-color, #B88050)" transform="rotate(-18,22,50)"/>
-                    <ellipse cx="78" cy="50" rx="6" ry="11" fill="var(--local-color, #B88050)" transform="rotate(18,78,50)"/>
-                </svg>
-            </div>
-            <div class="label">Ardilla</div>
-            <div class="label-small">Sciurus vulgaris</div>
-        </div>
+        function cargarTareas() {
+            try {
+                const datos = localStorage.getItem(CLAVE_STORAGE);
+                if (datos) {
+                    return JSON.parse(datos);
+                }
+            } catch (e) {
+                console.warn('No se pudieron cargar las tareas:', e);
+            }
+            // Tareas de ejemplo
+            return [
+                { id: Date.now() + 1, materia: 'Matemática', texto: 'Terminar guía de fracciones', fecha: '2026-08-18',
+                    prioridad: 'alta', completada: false },
+                { id: Date.now() + 2, materia: 'Lenguaje', texto: 'Leer capítulo 5 del libro "Papelucho"',
+                    fecha: '2026-08-17', prioridad: 'media', completada: false },
+                { id: Date.now() + 3, materia: 'Ciencias Naturales', texto: 'Preparar exposición sobre las plantas',
+                    fecha: '2026-08-20', prioridad: 'alta', completada: false },
+                { id: Date.now() + 4, materia: 'Inglés', texto: 'Practicar vocabulario de la unidad 3', fecha: '2026-08-16',
+                    prioridad: 'baja', completada: true },
+                { id: Date.now() + 5, materia: 'Historia y Geografía', texto: 'Completar mapa de Chile', fecha: '2026-08-19',
+                    prioridad: 'media', completada: false },
+                { id: Date.now() + 6, materia: 'Artes Visuales', texto: 'Traer materiales para collage', fecha: '2026-08-22',
+                    prioridad: 'baja', completada: false },
+            ];
+        }
 
-        <!-- 13. JAGUAR 🐆 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="56" r="29" fill="var(--local-color, #D4A050)"/>
-                    <circle cx="25" cy="25" r="12" fill="var(--local-color, #D4A050)"/>
-                    <circle cx="50" cy="19" r="12" fill="var(--local-color, #D4A050)"/>
-                    <circle cx="75" cy="25" r="12" fill="var(--local-color, #D4A050)"/>
-                    <circle cx="19" cy="50" r="9" fill="var(--local-color, #D4A050)"/>
-                    <circle cx="81" cy="50" r="9" fill="var(--local-color, #D4A050)"/>
-                </svg>
-            </div>
-            <div class="label">Jaguar</div>
-            <div class="label-small">Panthera onca</div>
-        </div>
+        function guardarTareas(tareas) {
+            try {
+                localStorage.setItem(CLAVE_STORAGE, JSON.stringify(tareas));
+            } catch (e) {
+                console.warn('No se pudieron guardar las tareas:', e);
+            }
+        }
 
-        <!-- 14. CABALLO 🐴 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="64" rx="24" ry="28" fill="var(--local-color, #7A6450)"/>
-                    <ellipse cx="35" cy="30" rx="12" ry="20" fill="var(--local-color, #7A6450)" transform="rotate(-5,35,30)"/>
-                    <ellipse cx="65" cy="30" rx="12" ry="20" fill="var(--local-color, #7A6450)" transform="rotate(5,65,30)"/>
-                </svg>
-            </div>
-            <div class="label">Caballo</div>
-            <div class="label-small">Equus ferus caballus</div>
-        </div>
+        let tareas = cargarTareas();
 
-        <!-- 15. NUTRIA 🦦 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="58" rx="26" ry="22" fill="var(--local-color, #8B7060)"/>
-                    <ellipse cx="27" cy="28" rx="10" ry="14" fill="var(--local-color, #8B7060)" transform="rotate(-7,27,28)"/>
-                    <ellipse cx="50" cy="22" rx="10" ry="15" fill="var(--local-color, #8B7060)"/>
-                    <ellipse cx="73" cy="28" rx="10" ry="14" fill="var(--local-color, #8B7060)" transform="rotate(7,73,28)"/>
-                    <ellipse cx="18" cy="50" rx="8" ry="11" fill="var(--local-color, #8B7060)" transform="rotate(-14,18,50)"/>
-                    <ellipse cx="82" cy="50" rx="8" ry="11" fill="var(--local-color, #8B7060)" transform="rotate(14,82,50)"/>
-                </svg>
-            </div>
-            <div class="label">Nutria</div>
-            <div class="label-small">Lutra lutra</div>
-        </div>
+        // ============================================================
+        //  FUNCIONES DE RENDERIZADO
+        // ============================================================
+        function obtenerMateria(nombre) {
+            return MATERIAS.find(m => m.nombre === nombre) || MATERIAS[0];
+        }
 
-        <!-- 16. PANDA 🐼 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="55" rx="33" ry="27" fill="var(--local-color, #3D3D3D)"/>
-                    <ellipse cx="22" cy="23" rx="14" ry="16" fill="var(--local-color, #3D3D3D)"/>
-                    <ellipse cx="50" cy="17" rx="14" ry="17" fill="var(--local-color, #3D3D3D)"/>
-                    <ellipse cx="78" cy="23" rx="14" ry="16" fill="var(--local-color, #3D3D3D)"/>
-                    <ellipse cx="13" cy="48" rx="11" ry="12" fill="var(--local-color, #3D3D3D)"/>
-                    <ellipse cx="87" cy="48" rx="11" ry="12" fill="var(--local-color, #3D3D3D)"/>
-                </svg>
-            </div>
-            <div class="label">Panda</div>
-            <div class="label-small">Ailuropoda melanoleuca</div>
-        </div>
+        function filtrarTareasPorMateria(nombreMateria) {
+            return tareas.filter(t => t.materia === nombreMateria);
+        }
 
-        <!-- 17. AVE / GALLINA 🐔 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="50" y1="20" x2="35" y2="75" stroke="var(--local-color, #D4956B)" stroke-width="6" stroke-linecap="round"/>
-                    <line x1="50" y1="20" x2="65" y2="75" stroke="var(--local-color, #D4956B)" stroke-width="6" stroke-linecap="round"/>
-                    <line x1="50" y1="20" x2="50" y2="80" stroke="var(--local-color, #D4956B)" stroke-width="6" stroke-linecap="round"/>
-                    <line x1="35" y1="75" x2="28" y2="90" stroke="var(--local-color, #D4956B)" stroke-width="5" stroke-linecap="round"/>
-                    <line x1="50" y1="80" x2="50" y2="92" stroke="var(--local-color, #D4956B)" stroke-width="5" stroke-linecap="round"/>
-                    <line x1="65" y1="75" x2="72" y2="90" stroke="var(--local-color, #D4956B)" stroke-width="5" stroke-linecap="round"/>
-                </svg>
-            </div>
-            <div class="label">Ave</div>
-            <div class="label-small">Gallus gallus</div>
-        </div>
+        function renderizarGridMaterias() {
+            const grid = document.getElementById('gridMaterias');
+            grid.innerHTML = '';
 
-        <!-- 18. PATO 🦆 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="55" rx="18" ry="22" fill="var(--local-color, #E8A850)"/>
-                    <line x1="50" y1="33" x2="22" y2="80" stroke="var(--local-color, #E8A850)" stroke-width="5" stroke-linecap="round"/>
-                    <line x1="50" y1="33" x2="50" y2="82" stroke="var(--local-color, #E8A850)" stroke-width="5" stroke-linecap="round"/>
-                    <line x1="50" y1="33" x2="78" y2="80" stroke="var(--local-color, #E8A850)" stroke-width="5" stroke-linecap="round"/>
-                    <ellipse cx="22" cy="83" rx="6" ry="4" fill="var(--local-color, #E8A850)"/>
-                    <ellipse cx="50" cy="85" rx="6" ry="4" fill="var(--local-color, #E8A850)"/>
-                    <ellipse cx="78" cy="83" rx="6" ry="4" fill="var(--local-color, #E8A850)"/>
-                </svg>
-            </div>
-            <div class="label">Pato</div>
-            <div class="label-small">Anas platyrhynchos</div>
-        </div>
+            MATERIAS.forEach(materia => {
+                const tareasMateria = filtrarTareasPorMateria(materia.nombre);
+                const completadas = tareasMateria.filter(t => t.completada).length;
+                const total = tareasMateria.length;
 
-        <!-- 19. RANA 🐸 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="58" rx="22" ry="20" fill="var(--local-color, #6B8C42)"/>
-                    <ellipse cx="22" cy="28" rx="9" ry="18" fill="var(--local-color, #6B8C42)" transform="rotate(-20,22,28)"/>
-                    <ellipse cx="42" cy="22" rx="9" ry="19" fill="var(--local-color, #6B8C42)" transform="rotate(-8,42,22)"/>
-                    <ellipse cx="58" cy="22" rx="9" ry="19" fill="var(--local-color, #6B8C42)" transform="rotate(8,58,22)"/>
-                    <ellipse cx="78" cy="28" rx="9" ry="18" fill="var(--local-color, #6B8C42)" transform="rotate(20,78,28)"/>
-                </svg>
-            </div>
-            <div class="label">Rana</div>
-            <div class="label-small">Lithobates catesbeianus</div>
-        </div>
+                const tarjeta = document.createElement('div');
+                tarjeta.className = 'tarjeta-materia';
+                tarjeta.style.setProperty('--color-materia', materia.color);
+                tarjeta.style.borderColor = materia.color + '55';
 
-        <!-- 20. HÁMSTER 🐹 -->
-        <div class="card">
-            <div class="paw-wrapper">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <ellipse cx="50" cy="62" rx="19" ry="24" fill="var(--local-color, #D4A878)"/>
-                    <ellipse cx="34" cy="30" rx="8" ry="16" fill="var(--local-color, #D4A878)" transform="rotate(-10,34,30)"/>
-                    <ellipse cx="66" cy="30" rx="8" ry="16" fill="var(--local-color, #D4A878)" transform="rotate(10,66,30)"/>
-                    <ellipse cx="24" cy="50" rx="6" ry="10" fill="var(--local-color, #D4A878)" transform="rotate(-16,24,50)"/>
-                    <ellipse cx="76" cy="50" rx="6" ry="10" fill="var(--local-color, #D4A878)" transform="rotate(16,76,50)"/>
-                </svg>
-            </div>
-            <div class="label">Hámster</div>
-            <div class="label-small">Mesocricetus auratus</div>
-        </div>
+                const cabecera = document.createElement('div');
+                cabecera.className = 'cabecera';
 
-    </main>
+                const iconoDiv = document.createElement('div');
+                iconoDiv.className = 'icono-materia';
+                iconoDiv.style.background = materia.color;
+                iconoDiv.innerHTML = obtenerIconoSVG(materia.icono);
 
-    <!-- ═══════════════════════════════════════ -->
-    <!-- PIE DE PÁGINA                          -->
-    <!-- ═══════════════════════════════════════ -->
-    <footer class="footer">
-        <p>Hecho con <span>🐾</span> amor por los animales · Plantilla SVG de huellas</p>
-        <p style="font-size:0.7rem;opacity:0.6;">Perro · Gato · Oso · Conejo · Lobo · Tigre · Zorro · Mapache · Ciervo · Elefante · León · Ardilla · Jaguar · Caballo · Nutria · Panda · Ave · Pato · Rana · Hámster</p>
-    </footer>
+                const nombreDiv = document.createElement('span');
+                nombreDiv.className = 'nombre-materia';
+                nombreDiv.textContent = `${materia.emoji} ${materia.nombre}`;
 
+                const contador = document.createElement('span');
+                contador.className = 'contador';
+                contador.style.background = materia.color;
+                contador.textContent = `${completadas}/${total}`;
+
+                cabecera.appendChild(iconoDiv);
+                cabecera.appendChild(nombreDiv);
+                cabecera.appendChild(contador);
+
+                const lista = document.createElement('ul');
+                lista.className = 'lista-tareas';
+
+                if (tareasMateria.length === 0) {
+                    const li = document.createElement('li');
+                    li.className = 'sin-tareas';
+                    li.textContent = '✨ Sin tareas pendientes ✨';
+                    lista.appendChild(li);
+                } else {
+                    tareasMateria.forEach(tarea => {
+                        lista.appendChild(crearElementoTarea(tarea, materia));
+                    });
+                }
+
+                tarjeta.appendChild(cabecera);
+                tarjeta.appendChild(lista);
+                grid.appendChild(tarjeta);
+            });
+
+            actualizarProgresoGlobal();
+        }
+
+        function crearElementoTarea(tarea, materia) {
+            const li = document.createElement('li');
+            li.className = 'tarea-item';
+            if (tarea.completada) li.classList.add('completada');
+
+            const checkbox = document.createElement('button');
+            checkbox.className = 'checkbox' + (tarea.completada ? ' checked' : '');
+            checkbox.style.borderColor = materia.color;
+            checkbox.setAttribute('aria-label', 'Marcar como completada');
+            checkbox.addEventListener('click', () => toggleTarea(tarea.id));
+
+            const contenido = document.createElement('div');
+            contenido.className = 'contenido-tarea';
+
+            const texto = document.createElement('span');
+            texto.className = 'texto-tarea';
+            texto.textContent = tarea.texto;
+
+            const meta = document.createElement('div');
+            meta.className = 'meta-tarea';
+
+            if (tarea.fecha) {
+                const fechaSpan = document.createElement('span');
+                fechaSpan.className = 'fecha-tarea';
+                fechaSpan.textContent = '📅 ' + formatearFecha(tarea.fecha);
+                meta.appendChild(fechaSpan);
+            }
+
+            if (tarea.prioridad) {
+                const prioridadSpan = document.createElement('span');
+                prioridadSpan.className = 'prioridad prioridad-' + tarea.prioridad;
+                const etiquetas = { alta: '🔴 Alta', media: '🟡 Media', baja: '🟢 Baja' };
+                prioridadSpan.textContent = etiquetas[tarea.prioridad] || tarea.prioridad;
+                meta.appendChild(prioridadSpan);
+            }
+
+            contenido.appendChild(texto);
+            contenido.appendChild(meta);
+
+            const btnEliminar = document.createElement('button');
+            btnEliminar.className = 'btn-eliminar';
+            btnEliminar.innerHTML = '✖';
+            btnEliminar.setAttribute('aria-label', 'Eliminar tarea');
+            btnEliminar.addEventListener('click', () => eliminarTarea(tarea.id));
+
+            li.appendChild(checkbox);
+            li.appendChild(contenido);
+            li.appendChild(btnEliminar);
+
+            return li;
+        }
+
+        function actualizarProgresoGlobal() {
+            const totalTareas = tareas.length;
+            const completadas = tareas.filter(t => t.completada).length;
+            const porcentaje = totalTareas > 0 ? Math.round((completadas / totalTareas) * 100) : 0;
+
+            const barra = document.getElementById('barra-progreso');
+            const porcentajeTexto = document.getElementById('porcentaje');
+            barra.style.width = porcentaje + '%';
+            porcentajeTexto.textContent = porcentaje + '%';
+        }
+
+        function formatearFecha(fechaISO) {
+            if (!fechaISO) return '';
+            const partes = fechaISO.split('-');
+            if (partes.length !== 3) return fechaISO;
+            const [anio, mes, dia] = partes;
+            const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+            const mesNombre = meses[parseInt(mes) - 1] || mes;
+            return `${dia} ${mesNombre}`;
+        }
+
+        // ============================================================
+        //  ACCIONES DE TAREAS
+        // ============================================================
+        function toggleTarea(id) {
+            tareas = tareas.map(t => t.id === id ? { ...t, completada: !t.completada } : t);
+            guardarTareas(tareas);
+            renderizarGridMaterias();
+        }
+
+        function eliminarTarea(id) {
+            if (confirm('¿Seguro que quieres eliminar esta tarea? 🥺')) {
+                tareas = tareas.filter(t => t.id !== id);
+                guardarTareas(tareas);
+                renderizarGridMaterias();
+            }
+        }
+
+        function agregarTarea(materia, texto, fecha, prioridad) {
+            const nuevaTarea = {
+                id: Date.now(),
+                materia: materia,
+                texto: texto,
+                fecha: fecha || '',
+                prioridad: prioridad || 'media',
+                completada: false,
+            };
+            tareas.unshift(nuevaTarea);
+            guardarTareas(tareas);
+            renderizarGridMaterias();
+        }
+
+        function limpiarCompletadas() {
+            const pendientes = tareas.filter(t => !t.completada);
+            if (pendientes.length === tareas.length) {
+                alert('¡No hay tareas completadas para limpiar! 🌸');
+                return;
+            }
+            if (confirm('¿Eliminar todas las tareas completadas? 🧹')) {
+                tareas = pendientes;
+                guardarTareas(tareas);
+                renderizarGridMaterias();
+            }
+        }
+
+        // ============================================================
+        //  MODAL
+        // ============================================================
+        const modalOverlay = document.getElementById('modalOverlay');
+        const btnAgregar = document.getElementById('btnAgregar');
+        const btnCerrarModal = document.getElementById('btnCerrarModal');
+        const btnCancelar = document.getElementById('btnCancelar');
+        const formTarea = document.getElementById('formTarea');
+
+        function abrirModal() {
+            modalOverlay.classList.add('activo');
+            document.getElementById('inputTarea').focus();
+        }
+
+        function cerrarModal() {
+            modalOverlay.classList.remove('activo');
+            formTarea.reset();
+            // Establecer fecha por defecto a hoy
+            const hoy = new Date();
+            const fechaLocal = new Date(hoy.getTime() - hoy.getTimezoneOffset() * 60000).toISOString().split('T')[0];
+            document.getElementById('inputFecha').value = fechaLocal;
+        }
+
+        btnAgregar.addEventListener('click', abrirModal);
+        btnCerrarModal.addEventListener('click', cerrarModal);
+        btnCancelar.addEventListener('click', cerrarModal);
+
+        // Cerrar al hacer clic fuera del modal
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) cerrarModal();
+        });
+
+        // Enviar formulario
+        formTarea.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const materia = document.getElementById('inputMateria').value;
+            const texto = document.getElementById('inputTarea').value.trim();
+            const fecha = document.getElementById('inputFecha').value;
+            const prioridad = document.getElementById('inputPrioridad').value;
+
+            if (!materia || !texto || !fecha) {
+                alert('¡Por favor completa todos los campos! 🥺');
+                return;
+            }
+
+            agregarTarea(materia, texto, fecha, prioridad);
+            cerrarModal();
+        });
+
+        // Botón limpiar completadas
+        document.getElementById('btnLimpiar').addEventListener('click', limpiarCompletadas);
+
+        // ============================================================
+        //  FECHA Y SALUDO
+        // ============================================================
+        function actualizarFechaSaludo() {
+            const ahora = new Date();
+            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const fechaFormateada = ahora.toLocaleDateString('es-CL', opciones);
+            document.getElementById('fecha-actual').textContent = '📅 ' + fechaFormateada;
+
+            const hora = ahora.getHours();
+            let saludo = '';
+            if (hora >= 6 && hora < 12) saludo = '🌅 ¡Buenos días, Trinidad!';
+            else if (hora >= 12 && hora < 19) saludo = '☀️ ¡Buenas tardes, Trinidad!';
+            else if (hora >= 19 && hora < 22) saludo = '🌙 ¡Buenas noches, Trinidad!';
+            else saludo = '🌟 ¡Hola, Trinidad! Ya es tarde... ¡a descansar!';
+
+            document.getElementById('saludo').textContent = saludo;
+        }
+
+        // ============================================================
+        //  INICIALIZACIÓN
+        // ============================================================
+        function inicializar() {
+            actualizarFechaSaludo();
+
+            // Establecer fecha por defecto en el modal
+            const hoy = new Date();
+            const fechaLocal = new Date(hoy.getTime() - hoy.getTimezoneOffset() * 60000).toISOString().split('T')[0];
+            document.getElementById('inputFecha').value = fechaLocal;
+
+            renderizarGridMaterias();
+
+            // Actualizar cada minuto el saludo (por si cambia la hora)
+            setInterval(actualizarFechaSaludo, 60000);
+        }
+
+        // Iniciar todo cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', inicializar);
+
+        // Si el DOM ya está cargado, iniciar de inmediato
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            inicializar();
+        }
+    </script>
 </body>
 </html>
