@@ -2,121 +2,23 @@
    Organizador Kawaii — Vista de resumen (inicio)
    Archivo: ./js/vistas/vistaResumen.js
    Propósito: Mostrar el resumen general de tareas de todas las materias,
-              con barra de progreso global, tarjetas por materia y un modal
-              para agregar nuevas tareas. Es la página principal (#/inicio).
-   Último cambio: 2026-08-21 — Creación inicial
+              con barra de progreso global, tarjetas por materia y un botón
+              para agregar tareas (usando el modal reutilizable).
+   Último cambio: 2026-08-21 — Se extrajo el modal a un componente reutilizable
    ========================================= */
 
 // ========== IMPORTACIONES ==========
-import { cargarTareas, agregarTarea, alternarTarea, eliminarTarea, limpiarCompletadas } from '../datos/tareas.js';
+import { cargarTareas, alternarTarea, eliminarTarea, limpiarCompletadas } from '../datos/tareas.js';
 import { obtenerMaterias } from '../datos/materias.js';
 import { formatearFechaCorta } from '../utilidades/fecha.js';
+import { abrirModal } from './modalNuevaTarea.js';
 
 // ========== FUNCIONES DE RENDERIZADO ==========
 
 /**
- * Genera el HTML del modal para agregar tareas.
- * El modal se oculta y muestra mediante la clase 'activo'.
- * @returns {HTMLElement} Elemento overlay del modal.
- */
-function crearModalAgregar() {
-    const overlay = document.createElement('div');
-    overlay.className = 'modal-overlay';
-    overlay.id = 'modal-agregar-tarea';
-
-    overlay.innerHTML = `
-        <div class="modal">
-            <button class="cerrar-modal" id="cerrar-modal">&times;</button>
-            <h3>🌸 Nueva Tarea 🌸</h3>
-            <form id="form-agregar-tarea">
-                <div class="form-grupo">
-                    <label for="input-materia">📚 Materia</label>
-                    <select id="input-materia" required>
-                        <option value="">-- Elige una materia --</option>
-                        ${obtenerMaterias().map(m => `<option value="${m.nombre}">${m.emoji} ${m.nombre}</option>`).join('')}
-                    </select>
-                </div>
-                <div class="form-grupo">
-                    <label for="input-texto">✏️ Descripción de la tarea</label>
-                    <input type="text" id="input-texto" placeholder="Ej: Hacer guía de fracciones" required>
-                </div>
-                <div class="form-grupo">
-                    <label for="input-fecha">📅 Fecha de entrega</label>
-                    <input type="date" id="input-fecha" required>
-                </div>
-                <div class="form-grupo">
-                    <label for="input-prioridad">⚡ Prioridad</label>
-                    <select id="input-prioridad">
-                        <option value="alta">🔴 Alta - ¡Urgente!</option>
-                        <option value="media" selected>🟡 Media - Normal</option>
-                        <option value="baja">🟢 Baja - Tranquila</option>
-                    </select>
-                </div>
-                <div class="form-botones">
-                    <button type="button" class="btn btn-secundario" id="btn-cancelar">Cancelar</button>
-                    <button type="submit" class="btn btn-primario">💾 Guardar Tarea</button>
-                </div>
-            </form>
-        </div>
-    `;
-
-    // Eventos del modal
-    overlay.querySelector('#cerrar-modal').addEventListener('click', () => cerrarModal(overlay));
-    overlay.querySelector('#btn-cancelar').addEventListener('click', () => cerrarModal(overlay));
-    overlay.addEventListener('click', (evento) => {
-        if (evento.target === overlay) cerrarModal(overlay);
-    });
-
-    // Enviar formulario
-    overlay.querySelector('#form-agregar-tarea').addEventListener('submit', (evento) => {
-        evento.preventDefault();
-        const materia = overlay.querySelector('#input-materia').value;
-        const texto = overlay.querySelector('#input-texto').value.trim();
-        const fecha = overlay.querySelector('#input-fecha').value;
-        const prioridad = overlay.querySelector('#input-prioridad').value;
-
-        if (!materia || !texto || !fecha) {
-            alert('¡Por favor completa todos los campos! 🥺');
-            return;
-        }
-
-        agregarTarea(materia, texto, fecha, prioridad);
-        cerrarModal(overlay);
-        // Re-renderizar la vista de resumen para reflejar la nueva tarea
-        const contenedor = document.getElementById('contenido-principal');
-        inicializarVistaResumen(contenedor);
-    });
-
-    return overlay;
-}
-
-/**
- * Abre el modal agregándole la clase 'activo'.
- * @param {HTMLElement} overlay - Overlay del modal.
- */
-function abrirModal(overlay) {
-    overlay.classList.add('activo');
-}
-
-/**
- * Cierra el modal quitándole la clase 'activo' y limpiando el formulario.
- * @param {HTMLElement} overlay - Overlay del modal.
- */
-function cerrarModal(overlay) {
-    overlay.classList.remove('activo');
-    const formulario = overlay.querySelector('#form-agregar-tarea');
-    if (formulario) formulario.reset();
-    // Establecer fecha de hoy por defecto
-    const inputFecha = overlay.querySelector('#input-fecha');
-    if (inputFecha) {
-        const hoy = new Date();
-        inputFecha.value = new Date(hoy.getTime() - hoy.getTimezoneOffset() * 60000).toISOString().split('T')[0];
-    }
-}
-
-/**
  * Crea la barra de progreso global con el porcentaje de tareas completadas.
- * @returns {HTMLElement} Elemento contenedor de la barra de progreso.
+ * @param {Array} tareas - Lista completa de tareas.
+ * @returns {HTMLElement} Contenedor de la barra de progreso.
  */
 function crearBarraProgreso(tareas) {
     const total = tareas.length;
@@ -136,18 +38,18 @@ function crearBarraProgreso(tareas) {
 }
 
 /**
- * Crea una tarjeta para una materia con sus tareas correspondientes.
- * @param {Object} materia - Objeto de materia (nombre, emoji, color, ruta).
- * @param {Array} tareasDeMateria - Tareas que pertenecen a esa materia.
+ * Crea una tarjeta para una materia con sus tareas.
+ * @param {Object} materia - Objeto materia.
+ * @param {Array} tareasDeMateria - Tareas de esa materia.
  * @returns {HTMLElement} Elemento tarjeta.
  */
 function crearTarjetaMateria(materia, tareasDeMateria) {
     const tarjeta = document.createElement('div');
     tarjeta.className = 'tarjeta';
-    tarjeta.style.borderColor = materia.color + '55'; // Borde semitransparente
+    tarjeta.style.borderColor = materia.color + '55';
     tarjeta.style.setProperty('--color-materia', materia.color);
 
-    // Cabecera de la tarjeta
+    // Cabecera
     const cabecera = document.createElement('div');
     cabecera.className = 'cabecera-tarjeta';
     cabecera.style.display = 'flex';
@@ -181,7 +83,7 @@ function crearTarjetaMateria(materia, tareasDeMateria) {
     cabecera.appendChild(contador);
     tarjeta.appendChild(cabecera);
 
-    // Lista de tareas de la materia
+    // Lista de tareas
     const lista = document.createElement('ul');
     lista.className = 'lista-tareas';
 
@@ -202,15 +104,14 @@ function crearTarjetaMateria(materia, tareasDeMateria) {
 /**
  * Crea un elemento de lista para una tarea individual.
  * @param {Object} tarea - Objeto tarea.
- * @param {Object} materia - Materia a la que pertenece (para el color).
- * @returns {HTMLElement} Elemento li de tarea.
+ * @param {Object} materia - Materia correspondiente.
+ * @returns {HTMLElement} Elemento li.
  */
 function crearElementoTarea(tarea, materia) {
     const li = document.createElement('li');
     li.className = 'tarea-item';
     if (tarea.completada) li.classList.add('completada');
 
-    // Checkbox circular
     const checkbox = document.createElement('button');
     checkbox.className = 'checkbox' + (tarea.completada ? ' checked' : '');
     checkbox.style.borderColor = materia.color;
@@ -221,7 +122,6 @@ function crearElementoTarea(tarea, materia) {
         inicializarVistaResumen(contenedor);
     });
 
-    // Contenido de la tarea
     const contenido = document.createElement('div');
     contenido.className = 'contenido-tarea';
 
@@ -247,7 +147,6 @@ function crearElementoTarea(tarea, materia) {
     contenido.appendChild(texto);
     contenido.appendChild(meta);
 
-    // Botón eliminar
     const btnEliminar = document.createElement('button');
     btnEliminar.className = 'btn-eliminar';
     btnEliminar.innerHTML = '✖';
@@ -267,17 +166,15 @@ function crearElementoTarea(tarea, materia) {
 }
 
 /**
- * Inicializa la vista de resumen dentro del contenedor principal.
- * @param {HTMLElement} contenedor - Contenedor donde se renderizará la vista.
+ * Inicializa la vista de resumen.
+ * @param {HTMLElement} contenedor - Contenedor principal.
  */
 export function inicializarVistaResumen(contenedor) {
-    // Limpiamos el contenedor
     contenedor.innerHTML = '';
 
-    // Cargamos todas las tareas
     const tareas = cargarTareas();
 
-    // Encabezado de la sección
+    // Título
     const titulo = document.createElement('h2');
     titulo.innerHTML = '📚 Mis Tareas <span style="font-size:0.8rem; color:var(--texto-suave);">(Resumen general)</span>';
     contenedor.appendChild(titulo);
@@ -296,13 +193,11 @@ export function inicializarVistaResumen(contenedor) {
     btnAgregar.className = 'btn btn-primario';
     btnAgregar.textContent = '➕ Agregar Tarea';
     btnAgregar.addEventListener('click', () => {
-        // Crear modal si no existe, o reutilizar
-        let modal = document.getElementById('modal-agregar-tarea');
-        if (!modal) {
-            modal = crearModalAgregar();
-            document.body.appendChild(modal);
-        }
-        abrirModal(modal);
+        abrirModal();
+        // Escuchar el evento de tarea agregada para refrescar
+        document.getElementById('modal-agregar-tarea').addEventListener('tarea-agregada', () => {
+            inicializarVistaResumen(contenedor);
+        }, { once: true });
     });
 
     const btnLimpiar = document.createElement('button');
