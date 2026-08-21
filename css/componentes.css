@@ -1,0 +1,447 @@
+/* =========================================
+   Organizador Kawaii — Componentes reutilizables
+   Archivo: ./css/componentes.css
+   Propósito: Estilos para botones, tarjetas, formularios,
+              modal, listas de tareas, barras de progreso y
+              demás componentes que se usan en toda la aplicación.
+   Último cambio: 2026-08-21 — Creación inicial
+   ========================================= */
+
+/* ========== BOTONES ========== */
+/* Estilo base para todos los botones de la aplicación.
+   Se utiliza en el encabezado, en las listas de tareas y en formularios. */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 50px;
+    font-family: var(--fuente-cuerpo);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transicion);
+    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+/* Efecto al pasar el mouse por cualquier botón */
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.45);
+}
+
+/* Efecto al hacer clic (presionar) */
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+}
+
+/* Botón principal: usado para acciones destacadas como "Agregar" o "Guardar".
+   Tiene un degradado rosa que llama la atención. */
+.btn-primario {
+    background: linear-gradient(135deg, var(--rosa), var(--rosa-fuerte));
+    color: white;
+    font-size: 1.05rem;
+    padding: 14px 28px;
+}
+
+.btn-primario:hover {
+    background: linear-gradient(135deg, var(--rosa-fuerte), #ff4d9e);
+}
+
+/* Botón secundario: fondo blanco con borde rosa.
+   Útil para acciones menos importantes como "Cancelar". */
+.btn-secundario {
+    background: var(--blanco);
+    color: var(--rosa-fuerte);
+    border: 2px solid var(--rosa-medio);
+}
+
+.btn-secundario:hover {
+    background: var(--rosa-claro);
+    border-color: var(--rosa-fuerte);
+}
+
+/* Botón de peligro: para eliminar elementos.
+   Usa rojo para indicar precaución. */
+.btn-peligro {
+    background: #ff6b6b;
+    color: white;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    box-shadow: 0 3px 10px rgba(255, 107, 107, 0.3);
+}
+
+.btn-peligro:hover {
+    background: #ff5252;
+    box-shadow: 0 6px 16px rgba(255, 107, 107, 0.5);
+}
+
+/* Botón de eliminar tarea (dentro de cada tarea) */
+.btn-eliminar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #ff6b6b;
+    transition: var(--transicion);
+    padding: 4px 6px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.btn-eliminar:hover {
+    background: #ffe0e0;
+    transform: scale(1.2);
+    color: #e53935;
+}
+
+/* ========== TARJETAS (Cards) ========== */
+/* Estructura general de una tarjeta.
+   Se usa para las materias en el resumen y en las vistas de asignatura. */
+.tarjeta {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radio);
+    padding: 22px;
+    box-shadow: var(--sombra);
+    border: 3px solid var(--rosa-claro);
+    transition: var(--transicion);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto al pasar el mouse sobre la tarjeta */
+.tarjeta:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--sombra-hover);
+    border-color: var(--rosa-medio);
+}
+
+/* ========== FORMULARIOS ========== */
+/* Cada grupo de campo de formulario: etiqueta + input/select */
+.form-grupo {
+    margin-bottom: 16px;
+}
+
+.form-grupo label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--texto);
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+}
+
+/* Estilo para inputs y selects, con borde redondeado y suave */
+.form-grupo input,
+.form-grupo select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 3px solid var(--rosa-claro);
+    border-radius: var(--radio-peq);
+    font-family: var(--fuente-cuerpo);
+    font-size: 1rem;
+    color: var(--texto);
+    background: var(--blanco);
+    transition: var(--transicion);
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+/* Al enfocar un campo, resaltamos con rosa */
+.form-grupo input:focus,
+.form-grupo select:focus {
+    border-color: var(--rosa-fuerte);
+    box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.15);
+    background: #fffafc;
+}
+
+/* Select con flecha personalizada */
+.form-grupo select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='%23ff69b4'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+}
+
+/* Contenedor de botones en formularios */
+.form-botones {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 22px;
+    flex-wrap: wrap;
+}
+
+/* ========== MODAL ========== */
+/* Superposición oscura detrás del modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: fundido 0.3s ease-out;
+}
+
+/* Clase que muestra el modal */
+.modal-overlay.activo {
+    display: flex;
+}
+
+@keyframes fundido {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Caja del modal */
+.modal {
+    background: var(--blanco);
+    border-radius: var(--radio);
+    padding: 30px 28px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(255, 105, 180, 0.4);
+    border: 4px solid var(--rosa-medio);
+    position: relative;
+    animation: salto 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes salto {
+    from { opacity: 0; transform: translateY(30px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal h3 {
+    font-family: var(--fuente-titulos);
+    font-size: 1.7rem;
+    color: var(--rosa-fuerte);
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* Botón para cerrar el modal (esquina superior derecha) */
+.modal .cerrar-modal {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--rosa-fuerte);
+    transition: var(--transicion);
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.modal .cerrar-modal:hover {
+    background: var(--rosa-claro);
+    transform: rotate(90deg);
+}
+
+/* ========== LISTA DE TAREAS ========== */
+/* Contenedor de lista sin viñetas */
+.lista-tareas {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Cada elemento de tarea */
+.tarea-item {
+    background: var(--blanco);
+    border-radius: var(--radio-peq);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 3px 8px rgba(255, 105, 180, 0.12);
+    border: 2px solid var(--rosa-claro);
+    transition: var(--transicion);
+    animation: aparecer 0.3s ease-out;
+}
+
+/* Al pasar el mouse sobre una tarea, se resalta y desplaza levemente */
+.tarea-item:hover {
+    border-color: var(--rosa-medio);
+    box-shadow: 0 6px 14px rgba(255, 105, 180, 0.2);
+    transform: translateX(4px);
+}
+
+/* Tarea completada: menor opacidad y texto tachado */
+.tarea-item.completada {
+    opacity: 0.6;
+    background: var(--lila-claro);
+    border-color: var(--lila);
+}
+
+.tarea-item.completada .texto-tarea {
+    text-decoration: line-through;
+    color: var(--texto-suave);
+}
+
+/* Checkbox circular personalizado */
+.checkbox {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 3px solid var(--rosa);
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transicion);
+    background: white;
+}
+
+.checkbox:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
+}
+
+/* Checkbox marcado: fondo rosa y signo de verificación */
+.checkbox.checked {
+    background: var(--rosa);
+    border-color: var(--rosa);
+}
+
+.checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-weight: 800;
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+/* Contenido de la tarea (texto y metadatos) */
+.contenido-tarea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.texto-tarea {
+    font-weight: 600;
+    color: var(--texto);
+    font-size: 0.95rem;
+    word-break: break-word;
+}
+
+/* Metadatos de la tarea: fecha y prioridad */
+.meta-tarea {
+    display: flex;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: var(--texto-suave);
+    flex-wrap: wrap;
+}
+
+/* Etiqueta de prioridad */
+.prioridad {
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+}
+
+.prioridad-alta { background: #ffe0e0; color: #e53935; }
+.prioridad-media { background: #fff8e1; color: #f9a825; }
+.prioridad-baja { background: #e0f5e0; color: #2e7d32; }
+
+/* Etiqueta de fecha */
+.fecha-tarea {
+    background: var(--rosa-claro);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+/* Mensaje cuando no hay tareas */
+.sin-tareas {
+    text-align: center;
+    color: var(--texto-suave);
+    font-style: italic;
+    padding: 15px;
+    font-size: 0.9rem;
+}
+
+/* Animación de aparición para tareas */
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(10px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ========== BARRA DE PROGRESO ========== */
+/* Contenedor de la barra de progreso global */
+.progreso-global {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    padding: 15px 20px;
+    border-radius: 50px;
+    box-shadow: var(--sombra);
+    border: 2px solid var(--rosa-claro);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Barra de progreso (fondo) */
+.progreso-global .barra {
+    flex: 1;
+    height: 14px;
+    background: var(--rosa-claro);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Relleno de la barra (avance) */
+.progreso-global .barra .relleno {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rosa), var(--rosa-fuerte));
+    border-radius: 20px;
+    transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    width: 0%;
+}
+
+/* Texto del porcentaje */
+.progreso-global .porcentaje {
+    font-weight: 700;
+    color: var(--rosa-fuerte);
+    font-size: 1.1rem;
+    min-width: 48px;
+    text-align: center;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .btn {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+    }
+    .modal {
+        padding: 22px 18px;
+    }
+}
