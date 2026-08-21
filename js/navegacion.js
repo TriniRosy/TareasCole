@@ -3,44 +3,44 @@
    Archivo: ./js/navegacion.js
    Propósito: Manejar la navegación entre páginas de la SPA usando
               el hash de la URL (ej. #/inicio, #/matematica).
-              Se encarga de mostrar/ocultar el contenido según la ruta
-              activa y de cargar las vistas correspondientes.
-   Último cambio: 2026-08-21 — Creación inicial
+              Se encarga de cargar la vista correspondiente y de
+              actualizar el enlace activo.
+   Último cambio: 2026-08-21 — Se añadió soporte para vista genérica
+              de asignaturas pendientes.
    ========================================= */
 
 // ========== IMPORTACIONES ==========
 import { inicializarMatematica } from './asignaturas/matematica/matematica.js';
 import { inicializarVistaResumen } from './vistas/vistaResumen.js';
 import { inicializarVistaHorario } from './vistas/vistaHorario.js';
+import { inicializarVistaAsignatura } from './vistas/vistaAsignaturaGenerica.js';
+import { obtenerMaterias } from './datos/materias.js';
 
 // ========== CONSTANTES ==========
-// Contenedor principal donde se renderizan las vistas
 const CONTENEDOR_PRINCIPAL = 'contenido-principal';
 
 // ========== FUNCIONES DE NAVEGACIÓN ==========
+
 /**
  * Obtiene la ruta actual a partir del hash de la URL.
- * Si no hay hash, devuelve '/inicio' como ruta por defecto.
- * @returns {string} Ruta actual (ej. '/matematica')
+ * @returns {string} Ruta actual (ej. '/matematica').
  */
 function obtenerRutaActual() {
     const hash = window.location.hash;
     if (!hash) return '/inicio';
-    // Eliminamos el símbolo '#' y cualquier barra inicial adicional
     return hash.replace(/^#/, '') || '/inicio';
 }
 
 /**
- * Navega a una ruta específica cambiando el hash de la URL.
- * Esto dispara el evento 'hashchange' que actualiza la vista.
- * @param {string} ruta - Ruta destino (ej. '/matematica')
+ * Navega a una ruta específica cambiando el hash.
+ * @param {string} ruta - Ruta destino.
  */
 export function navegarA(ruta) {
     window.location.hash = ruta;
 }
 
 /**
- * Limpia el contenedor principal para preparar la nueva vista.
+ * Limpia el contenedor principal.
  */
 function limpiarContenedor() {
     const contenedor = document.getElementById(CONTENEDOR_PRINCIPAL);
@@ -50,17 +50,13 @@ function limpiarContenedor() {
 }
 
 /**
- * Marca como activo el enlace de navegación correspondiente a la ruta actual.
- * Esto permite resaltar visualmente la página donde nos encontramos.
- * @param {string} rutaActual - Ruta activa (ej. '/matematica')
+ * Actualiza el enlace activo en la barra de navegación.
+ * @param {string} rutaActual - Ruta activa.
  */
 function actualizarEnlaceActivo(rutaActual) {
-    // Quitamos la clase 'activo' de todos los enlaces
     document.querySelectorAll('.enlace-nav').forEach(enlace => {
         enlace.classList.remove('activo');
     });
-
-    // Buscamos el enlace cuyo href coincide con la ruta actual
     const enlaceActivo = document.querySelector(`.enlace-nav[href="#${rutaActual}"]`);
     if (enlaceActivo) {
         enlaceActivo.classList.add('activo');
@@ -69,40 +65,44 @@ function actualizarEnlaceActivo(rutaActual) {
 
 /**
  * Determina qué vista cargar según la ruta y delega la inicialización.
- * @param {string} rutaActual - Ruta activa (ej. '/matematica')
+ * @param {string} rutaActual - Ruta activa.
  */
 function cargarVista(rutaActual) {
     const contenedor = document.getElementById(CONTENEDOR_PRINCIPAL);
     if (!contenedor) return;
 
-    // Limpiamos el contenido anterior
     limpiarContenedor();
 
-    // Dependiendo de la ruta, llamamos a la función de inicialización correspondiente
-    if (rutaActual.startsWith('/matematica')) {
-        // Vista de Matemática (piloto)
-        inicializarMatematica(contenedor);
+    if (rutaActual === '/inicio') {
+        // Vista de resumen general
+        inicializarVistaResumen(contenedor);
     } else if (rutaActual === '/horario') {
         // Vista del horario editable
         inicializarVistaHorario(contenedor);
+    } else if (rutaActual === '/matematica') {
+        // Vista específica de Matemática (piloto)
+        inicializarMatematica(contenedor);
     } else {
-        // Vista de inicio (resumen)
-        inicializarVistaResumen(contenedor);
+        // Verificar si la ruta corresponde a una materia conocida
+        const materias = obtenerMaterias();
+        const materiaEncontrada = materias.find(m => '/' + m.ruta === rutaActual);
+        if (materiaEncontrada) {
+            // Vista genérica para materias sin implementación específica
+            inicializarVistaAsignatura(contenedor, materiaEncontrada.ruta);
+        } else {
+            // Ruta desconocida, ir a inicio
+            navegarA('/inicio');
+        }
     }
 
-    // Actualizamos el enlace activo en la navegación
     actualizarEnlaceActivo(rutaActual);
 }
 
 /**
  * Inicializa el sistema de navegación.
- * Escucha los cambios de hash y carga la vista correspondiente.
  */
 export function inicializarNavegacion() {
-    // Cargar la vista inicial según el hash actual
     cargarVista(obtenerRutaActual());
-
-    // Escuchar cambios en el hash (cuando el usuario navega manualmente)
     window.addEventListener('hashchange', () => {
         cargarVista(obtenerRutaActual());
     });
