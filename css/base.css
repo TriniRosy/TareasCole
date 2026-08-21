@@ -1,0 +1,115 @@
+/* =========================================
+   Organizador Kawaii — Estilos base
+   Archivo: ./css/base.css
+   Propósito: Reset, variables CSS globales, estilos generales
+              para toda la aplicación.
+   Último cambio: 2026-08-21 — Creación inicial
+   ========================================= */
+
+/* ========== VARIABLES GLOBALES ========== */
+:root {
+    /* Colores principales */
+    --rosa: #ffb6c1;
+    --rosa-claro: #ffe4e9;
+    --rosa-medio: #ffc0cb;
+    --rosa-fuerte: #ff69b4;
+    --lila: #e6d0f0;
+    --lila-claro: #f3e8fa;
+    --blanco: #ffffff;
+    --texto: #5a4a5a;
+    --texto-suave: #8a7a8a;
+
+    /* Sombras */
+    --sombra: 0 8px 25px rgba(255, 105, 180, 0.25);
+    --sombra-hover: 0 12px 35px rgba(255, 105, 180, 0.4);
+    --sombra-suave: 0 2px 8px rgba(255, 105, 180, 0.15);
+
+    /* Bordes */
+    --borde-rosa: 3px solid #ffb6c1;
+    --radio: 24px;
+    --radio-peq: 16px;
+
+    /* Transiciones */
+    --transicion: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Tipografías */
+    --fuente-titulos: 'Baloo 2', cursive;
+    --fuente-cuerpo: 'Quicksand', sans-serif;
+}
+
+/* ========== RESET Y ESTILOS BASE ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--fuente-cuerpo);
+    background: linear-gradient(135deg, #ffe4e9 0%, #f8d5e8 25%, #e8d5f5 60%, #d5e8f5 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    color: var(--texto);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Barra de desplazamiento personalizada */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--rosa-claro);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--rosa-medio);
+    border-radius: 10px;
+    border: 2px solid var(--rosa-claro);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--rosa-fuerte);
+}
+
+/* Estilos para enlaces */
+a {
+    color: var(--rosa-fuerte);
+    text-decoration: none;
+    transition: var(--transicion);
+}
+
+a:hover {
+    color: #ff4d9e;
+    text-decoration: underline;
+}
+
+/* Estilos para listas */
+ul, ol {
+    list-style: none;
+}
+
+/* Estilos para imágenes */
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Clase para ocultar elementos visualmente pero mantener accesibilidad */
+.oculto-visualmente {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
