@@ -3,22 +3,33 @@
    Archivo: ./js/vistas/vistaHorario.js
    Propósito: Mostrar el horario semanal en formato de tabla.
               Permite editar las asignaturas de cada bloque horario
-              mediante un modo edición con selects.
-   Último cambio: 2026-08-21 — Creación inicial
+              mediante un modo edición con selects. En modo visualización,
+              las celdas con materia son enlaces a la página de esa materia.
+   Último cambio: 2026-08-21 — Se añadieron enlaces en celdas
    ========================================= */
 
 // ========== IMPORTACIONES ==========
 import { cargarHorario, guardarHorario, obtenerDias } from '../datos/horario.js';
 import { obtenerMaterias } from '../datos/materias.js';
 
-// ========== FUNCIONES DE RENDERIZADO ==========
+// ========== FUNCIONES AUXILIARES ==========
+/**
+ * Obtiene la ruta de una materia a partir de su nombre.
+ * Si no la encuentra, devuelve null.
+ * @param {string} nombreMateria - Nombre de la materia.
+ * @returns {string|null} Ruta de la materia o null.
+ */
+function obtenerRutaDeMateria(nombreMateria) {
+    const materias = obtenerMaterias();
+    const materia = materias.find(m => m.nombre === nombreMateria);
+    return materia ? materia.ruta : null;
+}
 
 /**
  * Inicializa la vista del horario dentro del contenedor.
  * @param {HTMLElement} contenedor - Contenedor donde se renderizará.
  */
 export function inicializarVistaHorario(contenedor) {
-    // Limpiamos el contenedor
     contenedor.innerHTML = '';
 
     // Título
@@ -120,13 +131,31 @@ export function inicializarVistaHorario(contenedor) {
 
                 td.appendChild(select);
             } else {
-                // Modo visualización: texto simple
-                td.textContent = bloque[dia] || 'Recreo';
-                // Aplicar clase según materia para color
-                if (bloque[dia] && bloque[dia] !== 'Recreo') {
-                    td.classList.add('mat-' + bloque[dia].toLowerCase().replace(/\s+/g, ''));
-                } else if (bloque[dia] === 'Recreo') {
-                    td.classList.add('recreo');
+                // Modo visualización: enlace si es materia, texto si es recreo
+                const nombreMateria = bloque[dia] || 'Recreo';
+                if (nombreMateria && nombreMateria !== 'Recreo') {
+                    const ruta = obtenerRutaDeMateria(nombreMateria);
+                    if (ruta) {
+                        const enlace = document.createElement('a');
+                        enlace.href = `#/${ruta}`;
+                        enlace.textContent = nombreMateria;
+                        enlace.style.color = 'var(--texto)';
+                        enlace.style.textDecoration = 'none';
+                        enlace.style.fontWeight = '600';
+                        enlace.style.display = 'block';
+                        enlace.style.width = '100%';
+                        enlace.style.height = '100%';
+                        enlace.addEventListener('click', (evento) => {
+                            // No prevenir, dejamos que el hash cambie normalmente
+                            // Solo para asegurar que no se active el modo edición
+                            evento.stopPropagation();
+                        });
+                        td.appendChild(enlace);
+                    } else {
+                        td.textContent = nombreMateria;
+                    }
+                } else {
+                    td.textContent = '☕ Recreo';
                 }
             }
             fila.appendChild(td);
