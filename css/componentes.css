@@ -1,11 +1,13 @@
 /* =========================================
    Organizador Kawaii — Componentes reutilizables
    Archivo: ./css/componentes.css
-   Versión: 1.1.0
+   Versión: 1.1.1
    Propósito: Estilos para botones, tarjetas, formularios,
               modal, listas de tareas, barras de progreso y
               barra lateral con degradado pastel y bordes izquierdos.
-   Último cambio: 2026-08-27 — Se añadieron estilos para la barra lateral.
+   Último cambio: 2026-08-27 — Ajustada la barra lateral para quedar
+              justo debajo del header (sticky top = 70px) y corrección
+              del contenedor.
    ========================================= */
 
 /* ========== BOTONES ========== */
@@ -90,18 +92,20 @@
 }
 
 /* ========== BARRA LATERAL ========== */
-/* Contenedor de la barra lateral (se llena con JS) */
+/* Contenedor de la barra lateral: ocupa el ancho y define la posición sticky
+   justo debajo del header (top: 70px; altura: calc(100vh - 70px)). */
 .barra-lateral-contenedor {
     width: 280px;
     min-width: 280px;
-    height: calc(100vh - 80px); /* debajo de barra superior */
     position: sticky;
-    top: 80px; /* altura de la barra superior */
+    top: 70px; /* altura exacta del header */
+    height: calc(100vh - 70px);
     overflow-y: auto;
     z-index: 50;
+    /* El fondo y bordes los aplica el hijo .barra-lateral */
 }
 
-/* Estilo principal de la barra lateral: degradado pastel + borde izquierdo */
+/* Estilo visual de la barra lateral generada por JS */
 .barra-lateral {
     background: linear-gradient(180deg, #ffe4e9 0%, #f8d5e8 50%, #e8d5f5 100%);
     padding: 20px 0 20px 15px;
@@ -116,10 +120,19 @@
 .barra-lateral h3 {
     font-family: var(--fuente-titulos);
     color: var(--rosa-fuerte);
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     text-align: center;
     font-size: 1.4rem;
     padding-right: 15px;
+}
+
+.barra-lateral .saludo-usuario {
+    text-align: center;
+    font-weight: 600;
+    color: var(--texto-suave);
+    margin-bottom: 10px;
+    padding-right: 15px;
+    font-size: 0.9rem;
 }
 
 .barra-lateral .enlace-lateral {
@@ -483,7 +496,7 @@
         z-index: 90;
         box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
         overflow-y: auto;
-        background: transparent; /* el fondo lo da .barra-lateral */
+        background: transparent;
     }
 
     .barra-lateral-contenedor.abierta {
