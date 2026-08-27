@@ -1,21 +1,20 @@
 /* =========================================
    Organizador Kawaii — Vista de resumen (inicio)
    Archivo: ./js/vistas/vistaResumen.js
-   Propósito: Mostrar el resumen general de tareas: barra de progreso,
-              botones de acción y sección "Próximas entregas" con las
-              tres tareas más próximas. Ya no muestra tarjetas de materias
-              porque la barra lateral se encarga de la navegación.
-   Último cambio: 2026-08-21 — Se eliminó grid de materias y se añadió
-              próxima entregas.
+   Versión: 1.1.0
+   Propósito: Mostrar el resumen general de tareas, con barra de
+              progreso global, sección "Próximas entregas" y botón
+              para agregar tarea. Ya no lista las tarjetas de materias.
+   Último cambio: 2026-08-27 — Se eliminaron tarjetas de materias y se
+              añadió sección de próximas entregas.
    ========================================= */
 
 // ========== IMPORTACIONES ==========
-import { cargarTareas, alternarTarea, eliminarTarea, limpiarCompletadas } from '../datos/tareas.js';
-import { formatearFechaCorta } from '../utilidades/fecha.js';
+import { cargarTareas, limpiarCompletadas } from '../datos/tareas.js';
 import { abrirModal } from './modalNuevaTarea.js';
+import { formatearFechaCorta } from '../utilidades/fecha.js';
 
 // ========== FUNCIONES DE RENDERIZADO ==========
-
 /**
  * Crea la barra de progreso global con el porcentaje de tareas completadas.
  * @param {Array} tareas - Lista completa de tareas.
@@ -39,53 +38,52 @@ function crearBarraProgreso(tareas) {
 }
 
 /**
- * Crea la sección de "Próximas entregas" con las 3 tareas más cercanas
- * que no están completadas.
+ * Obtiene las 3 tareas más próximas sin completar, ordenadas por fecha.
  * @param {Array} tareas - Lista completa de tareas.
- * @returns {HTMLElement} Tarjeta con la lista de próximas entregas.
+ * @returns {Array} Lista de hasta 3 tareas pendientes más cercanas.
  */
-function crearProximasEntregas(tareas) {
-    // Filtramos tareas no completadas y las ordenamos por fecha ascendente
-    const tareasPendientes = tareas
-        .filter(t => !t.completada)
-        .sort((a, b) => (a.fecha || '').localeCompare(b.fecha || ''));
+function obtenerProximasEntregas(tareas) {
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0); // Para comparar solo fechas
 
-    // Tomamos las tres primeras
-    const proximas = tareasPendientes.slice(0, 3);
-
-    const tarjeta = document.createElement('div');
-    tarjeta.className = 'tarjeta';
-    tarjeta.innerHTML = '<h3>⏰ Próximas entregas</h3>';
-
-    if (proximas.length === 0) {
-        tarjeta.innerHTML += '<p class="sin-tareas">✨ No tienes tareas pendientes ✨</p>';
-        return tarjeta;
-    }
-
-    const lista = document.createElement('ul');
-    lista.className = 'lista-tareas';
-    proximas.forEach(tarea => {
-        const li = document.createElement('li');
-        li.className = 'tarea-item';
-        li.innerHTML = `
-            <div class="contenido-tarea">
-                <span class="texto-tarea">${tarea.emoji || '📌'} ${tarea.texto}</span>
-                <div class="meta-tarea">
-                    ${tarea.fecha ? `<span class="fecha-tarea">📅 ${formatearFechaCorta(tarea.fecha)}</span>` : ''}
-                    ${tarea.materia ? `<span class="prioridad" style="background:var(--rosa-claro); color:var(--rosa-fuerte);">${tarea.materia}</span>` : ''}
-                </div>
-            </div>
-        `;
-        lista.appendChild(li);
-    });
-
-    tarjeta.appendChild(lista);
-    return tarjeta;
+    return tareas
+        .filter(t => !t.completada && t.fecha)
+        .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+        .slice(0, 3);
 }
 
 /**
- * Inicializa la vista de resumen.
- * @param {HTMLElement} contenedor - Contenedor principal.
+ * Crea la lista de próximas entregas.
+ * @param {Array} tareas - Lista completa de tareas.
+ * @returns {HTMLElement} Elemento de lista con próximas entregas.
+ */
+function crearProximasEntregas(tareas) {
+    const proximas = obtenerProximasEntregas(tareas);
+    const lista = document.createElement('ul');
+    lista.className = 'proximas-entregas';
+
+    if (proximas.length === 0) {
+        const li = document.createElement('li');
+        li.className = 'sin-tareas';
+        li.textContent = '✨ No hay tareas pendientes con fecha ✨';
+        lista.appendChild(li);
+    } else {
+        proximas.forEach(tarea => {
+            const li = document.createElement('li');
+            li.className = 'proxima-entrega-item';
+            li.innerHTML = `
+                <span>${tarea.emoji || ''} ${tarea.texto}</span>
+                <span class="fecha-tarea">📅 ${formatearFechaCorta(tarea.fecha)}</span>
+            `;
+            lista.appendChild(li);
+        });
+    }
+    return lista;
+}
+
+/**
+ * Inicializa la vista de resumen dentro del contenedor principal.
+ * @param {HTMLElement} contenedor - Contenedor donde se renderizará.
  */
 export function inicializarVistaResumen(contenedor) {
     contenedor.innerHTML = '';
@@ -94,42 +92,40 @@ export function inicializarVistaResumen(contenedor) {
 
     // Título
     const titulo = document.createElement('h2');
-    titulo.innerHTML = '📚 Mis Tareas <span style="font-size:0.8rem; color:var(--texto-suave);">(Resumen general)</span>';
+    titulo.textContent = '📚 Resumen General';
+    titulo.style.color = 'var(--rosa-fuerte)';
     contenedor.appendChild(titulo);
 
     // Barra de progreso
     contenedor.appendChild(crearBarraProgreso(tareas));
 
-    // Botones de acción
-    const contenedorBotones = document.createElement('div');
-    contenedorBotones.style.display = 'flex';
-    contenedorBotones.style.gap = '12px';
-    contenedorBotones.style.margin = '20px 0';
-    contenedorBotones.style.flexWrap = 'wrap';
+    // Sección "Próximas entregas"
+    const tarjetaProximas = document.createElement('div');
+    tarjetaProximas.className = 'tarjeta';
+    tarjetaProximas.innerHTML = '<h3>⏰ Próximas entregas</h3>';
+    tarjetaProximas.appendChild(crearProximasEntregas(tareas));
+    contenedor.appendChild(tarjetaProximas);
 
+    // Botón para agregar tarea
     const btnAgregar = document.createElement('button');
     btnAgregar.className = 'btn btn-primario';
     btnAgregar.textContent = '➕ Agregar Tarea';
     btnAgregar.addEventListener('click', () => {
         abrirModal();
-        // Escuchar el evento de tarea agregada para refrescar la vista
         document.getElementById('modal-agregar-tarea').addEventListener('tarea-agregada', () => {
             inicializarVistaResumen(contenedor);
         }, { once: true });
     });
+    contenedor.appendChild(btnAgregar);
 
+    // Botón para limpiar completadas
     const btnLimpiar = document.createElement('button');
     btnLimpiar.className = 'btn btn-secundario';
     btnLimpiar.textContent = '🧹 Limpiar Completadas';
+    btnLimpiar.style.marginLeft = '10px';
     btnLimpiar.addEventListener('click', () => {
         limpiarCompletadas();
         inicializarVistaResumen(contenedor);
     });
-
-    contenedorBotones.appendChild(btnAgregar);
-    contenedorBotones.appendChild(btnLimpiar);
-    contenedor.appendChild(contenedorBotones);
-
-    // Sección de próximas entregas
-    contenedor.appendChild(crearProximasEntregas(tareas));
+    contenedor.appendChild(btnLimpiar);
 }
