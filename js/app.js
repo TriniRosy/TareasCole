@@ -2,23 +2,20 @@
    Organizador Kawaii — Punto de entrada
    Archivo: ./js/app.js
    Propósito: Inicializar la aplicación, configurar el enrutador,
-              actualizar fecha y saludo, y cargar los enlaces de materias
-              en la navegación. Este es el primer script que se ejecuta
-              al cargar la página.
-   Último cambio: 2026-08-21 — Creación inicial
+              actualizar fecha y saludo, e inicializar la barra lateral.
+              Este es el primer script que se ejecuta al cargar la página.
+   Último cambio: 2026-08-21 — Se añadió inicialización de barra lateral
    ========================================= */
 
 // ========== IMPORTACIONES ==========
-// Importamos las funciones y datos desde otros módulos.
-// En ES6, las importaciones se realizan al inicio del archivo.
 import { inicializarNavegacion, navegarA } from './navegacion.js';
-import { obtenerMaterias } from './datos/materias.js';
+import { inicializarBarraLateral } from './componentes/barraLateral.js';
 import { formatearFechaActual } from './utilidades/fecha.js';
 
 // ========== FUNCIONES DE INICIALIZACIÓN ==========
 /**
  * Actualiza el texto de la fecha actual y el saludo según la hora del día.
- * Esta función se ejecuta al cargar la aplicación y luego cada minuto.
+ * Se ejecuta al cargar la aplicación y luego cada minuto.
  */
 function actualizarFechaYsaludo() {
     const fechaActual = formatearFechaActual();
@@ -41,36 +38,16 @@ function actualizarFechaYsaludo() {
 }
 
 /**
- * Genera los enlaces de navegación para cada materia.
- * Los enlaces se insertan en el elemento con id "enlaces-materias".
- * Cada enlace apunta a la ruta hash correspondiente (ej. #/matematica).
- */
-function cargarEnlacesMaterias() {
-    const contenedorEnlaces = document.getElementById('enlaces-materias');
-    if (!contenedorEnlaces) return;
-
-    const materias = obtenerMaterias();
-    materias.forEach(materia => {
-        const enlace = document.createElement('a');
-        enlace.href = `#/${materia.ruta}`;
-        enlace.className = 'enlace-nav';
-        enlace.textContent = `${materia.emoji} ${materia.nombre}`;
-        contenedorEnlaces.appendChild(enlace);
-    });
-}
-
-/**
  * Función principal de inicialización.
  * Se ejecuta cuando el DOM está completamente cargado.
  */
 function iniciarAplicacion() {
     // 1. Actualizar fecha y saludo
     actualizarFechaYsaludo();
-    // Actualizar cada minuto por si cambia la hora
     setInterval(actualizarFechaYsaludo, 60000);
 
-    // 2. Cargar enlaces de materias en la barra de navegación
-    cargarEnlacesMaterias();
+    // 2. Inicializar la barra lateral (menú de navegación)
+    inicializarBarraLateral();
 
     // 3. Inicializar el sistema de navegación (enrutador por hash)
     inicializarNavegacion();
@@ -82,6 +59,4 @@ function iniciarAplicacion() {
 }
 
 // ========== ARRANQUE ==========
-// Esperamos a que el DOM esté listo para ejecutar la aplicación.
-// Usamos 'DOMContentLoaded' para asegurar que todos los elementos HTML existen.
 document.addEventListener('DOMContentLoaded', iniciarAplicacion);
