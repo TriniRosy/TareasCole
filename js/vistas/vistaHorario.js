@@ -1,11 +1,12 @@
 /* =========================================
    Organizador Kawaii — Vista de horario
    Archivo: ./js/vistas/vistaHorario.js
+   Versión: 1.1.0
    Propósito: Mostrar el horario semanal en formato de tabla.
-              Permite editar las asignaturas de cada bloque horario
-              mediante un modo edición con selects. En modo visualización,
-              las celdas con materia son enlaces a la página de esa materia.
-   Último cambio: 2026-08-21 — Se añadieron enlaces en celdas
+              Permite editar las asignaturas de cada bloque horario.
+              En modo visualización, las celdas de materias son enlaces
+              directos a la vista de la materia correspondiente.
+   Último cambio: 2026-08-27 — Añadidos enlaces directos a materias.
    ========================================= */
 
 // ========== IMPORTACIONES ==========
@@ -14,15 +15,14 @@ import { obtenerMaterias } from '../datos/materias.js';
 
 // ========== FUNCIONES AUXILIARES ==========
 /**
- * Obtiene la ruta de una materia a partir de su nombre.
- * Si no la encuentra, devuelve null.
- * @param {string} nombreMateria - Nombre de la materia.
- * @returns {string|null} Ruta de la materia o null.
+ * Devuelve la ruta de una materia a partir de su nombre.
+ * @param {string} nombreMateria - Nombre de la materia (ej. 'Matemática').
+ * @returns {string|null} Ruta de la materia o null si no se encuentra.
  */
 function obtenerRutaDeMateria(nombreMateria) {
     const materias = obtenerMaterias();
     const materia = materias.find(m => m.nombre === nombreMateria);
-    return materia ? materia.ruta : null;
+    return materia ? '/' + materia.ruta : null;
 }
 
 /**
@@ -43,18 +43,15 @@ export function inicializarVistaHorario(contenedor) {
     btnEditar.textContent = '✏️ Editar Horario';
     btnEditar.style.marginBottom = '20px';
     btnEditar.addEventListener('click', () => {
-        // Alternar variable global de modo edición
         const modoEdicion = !contenedor.dataset.modoEdicion;
         contenedor.dataset.modoEdicion = modoEdicion ? 'activo' : '';
-        inicializarVistaHorario(contenedor); // Re-renderizar
+        inicializarVistaHorario(contenedor);
     });
     contenedor.appendChild(btnEditar);
 
-    // Cargar horario y días
+    // Cargar datos
     const horario = cargarHorario();
     const dias = obtenerDias();
-
-    // Determinar si estamos en modo edición
     const modoEdicion = contenedor.dataset.modoEdicion === 'activo';
 
     // Crear tabla
@@ -71,7 +68,6 @@ export function inicializarVistaHorario(contenedor) {
     const thHora = document.createElement('th');
     thHora.textContent = 'Hora';
     filaEncabezado.appendChild(thHora);
-
     dias.forEach(dia => {
         const thDia = document.createElement('th');
         thDia.textContent = dia.charAt(0).toUpperCase() + dia.slice(1);
@@ -94,6 +90,8 @@ export function inicializarVistaHorario(contenedor) {
         // Columnas por día
         dias.forEach(dia => {
             const td = document.createElement('td');
+            const valorAsignatura = bloque[dia] || 'Recreo';
+
             if (modoEdicion) {
                 // Modo edición: select con opciones de materias
                 const select = document.createElement('select');
@@ -103,13 +101,11 @@ export function inicializarVistaHorario(contenedor) {
                 select.style.borderRadius = '12px';
                 select.style.fontFamily = 'var(--fuente-cuerpo)';
 
-                // Opción para recreo
                 const opcionRecreo = document.createElement('option');
                 opcionRecreo.value = 'Recreo';
                 opcionRecreo.textContent = '☕ Recreo';
                 select.appendChild(opcionRecreo);
 
-                // Opciones de materias
                 obtenerMaterias().forEach(materia => {
                     const opcion = document.createElement('option');
                     opcion.value = materia.nombre;
@@ -117,45 +113,41 @@ export function inicializarVistaHorario(contenedor) {
                     select.appendChild(opcion);
                 });
 
-                // Seleccionar el valor actual
-                select.value = bloque[dia] || 'Recreo';
+                select.value = valorAsignatura === 'Recreo' ? 'Recreo' : valorAsignatura;
 
-                // Evento change: actualizar horario y guardar
                 select.addEventListener('change', () => {
                     const horarioActual = cargarHorario();
                     horarioActual[indiceBloque][dia] = select.value;
                     guardarHorario(horarioActual);
-                    // Opcional: mostrar retroalimentación visual
                     select.style.borderColor = 'var(--rosa-fuerte)';
                 });
 
                 td.appendChild(select);
             } else {
-                // Modo visualización: enlace si es materia, texto si es recreo
-                const nombreMateria = bloque[dia] || 'Recreo';
-                if (nombreMateria && nombreMateria !== 'Recreo') {
-                    const ruta = obtenerRutaDeMateria(nombreMateria);
-                    if (ruta) {
+                // Modo visualización: mostrar texto o enlace
+                if (valorAsignatura === 'Recreo') {
+                    td.textContent = '☕ Recreo';
+                    td.classList.add('recreo');
+                } else {
+                    const rutaMateria = obtenerRutaDeMateria(valorAsignatura);
+                    if (rutaMateria) {
+                        // Crear enlace directo a la materia
                         const enlace = document.createElement('a');
-                        enlace.href = `#/${ruta}`;
-                        enlace.textContent = nombreMateria;
-                        enlace.style.color = 'var(--texto)';
+                        enlace.href = '#' + rutaMateria;
+                        enlace.textContent = valorAsignatura;
                         enlace.style.textDecoration = 'none';
+                        enlace.style.color = 'inherit';
                         enlace.style.fontWeight = '600';
-                        enlace.style.display = 'block';
-                        enlace.style.width = '100%';
-                        enlace.style.height = '100%';
-                        enlace.addEventListener('click', (evento) => {
-                            // No prevenir, dejamos que el hash cambie normalmente
-                            // Solo para asegurar que no se active el modo edición
-                            evento.stopPropagation();
+                        enlace.addEventListener('click', () => {
+                            // No es necesario más, el hash hará la navegación
                         });
                         td.appendChild(enlace);
                     } else {
-                        td.textContent = nombreMateria;
+                        td.textContent = valorAsignatura;
                     }
-                } else {
-                    td.textContent = '☕ Recreo';
+                    // Aplicar clase según materia para color
+                    const clase = 'mat-' + valorAsignatura.toLowerCase().replace(/\s+/g, '');
+                    td.classList.add(clase);
                 }
             }
             fila.appendChild(td);
