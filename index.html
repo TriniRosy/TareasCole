@@ -13,33 +13,19 @@
     <link rel="stylesheet" href="./css/asignaturas.css">
 </head>
 <body>
-    <!-- Elementos decorativos flotantes -->
-    <div class="flotante" style="top:8%; left:3%;">🌸</div>
-    <div class="flotante" style="top:15%; right:5%; animation-delay:1.5s;">⭐</div>
-    <div class="flotante" style="bottom:20%; left:5%; animation-delay:3s;">💖</div>
-    <div class="flotante" style="bottom:12%; right:8%; animation-delay:4.5s;">✨</div>
-    <div class="flotante" style="top:45%; left:50%; animation-delay:2s; font-size:1.4rem; opacity:0.4;">🌷</div>
-    <div class="flotante" style="top:65%; right:3%; animation-delay:5s;">🎀</div>
-    <div class="flotante" style="bottom:35%; left:2%; animation-delay:3.8s;">💕</div>
-
-    <!-- Encabezado -->
-    <header class="encabezado">
-        <div class="contenedor-encabezado">
-            <h1>🌸 Mi Organizador Kawaii 🌸</h1>
-            <p class="nombre-usuario">✨ Trinidad Quilodrán ✨</p>
-            <p class="fecha-actual" id="fecha-actual"></p>
-            <p class="saludo" id="saludo"></p>
-        </div>
-        <nav class="navegacion-principal">
-            <a href="#/inicio" class="enlace-nav">🏠 Inicio</a>
-            <a href="#/horario" class="enlace-nav">📅 Horario</a>
-            <a href="#/matematica" class="enlace-nav">📐 Matemática</a>
-            <!-- Las demás materias se agregarán dinámicamente desde JS -->
-            <span id="enlaces-materias"></span>
-        </nav>
+    <!-- Barra superior con botón hamburguesa -->
+    <header class="barra-superior">
+        <button class="boton-hamburguesa" id="boton-hamburguesa" aria-label="Abrir menú">☰</button>
+        <span class="titulo-app">🌸 Organizador Kawaii 🌸</span>
     </header>
 
-    <!-- Contenedor principal de la SPA -->
+    <!-- Fondo oscuro para móvil (se activa al abrir la barra) -->
+    <div class="fondo-oscuro" id="fondo-oscuro"></div>
+
+    <!-- Contenedor de la barra lateral (se llenará con JavaScript) -->
+    <div id="contenedor-barra-lateral"></div>
+
+    <!-- Contenido principal de la SPA -->
     <main id="contenido-principal" class="contenido-principal">
         <!-- Aquí se renderizará la vista activa -->
     </main>
