@@ -1,11 +1,12 @@
 /* =========================================
    Organizador Kawaii — Enrutador por hash
    Archivo: ./js/navegacion.js
+   Versión: 1.1.0
    Propósito: Manejar la navegación entre páginas de la SPA usando
-              el hash de la URL. Carga la vista correspondiente y
-              actualiza el enlace activo en la barra lateral.
-   Último cambio: 2026-08-21 — Se adaptó a la barra lateral y se
-              añadió enlace activo para enlaces-lateral.
+              el hash de la URL. Carga la vista correspondiente según
+              la ruta activa. Ya no gestiona enlaces superiores (eso lo
+              hace la barra lateral).
+   Último cambio: 2026-08-27 — Se eliminó actualización de enlaces superiores.
    ========================================= */
 
 // ========== IMPORTACIONES ==========
@@ -19,7 +20,6 @@ import { obtenerMaterias } from './datos/materias.js';
 const CONTENEDOR_PRINCIPAL = 'contenido-principal';
 
 // ========== FUNCIONES DE NAVEGACIÓN ==========
-
 /**
  * Obtiene la ruta actual a partir del hash de la URL.
  * @returns {string} Ruta actual (ej. '/matematica').
@@ -49,25 +49,8 @@ function limpiarContenedor() {
 }
 
 /**
- * Actualiza el enlace activo en la barra lateral.
- * @param {string} rutaActual - Ruta activa (ej. '/matematica').
- */
-function actualizarEnlaceActivo(rutaActual) {
-    // Quitamos la clase 'activo' de todos los enlaces de la barra lateral
-    document.querySelectorAll('.enlace-lateral').forEach(enlace => {
-        enlace.classList.remove('activo');
-    });
-
-    // Buscamos el enlace cuyo href coincide con la ruta actual
-    const enlaceActivo = document.querySelector(`.enlace-lateral[href="#${rutaActual}"]`);
-    if (enlaceActivo) {
-        enlaceActivo.classList.add('activo');
-    }
-}
-
-/**
  * Determina qué vista cargar según la ruta y delega la inicialización.
- * @param {string} rutaActual - Ruta activa.
+ * @param {string} rutaActual - Ruta activa (ej. '/matematica').
  */
 function cargarVista(rutaActual) {
     const contenedor = document.getElementById(CONTENEDOR_PRINCIPAL);
@@ -76,35 +59,32 @@ function cargarVista(rutaActual) {
     limpiarContenedor();
 
     if (rutaActual === '/inicio') {
-        // Vista de resumen general
         inicializarVistaResumen(contenedor);
     } else if (rutaActual === '/horario') {
-        // Vista del horario editable
         inicializarVistaHorario(contenedor);
     } else if (rutaActual === '/matematica') {
-        // Vista específica de Matemática (piloto)
         inicializarMatematica(contenedor);
     } else {
-        // Verificar si la ruta corresponde a una materia conocida
+        // Verificar si la ruta corresponde a una materia
         const materias = obtenerMaterias();
         const materiaEncontrada = materias.find(m => '/' + m.ruta === rutaActual);
         if (materiaEncontrada) {
-            // Vista genérica para materias sin implementación específica
             inicializarVistaAsignatura(contenedor, materiaEncontrada.ruta);
         } else {
             // Ruta desconocida, ir a inicio
             navegarA('/inicio');
         }
     }
-
-    actualizarEnlaceActivo(rutaActual);
 }
 
 /**
  * Inicializa el sistema de navegación.
  */
 export function inicializarNavegacion() {
+    // Cargar la vista inicial según el hash actual
     cargarVista(obtenerRutaActual());
+
+    // Escuchar cambios de hash para cargar la nueva vista
     window.addEventListener('hashchange', () => {
         cargarVista(obtenerRutaActual());
     });
