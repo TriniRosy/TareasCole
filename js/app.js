@@ -1,10 +1,11 @@
 /* =========================================
    Organizador Kawaii — Punto de entrada
    Archivo: ./js/app.js
+   Versión: 1.1.0
    Propósito: Inicializar la aplicación, configurar el enrutador,
-              actualizar fecha y saludo, e inicializar la barra lateral.
-              Este es el primer script que se ejecuta al cargar la página.
-   Último cambio: 2026-08-21 — Se añadió inicialización de barra lateral
+              actualizar fecha y saludo, cargar la barra lateral de
+              navegación y arrancar la vista inicial.
+   Último cambio: 2026-08-27 — Se añadió inicialización de barra lateral.
    ========================================= */
 
 // ========== IMPORTACIONES ==========
@@ -46,13 +47,13 @@ function iniciarAplicacion() {
     actualizarFechaYsaludo();
     setInterval(actualizarFechaYsaludo, 60000);
 
-    // 2. Inicializar la barra lateral (menú de navegación)
+    // 2. Inicializar la barra lateral de navegación
     inicializarBarraLateral();
 
     // 3. Inicializar el sistema de navegación (enrutador por hash)
     inicializarNavegacion();
 
-    // 4. Navegar a la ruta inicial (si no hay hash, ir a #/inicio)
+    // 4. Navegar a la ruta inicial si no hay hash
     if (!window.location.hash) {
         navegarA('/inicio');
     }
