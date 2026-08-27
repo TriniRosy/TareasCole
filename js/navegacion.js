@@ -2,11 +2,10 @@
    Organizador Kawaii — Enrutador por hash
    Archivo: ./js/navegacion.js
    Propósito: Manejar la navegación entre páginas de la SPA usando
-              el hash de la URL (ej. #/inicio, #/matematica).
-              Se encarga de cargar la vista correspondiente y de
-              actualizar el enlace activo.
-   Último cambio: 2026-08-21 — Se añadió soporte para vista genérica
-              de asignaturas pendientes.
+              el hash de la URL. Carga la vista correspondiente y
+              actualiza el enlace activo en la barra lateral.
+   Último cambio: 2026-08-21 — Se adaptó a la barra lateral y se
+              añadió enlace activo para enlaces-lateral.
    ========================================= */
 
 // ========== IMPORTACIONES ==========
@@ -50,14 +49,17 @@ function limpiarContenedor() {
 }
 
 /**
- * Actualiza el enlace activo en la barra de navegación.
- * @param {string} rutaActual - Ruta activa.
+ * Actualiza el enlace activo en la barra lateral.
+ * @param {string} rutaActual - Ruta activa (ej. '/matematica').
  */
 function actualizarEnlaceActivo(rutaActual) {
-    document.querySelectorAll('.enlace-nav').forEach(enlace => {
+    // Quitamos la clase 'activo' de todos los enlaces de la barra lateral
+    document.querySelectorAll('.enlace-lateral').forEach(enlace => {
         enlace.classList.remove('activo');
     });
-    const enlaceActivo = document.querySelector(`.enlace-nav[href="#${rutaActual}"]`);
+
+    // Buscamos el enlace cuyo href coincide con la ruta actual
+    const enlaceActivo = document.querySelector(`.enlace-lateral[href="#${rutaActual}"]`);
     if (enlaceActivo) {
         enlaceActivo.classList.add('activo');
     }
