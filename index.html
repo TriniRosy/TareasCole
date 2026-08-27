@@ -13,22 +13,35 @@
     <link rel="stylesheet" href="./css/asignaturas.css">
 </head>
 <body>
+    <!-- Elementos decorativos flotantes -->
+    <div class="flotante" style="top:8%; left:3%;">🌸</div>
+    <div class="flotante" style="top:15%; right:5%; animation-delay:1.5s;">⭐</div>
+    <div class="flotante" style="bottom:20%; left:5%; animation-delay:3s;">💖</div>
+    <div class="flotante" style="bottom:12%; right:8%; animation-delay:4.5s;">✨</div>
+    <div class="flotante" style="top:45%; left:50%; animation-delay:2s; font-size:1.4rem; opacity:0.4;">🌷</div>
+    <div class="flotante" style="top:65%; right:3%; animation-delay:5s;">🎀</div>
+    <div class="flotante" style="bottom:35%; left:2%; animation-delay:3.8s;">💕</div>
+
     <!-- Barra superior con botón hamburguesa -->
     <header class="barra-superior">
         <button class="boton-hamburguesa" id="boton-hamburguesa" aria-label="Abrir menú">☰</button>
         <span class="titulo-app">🌸 Organizador Kawaii 🌸</span>
+        <span class="nombre-usuario">✨ Trinidad Quilodrán ✨</span>
     </header>
 
-    <!-- Fondo oscuro para móvil (se activa al abrir la barra) -->
+    <!-- Fondo oscuro para menú móvil -->
     <div class="fondo-oscuro" id="fondo-oscuro"></div>
 
-    <!-- Contenedor de la barra lateral (se llenará con JavaScript) -->
-    <div id="contenedor-barra-lateral"></div>
+    <!-- Estructura principal: barra lateral + contenido -->
+    <div class="cuerpo">
+        <!-- La barra lateral se insertará aquí mediante JavaScript -->
+        <nav class="barra-lateral-contenedor" id="barra-lateral-contenedor"></nav>
 
-    <!-- Contenido principal de la SPA -->
-    <main id="contenido-principal" class="contenido-principal">
-        <!-- Aquí se renderizará la vista activa -->
-    </main>
+        <!-- Contenido dinámico de la SPA -->
+        <main id="contenido-principal" class="contenido-principal">
+            <!-- Aquí se renderizará la vista activa -->
+        </main>
+    </div>
 
     <!-- Pie de página -->
     <footer class="pie-pagina">
