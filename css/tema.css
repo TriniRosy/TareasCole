@@ -1,13 +1,14 @@
 /* =========================================
    Organizador Kawaii — Tema visual
    Archivo: ./css/tema.css
-   Versión: 1.1.0
+   Versión: 1.1.1
    Propósito: Estilos del tema rosa kawaii, incluyendo
-              encabezado (barra superior), navegación, contenido principal,
+              barra superior simplificada, estructura de cuerpo,
               pie de página, elementos decorativos flotantes y
-              estructura responsive para barra lateral.
-   Último cambio: 2026-08-27 — Se añadió barra superior con botón
-              hamburguesa y layout flexible para barra lateral.
+              estilos base para layout responsive.
+   Último cambio: 2026-08-27 — Se simplificó la barra superior,
+              eliminando el nombre de usuario para que coincida
+              con el prototipo y evitar descuadres.
    ========================================= */
 
 /* ========== FONDO DECORATIVO ========== */
@@ -46,7 +47,7 @@ body::before {
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 12px 20px;
+    padding: 15px 20px;
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
     box-shadow: var(--sombra);
@@ -54,7 +55,7 @@ body::before {
     position: sticky;
     top: 0;
     z-index: 100;
-    flex-wrap: wrap;
+    height: 70px; /* altura fija para facilitar el sticky de la barra lateral */
 }
 
 .barra-superior .titulo-app {
@@ -66,16 +67,6 @@ body::before {
     letter-spacing: 1px;
     flex: 1;
     text-align: center;
-}
-
-.barra-superior .nombre-usuario {
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--texto);
-    background: var(--rosa-claro);
-    padding: 6px 16px;
-    border-radius: 50px;
-    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.2);
 }
 
 /* Botón hamburguesa (visible solo en móvil) */
@@ -99,7 +90,7 @@ body::before {
 .cuerpo {
     display: flex;
     flex: 1;
-    min-height: calc(100vh - 80px); /* descontamos barra superior y footer aprox. */
+    min-height: calc(100vh - 70px); /* descontamos la altura del header */
 }
 
 /* ========== PIE DE PÁGINA ========== */
@@ -151,11 +142,6 @@ body::before {
 
     .barra-superior .titulo-app {
         font-size: 1.4rem;
-    }
-
-    .barra-superior .nombre-usuario {
-        font-size: 0.85rem;
-        padding: 4px 10px;
     }
 
     .cuerpo {
