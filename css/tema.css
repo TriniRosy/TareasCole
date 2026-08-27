@@ -3,11 +3,11 @@
    Archivo: ./css/tema.css
    Versión: 1.1.3
    Propósito: Estilos del tema rosa kawaii, incluyendo
-              barra superior adaptable, estructura de cuerpo,
+              barra superior simplificada, estructura de cuerpo,
               pie de página, elementos decorativos flotantes y
-              ajustes responsive usando variables de layout.
-   Último cambio: 2026-08-27 — Uso de var(--altura-header) para
-              adaptar alturas, sombreado móvil cubre correctamente.
+              estilos base para layout responsive.
+   Último cambio: 2026-08-27 — Se mejoró el fondo oscuro móvil
+              con blur y se aseguró cobertura completa.
    ========================================= */
 
 /* ========== FONDO DECORATIVO ========== */
@@ -30,7 +30,7 @@ body::before {
     pointer-events: none;
     animation: flotar 6s ease-in-out infinite;
     opacity: 0.6;
-    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-size: 2rem;
     user-select: none;
 }
 
@@ -54,13 +54,12 @@ body::before {
     position: sticky;
     top: 0;
     z-index: 100;
-    /* Usamos la variable de altura para que sea consistente */
-    height: var(--altura-header);
+    height: 70px; /* altura fija para coordinar con la barra lateral */
 }
 
 .barra-superior .titulo-app {
     font-family: var(--fuente-titulos);
-    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    font-size: 1.8rem;
     font-weight: 700;
     color: var(--rosa-fuerte);
     text-shadow: 2px 2px 0px var(--rosa-claro);
@@ -73,7 +72,7 @@ body::before {
 .boton-hamburguesa {
     background: none;
     border: none;
-    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-size: 2rem;
     cursor: pointer;
     color: var(--rosa-fuerte);
     transition: var(--transicion);
@@ -90,8 +89,7 @@ body::before {
 .cuerpo {
     display: flex;
     flex: 1;
-    /* Restamos la altura del header para que ocupe el resto */
-    min-height: calc(100vh - var(--altura-header));
+    min-height: calc(100vh - 70px); /* descontamos la altura del header */
 }
 
 /* ========== PIE DE PÁGINA ========== */
@@ -120,15 +118,18 @@ body::before {
 }
 
 /* ========== FONDO OSCURO PARA MÓVIL ========== */
-/* Cubre desde debajo del header hasta el final de la pantalla */
+/* Se posiciona debajo del header (top: 70px) y ocupa el resto de la pantalla.
+   Añadimos un ligero blur para que el oscurecimiento sea más agradable. */
 .fondo-oscuro {
     display: none;
     position: fixed;
-    top: var(--altura-header);
+    top: 70px;
     left: 0;
     width: 100%;
-    height: calc(100vh - var(--altura-header));
-    background: rgba(0, 0, 0, 0.4);
+    height: calc(100vh - 70px);
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     z-index: 80;
 }
 
@@ -137,21 +138,16 @@ body::before {
 }
 
 /* ========== RESPONSIVE ========== */
-@media (max-width: var(--breakpoint-movil)) {
+@media (max-width: 768px) {
     .boton-hamburguesa {
         display: block; /* mostramos el botón en móvil */
     }
 
     .barra-superior .titulo-app {
-        font-size: clamp(1rem, 4vw, 1.4rem);
+        font-size: 1.4rem;
     }
 
     .cuerpo {
         flex-direction: column;
-    }
-
-    /* Ajustamos el alto del header ligeramente menor en móvil */
-    .barra-superior {
-        padding: 10px 15px;
     }
 }
