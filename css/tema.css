@@ -1,14 +1,13 @@
 /* =========================================
    Organizador Kawaii — Tema visual
    Archivo: ./css/tema.css
-   Versión: 1.1.1
+   Versión: 1.1.2
    Propósito: Estilos del tema rosa kawaii, incluyendo
               barra superior simplificada, estructura de cuerpo,
               pie de página, elementos decorativos flotantes y
               estilos base para layout responsive.
-   Último cambio: 2026-08-27 — Se simplificó la barra superior,
-              eliminando el nombre de usuario para que coincida
-              con el prototipo y evitar descuadres.
+   Último cambio: 2026-08-27 — Se corrigió el fondo oscuro móvil
+              para que quede debajo del header (top: 70px).
    ========================================= */
 
 /* ========== FONDO DECORATIVO ========== */
@@ -55,7 +54,7 @@ body::before {
     position: sticky;
     top: 0;
     z-index: 100;
-    height: 70px; /* altura fija para facilitar el sticky de la barra lateral */
+    height: 70px; /* altura fija para coordinar con la barra lateral */
 }
 
 .barra-superior .titulo-app {
@@ -119,13 +118,14 @@ body::before {
 }
 
 /* ========== FONDO OSCURO PARA MÓVIL ========== */
+/* Se posiciona debajo del header (top: 70px) y ocupa el resto de la pantalla */
 .fondo-oscuro {
     display: none;
     position: fixed;
-    top: 0;
+    top: 70px;               /* queda justo debajo del header */
     left: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 70px); /* el alto restante */
     background: rgba(0, 0, 0, 0.4);
     z-index: 80;
 }
