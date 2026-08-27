@@ -1,10 +1,13 @@
 /* =========================================
    Organizador Kawaii — Tema visual
    Archivo: ./css/tema.css
+   Versión: 1.1.0
    Propósito: Estilos del tema rosa kawaii, incluyendo
-              barra superior, navegación, contenido principal,
-              pie de página y elementos decorativos flotantes.
-   Último cambio: 2026-08-21 — Se añadió barra superior con botón hamburguesa
+              encabezado (barra superior), navegación, contenido principal,
+              pie de página, elementos decorativos flotantes y
+              estructura responsive para barra lateral.
+   Último cambio: 2026-08-27 — Se añadió barra superior con botón
+              hamburguesa y layout flexible para barra lateral.
    ========================================= */
 
 /* ========== FONDO DECORATIVO ========== */
@@ -43,7 +46,7 @@ body::before {
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 15px 20px;
+    padding: 12px 20px;
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
     box-shadow: var(--sombra);
@@ -51,8 +54,31 @@ body::before {
     position: sticky;
     top: 0;
     z-index: 100;
+    flex-wrap: wrap;
 }
 
+.barra-superior .titulo-app {
+    font-family: var(--fuente-titulos);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--rosa-fuerte);
+    text-shadow: 2px 2px 0px var(--rosa-claro);
+    letter-spacing: 1px;
+    flex: 1;
+    text-align: center;
+}
+
+.barra-superior .nombre-usuario {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--texto);
+    background: var(--rosa-claro);
+    padding: 6px 16px;
+    border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.2);
+}
+
+/* Botón hamburguesa (visible solo en móvil) */
 .boton-hamburguesa {
     background: none;
     border: none;
@@ -60,33 +86,20 @@ body::before {
     cursor: pointer;
     color: var(--rosa-fuerte);
     transition: var(--transicion);
-    display: none; /* En escritorio no se muestra, la barra lateral está fija */
-    line-height: 1;
+    display: none; /* oculto en escritorio */
     padding: 0 5px;
+    line-height: 1;
 }
 
 .boton-hamburguesa:hover {
     transform: scale(1.2);
 }
 
-.titulo-app {
-    font-family: var(--fuente-titulos);
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--rosa-fuerte);
-    text-shadow: 2px 2px 0px var(--rosa-claro);
-    letter-spacing: 1px;
-}
-
-/* ========== CONTENEDOR PRINCIPAL ========== */
-.contenido-principal {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px 25px 60px;
-    position: relative;
-    z-index: 1;
-    min-height: 60vh;
+/* ========== ESTRUCTURA PRINCIPAL ========== */
+.cuerpo {
+    display: flex;
     flex: 1;
+    min-height: calc(100vh - 80px); /* descontamos barra superior y footer aprox. */
 }
 
 /* ========== PIE DE PÁGINA ========== */
@@ -114,17 +127,38 @@ body::before {
     75% { transform: scale(1.2); }
 }
 
+/* ========== FONDO OSCURO PARA MÓVIL ========== */
+.fondo-oscuro {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 80;
+}
+
+.fondo-oscuro.visible {
+    display: block;
+}
+
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
     .boton-hamburguesa {
-        display: block; /* En móvil mostramos el botón */
+        display: block; /* mostramos el botón en móvil */
     }
 
-    .titulo-app {
-        font-size: 1.5rem;
+    .barra-superior .titulo-app {
+        font-size: 1.4rem;
     }
 
-    .contenido-principal {
-        padding: 15px 15px 40px;
+    .barra-superior .nombre-usuario {
+        font-size: 0.85rem;
+        padding: 4px 10px;
+    }
+
+    .cuerpo {
+        flex-direction: column;
     }
 }
