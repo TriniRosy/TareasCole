@@ -1,9 +1,11 @@
 /* =========================================
    Organizador Kawaii — Estilos base
    Archivo: ./css/base.css
+   Versión: 1.1.0
    Propósito: Reset, variables CSS globales, estilos generales
-              para toda la aplicación.
-   Último cambio: 2026-08-21 — Creación inicial
+              y variables de layout para adaptación responsive.
+   Último cambio: 2026-08-27 — Añadidas variables de altura y breakpoints,
+              estilos para scrollbars personalizadas.
    ========================================= */
 
 /* ========== VARIABLES GLOBALES ========== */
@@ -35,6 +37,11 @@
     /* Tipografías */
     --fuente-titulos: 'Baloo 2', cursive;
     --fuente-cuerpo: 'Quicksand', sans-serif;
+
+    /* Layout responsive: altura del header y ancho de barra lateral */
+    --altura-header: clamp(60px, 10vh, 80px);   /* se adapta entre 60 y 80px */
+    --ancho-barra-lateral: clamp(240px, 22vw, 300px); /* adaptable */
+    --breakpoint-movil: 768px;                  /* punto de quiebre para móvil */
 }
 
 /* ========== RESET Y ESTILOS BASE ========== */
@@ -59,7 +66,7 @@ body {
     position: relative;
 }
 
-/* Barra de desplazamiento personalizada */
+/* Scrollbar personalizada para toda la página */
 ::-webkit-scrollbar {
     width: 12px;
 }
@@ -79,6 +86,12 @@ body {
     background: var(--rosa-fuerte);
 }
 
+/* Para Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--rosa-medio) var(--rosa-claro);
+}
+
 /* Estilos para enlaces */
 a {
     color: var(--rosa-fuerte);
@@ -92,14 +105,9 @@ a:hover {
 }
 
 /* Estilos para listas */
-ul, ol {
+ul,
+ol {
     list-style: none;
-}
-
-/* Estilos para imágenes */
-img {
-    max-width: 100%;
-    display: block;
 }
 
 /* Clase para ocultar elementos visualmente pero mantener accesibilidad */
