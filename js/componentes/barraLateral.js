@@ -1,11 +1,12 @@
 /* =========================================
    Organizador Kawaii — Componente barra lateral
    Archivo: ./js/componentes/barraLateral.js
-   Versión: 1.0.1
+   Versión: 1.0.2
    Propósito: Generar dinámicamente la barra lateral de navegación
               con enlaces a Inicio, Horario y todas las materias.
-              Incluye saludo personalizado para Trinidad.
-   Último cambio: 2026-08-27 — Añadido saludo de usuario en la barra.
+              Incluye saludo personalizado y control de menú móvil.
+   Último cambio: 2026-08-27 — Se aseguró que al inicializar la barra
+              quede replegada en móvil y el fondo oscuro oculto.
    ========================================= */
 
 // ========== IMPORTACIONES ==========
@@ -107,6 +108,7 @@ function actualizarEnlaceActivo(rutaActual) {
 /**
  * Inicializa la barra lateral: la inserta en el contenedor,
  * configura el botón hamburguesa y el fondo oscuro para móvil.
+ * Asegura que al cargar la barra quede replegada en móvil.
  */
 export function inicializarBarraLateral() {
     const contenedor = document.getElementById('barra-lateral-contenedor');
@@ -117,6 +119,12 @@ export function inicializarBarraLateral() {
 
     const botonHamburguesa = document.getElementById('boton-hamburguesa');
     const fondoOscuro = document.getElementById('fondo-oscuro');
+
+    // Al iniciar, removemos la clase 'abierta' y ocultamos fondo
+    contenedor.classList.remove('abierta');
+    if (fondoOscuro) {
+        fondoOscuro.classList.remove('visible');
+    }
 
     function alternarBarra() {
         contenedor.classList.toggle('abierta');
@@ -142,7 +150,9 @@ export function inicializarBarraLateral() {
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
             contenedor.classList.remove('abierta');
-            fondoOscuro.classList.remove('visible');
+            if (fondoOscuro) {
+                fondoOscuro.classList.remove('visible');
+            }
         }
     });
 }
