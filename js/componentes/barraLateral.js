@@ -1,12 +1,11 @@
 /* =========================================
    Organizador Kawaii — Componente barra lateral
    Archivo: ./js/componentes/barraLateral.js
-   Versión: 1.0.0
+   Versión: 1.0.1
    Propósito: Generar dinámicamente la barra lateral de navegación
               con enlaces a Inicio, Horario y todas las materias.
-              Maneja el estado activo del enlace actual y el
-              comportamiento responsive (menú deslizante en móvil).
-   Último cambio: 2026-08-27 — Creación inicial
+              Incluye saludo personalizado para Trinidad.
+   Último cambio: 2026-08-27 — Añadido saludo de usuario en la barra.
    ========================================= */
 
 // ========== IMPORTACIONES ==========
@@ -23,10 +22,16 @@ function crearBarraLateral() {
     nav.className = 'barra-lateral';
     nav.id = 'barra-lateral';
 
-    // Encabezado de la barra
+    // Título de la barra
     const titulo = document.createElement('h3');
     titulo.textContent = '🌸 Menú';
     nav.appendChild(titulo);
+
+    // Saludo personalizado
+    const saludo = document.createElement('p');
+    saludo.className = 'saludo-usuario';
+    saludo.textContent = '✨ Trinidad Quilodrán ✨';
+    nav.appendChild(saludo);
 
     // Enlace a Inicio
     nav.appendChild(crearEnlace('inicio', '🏠', 'Inicio', '/inicio'));
@@ -90,12 +95,9 @@ function crearEnlace(id, emoji, texto, ruta) {
  * @param {string} rutaActual - Ruta activa (ej. '/matematica').
  */
 function actualizarEnlaceActivo(rutaActual) {
-    // Quitamos la clase 'activo' de todos los enlaces
     document.querySelectorAll('.enlace-lateral').forEach(enlace => {
         enlace.classList.remove('activo');
     });
-
-    // Buscamos el enlace que coincide con la ruta y le añadimos 'activo'
     const enlaceActivo = document.querySelector(`.enlace-lateral[data-ruta="${rutaActual}"]`);
     if (enlaceActivo) {
         enlaceActivo.classList.add('activo');
@@ -104,50 +106,39 @@ function actualizarEnlaceActivo(rutaActual) {
 
 /**
  * Inicializa la barra lateral: la inserta en el contenedor,
- * configura el botón hamburguesa y el fondo oscuro para móvil,
- * y escucha los cambios de hash para actualizar el enlace activo.
+ * configura el botón hamburguesa y el fondo oscuro para móvil.
  */
 export function inicializarBarraLateral() {
     const contenedor = document.getElementById('barra-lateral-contenedor');
     if (!contenedor) return;
 
-    // Insertamos la barra lateral
     contenedor.innerHTML = '';
     contenedor.appendChild(crearBarraLateral());
 
-    // Referencias a elementos del DOM
     const botonHamburguesa = document.getElementById('boton-hamburguesa');
     const fondoOscuro = document.getElementById('fondo-oscuro');
 
-    /**
-     * Abre o cierra la barra lateral en móvil.
-     */
     function alternarBarra() {
         contenedor.classList.toggle('abierta');
         fondoOscuro.classList.toggle('visible');
     }
 
-    // Evento del botón hamburguesa (solo visible en móvil)
     if (botonHamburguesa) {
         botonHamburguesa.addEventListener('click', alternarBarra);
     }
 
-    // Evento del fondo oscuro para cerrar la barra
     if (fondoOscuro) {
         fondoOscuro.addEventListener('click', alternarBarra);
     }
 
-    // Al cambiar el hash, actualizamos el enlace activo
     window.addEventListener('hashchange', () => {
         const ruta = window.location.hash.replace(/^#/, '') || '/inicio';
         actualizarEnlaceActivo(ruta);
     });
 
-    // Llamada inicial para establecer el enlace activo
     const rutaInicial = window.location.hash.replace(/^#/, '') || '/inicio';
     actualizarEnlaceActivo(rutaInicial);
 
-    // Ajustar al redimensionar: si pasamos a escritorio, quitar clases de móvil
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) {
             contenedor.classList.remove('abierta');
