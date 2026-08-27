@@ -1,12 +1,12 @@
 /* =========================================
    Organizador Kawaii — Componentes reutilizables
    Archivo: ./css/componentes.css
-   Versión: 1.1.3
+   Versión: 1.1.4
    Propósito: Estilos para botones, tarjetas, formularios,
               modal, listas de tareas, barras de progreso y
               barra lateral con degradado pastel y bordes izquierdos.
-   Último cambio: 2026-08-27 — Se quitó borde rosa en móvil y se
-              ajustó la sombra de la barra lateral desplegable.
+   Último cambio: 2026-08-27 — Se corrigió la barra lateral móvil
+              para que esté replegada por defecto (translateX -100%).
    ========================================= */
 
 /* ========== BOTONES ========== */
@@ -489,7 +489,7 @@
         left: 0;
         width: 260px;
         height: calc(100vh - 70px);
-        transform: translateX(-100%);
+        transform: translateX(-100%); /* Oculto por defecto */
         transition: transform 0.3s ease;
         z-index: 90;
         box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
@@ -498,15 +498,14 @@
     }
 
     .barra-lateral-contenedor.abierta {
-        transform: translateX(0);
+        transform: translateX(0); /* Visible al abrir */
     }
 
-    /* Quitamos el borde rosa derecho y usamos solo sombra elegante */
     .barra-lateral {
         height: 100%;
         border-left: none;
-        border-right: none;   /* antes era 8px solid rosa, ya no */
-        border-radius: 0;     /* sin redondeo en el lado derecho */
+        border-right: none;
+        border-radius: 0;
         box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
     }
 
