@@ -1,12 +1,12 @@
 /* =========================================
    Organizador Kawaii — Componentes reutilizables
    Archivo: ./css/componentes.css
-   Versión: 1.1.4
+   Versión: 1.1.5
    Propósito: Estilos para botones, tarjetas, formularios,
               modal, listas de tareas, barras de progreso y
               barra lateral con degradado pastel y bordes izquierdos.
-   Último cambio: 2026-08-27 — Se corrigió la barra lateral móvil
-              para que esté replegada por defecto (translateX -100%).
+   Último cambio: 2026-08-27 — Se corrigió la barra de scroll
+              y la sombra inferior en la barra lateral cuando hay zoom.
    ========================================= */
 
 /* ========== BOTONES ========== */
@@ -91,18 +91,18 @@
 }
 
 /* ========== BARRA LATERAL ========== */
-/* Contenedor de la barra lateral en escritorio */
+/* Contenedor externo: solo define dimensiones y sticky */
 .barra-lateral-contenedor {
     width: 280px;
     min-width: 280px;
     position: sticky;
     top: 70px;
     height: calc(100vh - 70px);
-    overflow-y: auto;
     z-index: 50;
+    overflow: hidden; /* ocultamos cualquier desbordamiento del contenedor */
 }
 
-/* Estilo visual de la barra lateral generada por JS */
+/* La barra lateral interna tiene el fondo y el scroll */
 .barra-lateral {
     background: linear-gradient(180deg, #ffe4e9 0%, #f8d5e8 50%, #e8d5f5 100%);
     padding: 20px 0 20px 15px;
@@ -110,8 +110,28 @@
     flex-direction: column;
     gap: 5px;
     height: 100%;
+    overflow-y: auto;  /* scroll interno, se ve sobre el degradado */
+    scrollbar-width: thin; /* para Firefox */
+    scrollbar-color: var(--rosa-fuerte) var(--rosa-claro);
     border-left: 8px solid var(--rosa-fuerte);
     box-shadow: 4px 0 15px rgba(255, 105, 180, 0.15);
+    /* Aseguramos que el scroll no tape los bordes */
+    padding-right: 10px;
+}
+
+/* Estilizamos la barra de scroll para navegadores WebKit */
+.barra-lateral::-webkit-scrollbar {
+    width: 8px;
+}
+
+.barra-lateral::-webkit-scrollbar-track {
+    background: var(--rosa-claro);
+    border-radius: 10px;
+}
+
+.barra-lateral::-webkit-scrollbar-thumb {
+    background: var(--rosa-fuerte);
+    border-radius: 10px;
 }
 
 .barra-lateral h3 {
@@ -120,7 +140,7 @@
     margin-bottom: 5px;
     text-align: center;
     font-size: 1.4rem;
-    padding-right: 15px;
+    padding-right: 5px;
 }
 
 .barra-lateral .saludo-usuario {
@@ -128,7 +148,7 @@
     font-weight: 600;
     color: var(--texto-suave);
     margin-bottom: 10px;
-    padding-right: 15px;
+    padding-right: 5px;
     font-size: 0.9rem;
 }
 
@@ -145,7 +165,8 @@
     transition: var(--transicion);
     border-left: 4px solid transparent;
     background: rgba(255, 255, 255, 0.5);
-    margin-right: 10px;
+    margin-right: 5px;
+    flex-shrink: 0; /* evita que se compriman */
 }
 
 .barra-lateral .enlace-lateral:hover {
@@ -168,7 +189,8 @@
 
 .barra-lateral .separador {
     border-top: 2px dashed var(--rosa-medio);
-    margin: 10px 15px 10px 0;
+    margin: 10px 5px 10px 0;
+    flex-shrink: 0;
 }
 
 /* ========== TARJETAS ========== */
@@ -482,23 +504,21 @@
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
-    /* En móvil, la barra lateral se convierte en menú deslizante */
     .barra-lateral-contenedor {
         position: fixed;
         top: 70px;
         left: 0;
         width: 260px;
         height: calc(100vh - 70px);
-        transform: translateX(-100%); /* Oculto por defecto */
+        transform: translateX(-100%);
         transition: transform 0.3s ease;
         z-index: 90;
         box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
-        overflow-y: auto;
-        background: transparent;
+        overflow: hidden; /* el scroll lo maneja .barra-lateral */
     }
 
     .barra-lateral-contenedor.abierta {
-        transform: translateX(0); /* Visible al abrir */
+        transform: translateX(0);
     }
 
     .barra-lateral {
@@ -506,7 +526,8 @@
         border-left: none;
         border-right: none;
         border-radius: 0;
-        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.25);
+        box-shadow: none; /* quitamos sombra en móvil para que no se vea cortada */
+        overflow-y: auto;
     }
 
     .btn {
