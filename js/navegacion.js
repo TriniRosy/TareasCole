@@ -1,12 +1,12 @@
 /* =========================================
    Organizador Kawaii — Enrutador por hash
    Archivo: ./js/navegacion.js
-   Versión: 1.1.0
+   Versión: 1.2.0
    Propósito: Manejar la navegación entre páginas de la SPA usando
               el hash de la URL. Carga la vista correspondiente según
-              la ruta activa. Ya no gestiona enlaces superiores (eso lo
-              hace la barra lateral).
-   Último cambio: 2026-08-27 — Se eliminó actualización de enlaces superiores.
+              la ruta activa. Además, actualiza el título del header
+              con un texto contextual (Inicio, Horario o materia).
+   Último cambio: 2026-08-27 — Se añadió actualización del título del header.
    ========================================= */
 
 // ========== IMPORTACIONES ==========
@@ -49,6 +49,34 @@ function limpiarContenedor() {
 }
 
 /**
+ * Actualiza el título del header según la ruta actual.
+ * En inicio muestra el nombre de la aplicación; en otras rutas
+ * muestra el nombre de la sección o materia correspondiente.
+ * @param {string} rutaActual - Ruta activa (ej. '/matematica').
+ */
+function actualizarTituloHeader(rutaActual) {
+    const tituloElemento = document.querySelector('.barra-superior .titulo-app');
+    if (!tituloElemento) return;
+
+    let titulo = '🌸 Organizador Kawaii 🌸'; // Valor por defecto (inicio)
+
+    if (rutaActual === '/horario') {
+        titulo = '📅 Mi Horario';
+    } else if (rutaActual === '/matematica') {
+        titulo = '📐 Matemática';
+    } else if (rutaActual !== '/inicio') {
+        // Buscar la materia correspondiente a la ruta
+        const materias = obtenerMaterias();
+        const materia = materias.find(m => '/' + m.ruta === rutaActual);
+        if (materia) {
+            titulo = `${materia.emoji} ${materia.nombre}`;
+        }
+    }
+
+    tituloElemento.textContent = titulo;
+}
+
+/**
  * Determina qué vista cargar según la ruta y delega la inicialización.
  * @param {string} rutaActual - Ruta activa (ej. '/matematica').
  */
@@ -57,6 +85,7 @@ function cargarVista(rutaActual) {
     if (!contenedor) return;
 
     limpiarContenedor();
+    actualizarTituloHeader(rutaActual); // Actualizamos el título del header
 
     if (rutaActual === '/inicio') {
         inicializarVistaResumen(contenedor);
