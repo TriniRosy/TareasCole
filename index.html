@@ -1,228 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agua Potable Rural | San Gabriel, Chillán</title>
-
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      --azul-agua: #0a6f8a;
-      --celeste: #e6f4f7;
-      --verde-suave: #a8d5ba;
-      --texto: #1e2a32;
-      --gris: #f5f7f8;
-      --blanco: #ffffff;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      color: var(--texto);
-      background-color: var(--gris);
-      line-height: 1.6;
-    }
-
-    /* Navegación */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: var(--blanco);
-      box-shadow: 0 2px 10px rgba(0,0,0,.05);
-      z-index: 1000;
-      padding: 0 24px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .logo {
-      font-weight: 800;
-      font-size: 18px;
-      color: var(--azul-agua);
-    }
-
-    nav ul {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--texto);
-      font-weight: 500;
-      font-size: 14px;
-    }
-
-    nav a:hover {
-      color: var(--azul-agua);
-    }
-
-    /* Secciones */
-    section {
-      padding: 80px 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .hero {
-      margin-top: 64px;
-      background: linear-gradient(135deg, #0a6f8a 0%, #0c4f6e 100%);
-      color: white;
-      padding: 100px 24px;
-      text-align: center;
-      border-radius: 0 0 28px 28px;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      margin-top: 32px;
-    }
-
-    .card {
-      background: var(--blanco);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 6px 20px rgba(0,0,0,.03);
-      border: 1px solid #e0e8ec;
-    }
-
-    .card h3 {
-      color: var(--azul-agua);
-      margin-bottom: 8px;
-    }
-
-    .mapa {
-      height: 400px;
-      border-radius: 16px;
-      margin-top: 24px;
-      border: 1px solid #d0dde2;
-    }
-
-    .documentos {
-      background: var(--celeste);
-      border-radius: 16px;
-      padding: 24px;
-      margin-top: 24px;
-    }
-
-    .documentos a {
-      display: inline-block;
-      margin-right: 12px;
-      margin-top: 8px;
-      background: var(--azul-agua);
-      color: white;
-      padding: 8px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-    }
-
-    footer {
-      background: var(--texto);
-      color: white;
-      text-align: center;
-      padding: 32px 24px;
-      margin-top: 64px;
-    }
-
-    @media (max-width: 768px) {
-      nav ul { display: none; }
-      .hero h1 { font-size: 2rem; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 Organizador Kawaii de Trinidad 🌸</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/tema.css">
+    <link rel="stylesheet" href="./css/componentes.css">
+    <link rel="stylesheet" href="./css/asignaturas.css">
 </head>
 <body>
+    <!-- Elementos decorativos flotantes -->
+    <div class="flotante" style="top:8%; left:3%;">🌸</div>
+    <div class="flotante" style="top:15%; right:5%; animation-delay:1.5s;">⭐</div>
+    <div class="flotante" style="bottom:20%; left:5%; animation-delay:3s;">💖</div>
+    <div class="flotante" style="bottom:12%; right:8%; animation-delay:4.5s;">✨</div>
+    <div class="flotante" style="top:45%; left:50%; animation-delay:2s; font-size:1.4rem; opacity:0.4;">🌷</div>
+    <div class="flotante" style="top:65%; right:3%; animation-delay:5s;">🎀</div>
+    <div class="flotante" style="bottom:35%; left:2%; animation-delay:3.8s;">💕</div>
 
-<nav>
-  <div class="logo">💧 Agua Potable San Gabriel</div>
-  <ul>
-    <li><a href="#problema">Problema</a></li>
-    <li><a href="#solucion">Solución</a></li>
-    <li><a href="#mapa">Mapa</a></li>
-    <li><a href="#documentos">Documentos</a></li>
-  </ul>
-</nav>
+    <!-- Barra superior simplificada: solo botón y título, como en el prototipo -->
+    <header class="barra-superior">
+        <button class="boton-hamburguesa" id="boton-hamburguesa" aria-label="Abrir menú">☰</button>
+        <span class="titulo-app">🌸 Organizador Kawaii 🌸</span>
+    </header>
 
-<div class="hero">
-  <h1>Agua potable para San Gabriel</h1>
-  <p>Proyecto comunitario para mejorar la calidad de vida de las familias rurales de Chillán.</p>
-</div>
+    <!-- Fondo oscuro para menú móvil -->
+    <div class="fondo-oscuro" id="fondo-oscuro"></div>
 
-<section id="problema">
-  <h2>Contexto y problemática</h2>
-  <p>Aquí se describirá la situación actual del agua en el sector San Gabriel, los problemas de abastecimiento y cómo afecta la vida diaria de la comunidad.</p>
-</section>
+    <!-- Estructura principal: barra lateral + contenido -->
+    <div class="cuerpo">
+        <!-- La barra lateral se insertará aquí mediante JavaScript -->
+        <nav class="barra-lateral-contenedor" id="barra-lateral-contenedor"></nav>
 
-<section id="solucion">
-  <h2>Propuesta de solución</h2>
-  <div class="grid">
-    <div class="card"><h3>Infraestructura</h3><p>Pozo profundo, estanque de acumulación y red de distribución.</p></div>
-    <div class="card"><h3>Etapas</h3><p>Diseño, excavación, instalación y puesta en marcha.</p></div>
-    <div class="card"><h3>Beneficios</h3><p>Salud, educación, economía y dignidad para las familias.</p></div>
-  </div>
-</section>
+        <!-- Contenido dinámico de la SPA -->
+        <main id="contenido-principal" class="contenido-principal">
+            <!-- Aquí se renderizará la vista activa -->
+        </main>
+    </div>
 
-<section id="mapa">
-  <h2>Ubicación del proyecto</h2>
-  <div id="map" class="mapa"></div>
-</section>
+    <!-- Pie de página -->
+    <footer class="pie-pagina">
+        Hecho con <span class="corazon">💖</span> para Trinidad Quilodrán · 5° Básico · Chile 🇨🇱
+    </footer>
 
-<section id="documentos">
-  <h2>Documentos y evidencia</h2>
-  <div class="documentos">
-    <p>Aquí podrás acceder a informes, actas y fotografías del proyecto.</p>
-    <!-- Los enlaces se agregarán después -->
-  </div>
-</section>
-
-<footer>
-  <p>Proyecto presentado ante el consejo municipal de Chillán</p>
-</footer>
-
-<script>
-  // Inicialización del mapa con Leaflet
-  const map = L.map('map').setView([-36.8500, -72.0500], 13);
-
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(map);
-
-  // Marcador del sector
-  const marker = L.marker([-36.8500, -72.0500]).addTo(map);
-  marker.bindPopup('<b>San Gabriel, Chillán</b>').openPopup();
-</script>
-
+    <!-- Script principal de la aplicación (ES Modules) -->
+    <script type="module" src="./js/app.js"></script>
 </body>
 </html>
